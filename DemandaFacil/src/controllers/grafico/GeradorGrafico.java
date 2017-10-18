@@ -1,4 +1,4 @@
-package controllers;
+package controllers.grafico;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
