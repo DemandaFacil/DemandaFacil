@@ -41,6 +41,8 @@ public class ListasEmpresa extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Lista de Empresas");
+        setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(178, 242, 236));
 
@@ -321,6 +323,7 @@ public class ListasEmpresa extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_busca_empresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_busca_empresaActionPerformed
