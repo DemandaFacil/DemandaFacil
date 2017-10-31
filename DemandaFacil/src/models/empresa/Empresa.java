@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models.Empresa;
+package models.empresa;
+
+//import models.usuario.Usuario;
 
 /**
  *
@@ -11,10 +13,11 @@ package models.Empresa;
  */
 public class Empresa {
     
-    private int id;
+    private int idEmpresa;
     private String nome;
     private String CNPJ;
-
+    //private Usuario usuario;
+    
     
     public Empresa() {
     }
@@ -27,12 +30,12 @@ public class Empresa {
 
     
     public int getIdEmpresa() {
-        return id;
+        return idEmpresa;
     }
 
     
     public void setIdEmpresa(int id) {
-        this.id = id;
+        this.idEmpresa = id;
     }
 
     
@@ -54,6 +57,15 @@ public class Empresa {
     public void setCNPJ(String CNPJ) {
         this.CNPJ = CNPJ;
     }
+    
+    /*public Usuario getUsuario() {
+    return usuario;
+    }
+    
+    
+    public void setUsuario(Usuario usuario) {
+    this.usuario = usuario;
+    }*/
     
     
 }
