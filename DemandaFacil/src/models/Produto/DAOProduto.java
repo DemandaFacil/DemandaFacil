@@ -5,9 +5,13 @@
  */
 package models;
 
+import controllers.banco.ConnectionFactory;
 import controllers.conexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JTable;
+import net.proteanit.sql.DbUtils;
 
 /* *
  *  @author nicolas
@@ -42,5 +46,18 @@ public class DAOProduto {
             System.out.println(e);
             return false;
         }
+    }
+    public void procuraProduto(String nome,JTable jt)throws Exception{
+       PreparedStatement p = null;
+       try{
+           Connection c = ConnectionFactory.getConnection();
+           p = c.prepareStatement("SELECT id, nome FROM Produto WHERE nome like ?");
+           p.setString(1, nome);
+           ResultSet rs = p.executeQuery();
+           jt.setModel(DbUtils.resultSetToTableModel(rs));
+           ConnectionFactory.closeConnection(c, p, rs);
+       }catch(Exception e){
+           System.out.println(e);
+       }
     }
 }
