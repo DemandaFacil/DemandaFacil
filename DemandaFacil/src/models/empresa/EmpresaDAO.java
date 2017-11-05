@@ -98,33 +98,29 @@ public class EmpresaDAO {
         
     }
     
-    public List<Empresa> findEmpresa(String pesquisa) {
+    public ResultSet findEmpresa(String pesquisa) {
+        
         
         PreparedStatement stmt = null;
         ResultSet rs = null;
         String sql;
-        sql = "SELECT Empresa.idEmpresa, Empresa.CNPJ, Empresa.nome FROM Empresa" 
+        sql = "SELECT * FROM Empresa" 
                + "INNER JOIN Empresa_has_Usuario on Empresa.idEmpresa = Empresa_has_Usuario.Empresa_idEmpresa" 
                + "INNER JOIN Usuario on Usuario.idUsuario = Empresa_has_Usuario.Usuario_idUsuario" 
-               + "WHERE Empresa.nome LIKE '?%' AND Usuario.idUsuario = ?";
-        List<Empresa> empresas = new ArrayList<>();
+               + "WHERE Empresa.nome LIKE CONCAT('?', '%') AND Usuario.idUsuario = ?";
         
         try {
             stmt = con.prepareStatement(sql);
             stmt.setString(1, pesquisa);
-            stmt.setInt(2, empresa.getUsuario().getIdUsuario());
+            stmt.setInt(2, 2);
             rs = stmt.executeQuery();
-            
-            saveInListEmpresas(rs, empresas);
-            tbl_empresas.setModel(DbUtils.resultSetToTableModel(rs));
-
         } catch (SQLException ex) {
             System.err.println("Erro ao pesquisar empresas: "+ ex);
         } finally{
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
         
-        return empresas;
+        return rs;
     }
     
     public List<Empresa> findAll(){
@@ -187,4 +183,25 @@ public class EmpresaDAO {
             ConnectionFactory.closeConnection(con, stmt);
         }
     }
+    
+    public boolean findCNPJ(String pesquisa) {
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT CNPJ FROM Empresa WHERE CNPJ LIKE '?'";
+        
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, pesquisa);
+            rs = stmt.executeQuery();
+            
+            return rs.first();
+        } catch (SQLException ex) {
+            System.err.println("Erro ao pesquisar empresas: "+ ex);
+        } finally{
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        return false;
+    }
+    
 }
