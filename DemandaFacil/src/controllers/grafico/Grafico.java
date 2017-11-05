@@ -1,4 +1,4 @@
-package controllers;
+package controllers.grafico;
 
 import javafx.scene.chart.XYChart;
 import javax.swing.JPanel;
