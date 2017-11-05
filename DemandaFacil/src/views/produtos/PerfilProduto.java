@@ -5,6 +5,10 @@
  */
 package views.produtos;
 
+import javax.swing.JOptionPane;
+import models.DAOProduto;
+import models.Produto;
+
 /**
  *
  * @author akira
@@ -16,6 +20,20 @@ public class PerfilProduto extends javax.swing.JFrame {
      */
     public PerfilProduto() {
         initComponents();
+    }
+    public PerfilProduto(int id){
+        initComponents();
+        jTextNome.setEditable(false);jTextPeriodo.setEditable(false); //seta todos campos para nao ser alterado
+        DAOProduto DAOp = new DAOProduto();
+        Produto prod = new Produto();
+        try{
+            prod = DAOp.leProduto(id);
+            jTextNome.setText(prod.getNome());
+            jTextPeriodo.setText(Integer.toString(prod.getPeriodo_de_reposicao()));
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Nao encontrado", "erro de leitura",JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -50,20 +68,18 @@ public class PerfilProduto extends javax.swing.JFrame {
         painelForm = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableProduto = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        jTextPeriodo = new javax.swing.JTextPane();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextPane2 = new javax.swing.JTextPane();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTextPane3 = new javax.swing.JTextPane();
         jButton5 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jTextNome = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Perfil do Produto");
@@ -225,15 +241,7 @@ public class PerfilProduto extends javax.swing.JFrame {
 
         jLabel2.setText("Período de Reposição");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Editar propriedade-26.png"))); // NOI18N
-        jButton1.setText("Editar Produto");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableProduto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -259,7 +267,7 @@ public class PerfilProduto extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableProduto);
 
         jLabel3.setText("Consumo do Produto");
 
@@ -280,14 +288,11 @@ public class PerfilProduto extends javax.swing.JFrame {
             }
         });
 
-        jTextPane1.setText("NumPeriodo");
-        jScrollPane2.setViewportView(jTextPane1);
+        jTextPeriodo.setText("NumPeriodo");
+        jScrollPane2.setViewportView(jTextPeriodo);
 
         jTextPane2.setText("TipoPeriodo");
         jScrollPane3.setViewportView(jTextPane2);
-
-        jTextPane3.setText("NomeProduto");
-        jScrollPane4.setViewportView(jTextPane3);
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Mais-26.png"))); // NOI18N
         jButton5.setText("Inserir Consumo");
@@ -306,6 +311,12 @@ public class PerfilProduto extends javax.swing.JFrame {
             }
         });
 
+        jTextNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextNomeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout painelFormLayout = new javax.swing.GroupLayout(painelForm);
         painelForm.setLayout(painelFormLayout);
         painelFormLayout.setHorizontalGroup(
@@ -316,21 +327,23 @@ public class PerfilProduto extends javax.swing.JFrame {
                     .addGroup(painelFormLayout.createSequentialGroup()
                         .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(painelFormLayout.createSequentialGroup()
-                                .addComponent(jButton3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1))
-                            .addGroup(painelFormLayout.createSequentialGroup()
                                 .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(painelFormLayout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(painelFormLayout.createSequentialGroup()
+                                        .addComponent(jTextNome)
+                                        .addGap(93, 93, 93)))
                                 .addComponent(jButton4))
-                            .addGroup(painelFormLayout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelFormLayout.createSequentialGroup()
+                                .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(painelFormLayout.createSequentialGroup()
+                                        .addComponent(jButton3)
+                                        .addGap(48, 48, 48)
+                                        .addComponent(jButton2))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)))
+                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)))
                         .addGap(34, 34, 34))
                     .addGroup(painelFormLayout.createSequentialGroup()
                         .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -347,12 +360,12 @@ public class PerfilProduto extends javax.swing.JFrame {
             .addGroup(painelFormLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(painelFormLayout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextNome, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(painelFormLayout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -366,13 +379,11 @@ public class PerfilProduto extends javax.swing.JFrame {
                     .addGroup(painelFormLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout painelBackgroundFormLayout = new javax.swing.GroupLayout(painelBackgroundForm);
@@ -430,18 +441,17 @@ public class PerfilProduto extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void opcaoMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcaoMenuMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_opcaoMenuMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        EditarProduto editaProd = new EditarProduto();
+    private void jTextNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNomeActionPerformed
+        // TODO add your handling code here:
         
-        editaProd.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jTextNomeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -489,6 +499,7 @@ public class PerfilProduto extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new PerfilProduto().setVisible(true);
+                
             }
         });
     }
@@ -501,7 +512,6 @@ public class PerfilProduto extends javax.swing.JFrame {
     private javax.swing.JLabel icon2;
     private javax.swing.JLabel icon3;
     private javax.swing.JLabel iconLogo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -512,11 +522,10 @@ public class PerfilProduto extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JTable jTableProduto;
+    private javax.swing.JTextField jTextNome;
     private javax.swing.JTextPane jTextPane2;
-    private javax.swing.JTextPane jTextPane3;
+    private javax.swing.JTextPane jTextPeriodo;
     private javax.swing.JPanel linhaDivisoria;
     private javax.swing.JPanel menuLateral;
     private javax.swing.JLabel nome;

@@ -227,6 +227,12 @@ public class CriarProduto extends javax.swing.JFrame {
 
         jLabel2.setText("Período de Reposição");
 
+        jTextDIA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextDIAActionPerformed(evt);
+            }
+        });
+
         jComboBoxMES.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mês", "Semestre", "Ano" }));
         jComboBoxMES.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -417,6 +423,10 @@ public class CriarProduto extends javax.swing.JFrame {
     private void jComboBoxMESActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxMESActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxMESActionPerformed
+
+    private void jTextDIAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextDIAActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextDIAActionPerformed
 
     /**
      * @param args the command line arguments

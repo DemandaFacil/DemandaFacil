@@ -5,9 +5,13 @@
  */
 package models;
 
+import controllers.banco.ConnectionFactory;
 import controllers.conexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JTable;
+import net.proteanit.sql.DbUtils;
 
 /* *
  *  @author nicolas
@@ -41,6 +45,39 @@ public class DAOProduto {
         }catch(Exception e){
             System.out.println(e);
             return false;
+        }
+    }
+    public void procuraProduto(String nome,JTable jt)throws Exception{
+       PreparedStatement p = null;
+       try{
+           Connection c = ConnectionFactory.getConnection();
+           p = c.prepareStatement("SELECT id, nome FROM Produto WHERE nome like ?");
+           p.setString(1, nome);
+           ResultSet rs = p.executeQuery();
+           jt.setModel(DbUtils.resultSetToTableModel(rs));
+           ConnectionFactory.closeConnection(c, p, rs);
+       }catch(Exception e){
+           System.out.println(e);
+       }
+    }
+     public Produto leProduto(int id) throws Exception{
+        PreparedStatement p = null;
+        ResultSet rs = null;
+        Produto prod = new Produto();
+        try{
+            Connection c = ConnectionFactory.getConnection();
+            p = c.prepareStatement("SELECT descricao,preco FROM produto WHERE idProduto = ?");
+            p.setInt(1, id);
+            rs = p.executeQuery();
+            while(rs.next()){
+                prod.setNome(rs.getString(1)); // enviar pro objeto o valor do banco
+                prod.setPeriodo_de_reposicao(rs.getInt(2));
+            }
+            ConnectionFactory.closeConnection(c, p, rs);
+            return prod;
+        }catch(Exception e){
+            System.out.println(e);
+            return prod;
         }
     }
 }
