@@ -60,4 +60,24 @@ public class DAOProduto {
            System.out.println(e);
        }
     }
+     public Produto leProduto(int id) throws Exception{
+        PreparedStatement p = null;
+        ResultSet rs = null;
+        Produto prod = new Produto();
+        try{
+            Connection c = ConnectionFactory.getConnection();
+            p = c.prepareStatement("SELECT descricao,preco FROM produto WHERE idProduto = ?");
+            p.setInt(1, id);
+            rs = p.executeQuery();
+            while(rs.next()){
+                prod.setNome(rs.getString(1)); // enviar pro objeto o valor do banco
+                prod.setPeriodo_de_reposicao(rs.getInt(2));
+            }
+            ConnectionFactory.closeConnection(c, p, rs);
+            return prod;
+        }catch(Exception e){
+            System.out.println(e);
+            return prod;
+        }
+    }
 }

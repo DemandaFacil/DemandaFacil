@@ -379,10 +379,12 @@ public class ListaDeProdutos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        PerfilProduto perfilProd = new PerfilProduto();
         
+        int linhaSelecionada = jTableTabela.getSelectedRow();
+        int idProdutoLinha = Integer.parseInt(jTableTabela.getValueAt(linhaSelecionada, 0).toString()); //1º seleciona linha, 2º seleciona coluna desejada
+        PerfilProduto perfilProd = new PerfilProduto(idProdutoLinha);
         perfilProd.setVisible(true);
-        this.setVisible(false);
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextNomeProdutoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextNomeProdutoKeyReleased

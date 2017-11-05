@@ -18,7 +18,8 @@ public class Produto {
         this.nome = nome;
         this.periodo_de_reposicao = periodo_de_reposicao;
     }
-    
+    public Produto(){
+    }
     public int getIdProduto() {
         return idProduto;
     }
