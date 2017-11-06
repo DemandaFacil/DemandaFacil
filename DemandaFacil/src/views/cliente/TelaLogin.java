@@ -5,6 +5,13 @@
  */
 package views.cliente;
 
+import controllers.banco.ConnectionFactory;
+import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import models.Usuario.DAOUsuario;
+import models.Usuario.Usuario;
+
 /**
  *
  * @author souza
@@ -40,9 +47,9 @@ public class TelaLogin extends javax.swing.JFrame {
         jPanelCadastro = new javax.swing.JPanel();
         lbl_numCnpj = new javax.swing.JLabel();
         lbl_nomeFantasia = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextLogin = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        jPasswordSenha = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
         jButton2 = new javax.swing.JButton();
@@ -143,15 +150,15 @@ public class TelaLogin extends javax.swing.JFrame {
 
         lbl_nomeFantasia.setText("Senha:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jTextLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jTextLoginActionPerformed(evt);
             }
         });
 
         jLabel1.setText("Esqueci minha senha");
 
-        jPasswordField1.setText("jPasswordField1");
+        jPasswordSenha.setText("jPasswordField1");
 
         jButton1.setText("Login");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -186,8 +193,8 @@ public class TelaLogin extends javax.swing.JFrame {
                                 .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                                 .addComponent(jButton1))
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
+                            .addComponent(jTextLogin, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPasswordSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
                         .addGap(0, 55, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -197,11 +204,11 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_numCnpj)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_nomeFantasia)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPasswordSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -287,12 +294,28 @@ public class TelaLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jTextLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextLoginActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jTextLoginActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String nome = jTextLogin.getText();
+        String senha = jPasswordSenha.getText();
+        PerfilCliente pc = new PerfilCliente();
+        DAOUsuario user = new DAOUsuario();
+        Usuario usuario = new Usuario();
+       
+        try {
+            usuario = user.leUsuario(nome);
+            if(nome.equals(usuario.getNome())&& senha.equals(usuario.getSenha())){
+                this.setVisible(false);
+                pc.setVisible(true);
+            }
+                
+        }catch (Exception ex){
+            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -342,8 +365,8 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelCadastro;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField jPasswordSenha;
+    private javax.swing.JTextField jTextLogin;
     private javax.swing.JLabel lbl_nomeFantasia;
     private javax.swing.JLabel lbl_numCnpj;
     private javax.swing.JPanel linhaDivisoria;
