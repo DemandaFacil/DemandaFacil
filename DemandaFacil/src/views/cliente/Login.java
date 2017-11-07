@@ -149,9 +149,9 @@ public class Login extends javax.swing.JFrame {
     private void btn_entrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_entrarActionPerformed
         // TODO add your handling code here:
         control.setUsuario(usuario);
-        if(control.login(txt_login.getText(), new String(txt_senha.getPassword()))){
-            this.setVisible(false);
-        }
+        //if(control.login(txt_login.getText(), new String(txt_senha.getPassword()))){
+          //  this.setVisible(false);
+        //}
     }//GEN-LAST:event_btn_entrarActionPerformed
 
     private void btn_entrarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_entrarKeyReleased

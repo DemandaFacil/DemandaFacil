@@ -5,19 +5,19 @@
  */
 package views.empresa;
 
-import controllers.comunicacao.Comunicavel;
 import javax.swing.JOptionPane;
 import models.empresa.EmpresaDAO;
 import models.empresa.Empresa;
+import models.usuario.Usuario;
 
 /**
  *
  * @author akira
  */
-public class EditarEmpresa extends javax.swing.JFrame implements Comunicavel{
+public class EditarEmpresa extends javax.swing.JFrame {
 
     private Empresa empresa;
-    //private Usuario usuario;
+    private Usuario usuario;
     /**
      * Creates new form EditaEmpresa
      */
@@ -66,6 +66,11 @@ public class EditarEmpresa extends javax.swing.JFrame implements Comunicavel{
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Editar Empresa");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         JPanelFundo.setBackground(new java.awt.Color(178, 242, 236));
         JPanelFundo.setPreferredSize(new java.awt.Dimension(820, 509));
@@ -173,12 +178,12 @@ public class EditarEmpresa extends javax.swing.JFrame implements Comunicavel{
                 .addComponent(opcaoMenu3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(opcaoMenu2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
                 .addComponent(opcaoMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38))
         );
 
-        JPanelFundo.add(menuLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, -1));
+        JPanelFundo.add(menuLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 500));
 
         faixaTitulo.setBackground(new java.awt.Color(0, 128, 128));
 
@@ -270,7 +275,7 @@ public class EditarEmpresa extends javax.swing.JFrame implements Comunicavel{
                 .addComponent(lbl_numCnpj)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txt_CNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
                 .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -311,7 +316,7 @@ public class EditarEmpresa extends javax.swing.JFrame implements Comunicavel{
                 .addContainerGap())
         );
 
-        JPanelFundo.add(painelBackgroundForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 570, 370));
+        JPanelFundo.add(painelBackgroundForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 570, 360));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -322,7 +327,7 @@ public class EditarEmpresa extends javax.swing.JFrame implements Comunicavel{
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(JPanelFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(JPanelFundo, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -339,7 +344,7 @@ public class EditarEmpresa extends javax.swing.JFrame implements Comunicavel{
         if(dao.update(empresa)){
             PerfilEmpresa perfilEmpresa = new PerfilEmpresa();
 
-            perfilEmpresa.setObject(empresa);
+            perfilEmpresa.setEmpresa(empresa);
 
             perfilEmpresa.setVisible(true);
             this.setVisible(false);
@@ -351,11 +356,18 @@ public class EditarEmpresa extends javax.swing.JFrame implements Comunicavel{
     private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
         PerfilEmpresa perfilEmpresa = new PerfilEmpresa();
 
-        perfilEmpresa.setObject(empresa);
+        perfilEmpresa.setEmpresa(empresa);
 
         perfilEmpresa.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btn_voltarActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        txt_nome.setText(empresa.getNome());
+        txt_CNPJ.setText(empresa.getCNPJ());
+        txt_CNPJ.setEnabled(false);
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
@@ -424,11 +436,15 @@ public class EditarEmpresa extends javax.swing.JFrame implements Comunicavel{
     private javax.swing.JTextField txt_nome;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void setObject(Object object) {
-        if(object != null){
-            empresa = (Empresa) object;
-            //usuario = empresa.getUsuario();
+    public void setEmpresa(Empresa empresa) {
+        if(empresa != null){
+            this.empresa = empresa;
+            this.usuario = empresa.getUsuario();
         }
     }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+    
 }

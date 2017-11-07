@@ -10,9 +10,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import models.usuario.Usuario;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -33,7 +33,7 @@ public class EmpresaDAO {
         ResultSet rs = null;
         PreparedStatement stmt = null;
         String sqlEmpresa = "INSERT INTO Empresa (CNPJ, nome) VALUES (?,?)";
-        String sqlQuery = "SELECT MAX(idEmpresa) id FROM Empresa";
+        String sqlQuery = "SELECT MAX(idEmpresa) id FROM Empresa WHERE CNPJ like concat(?,'%')";
         String sqlEmpresaUsuario = "INSERT INTO Empresa_has_Usuario (Empresa_idEmpresa, Usuario_idUsuario) VALUES (?,?)";
         
         try {
@@ -45,16 +45,17 @@ public class EmpresaDAO {
             
             int id;
             stmt = con.prepareStatement(sqlQuery);
+            stmt.setString(1, empresa.getCNPJ());
             rs = stmt.executeQuery();
             rs.first();
             id = rs.getInt("id");
             empresa.setIdEmpresa(id);
-
-            /*stmt = con.prepareStatement(sqlEmpresaUsuario);
+            
+            stmt = con.prepareStatement(sqlEmpresaUsuario);
             stmt.setInt(1, empresa.getIdEmpresa());
             stmt.setInt(2, empresa.getUsuario().getIdUsuario());
             
-            stmt.executeUpdate();*/
+            stmt.executeUpdate();
             
             JOptionPane.showMessageDialog(null, "Criado com Sucesso!");
             return true;
@@ -98,71 +99,46 @@ public class EmpresaDAO {
         
     }
     
-    public ResultSet findEmpresa(String pesquisa) {
+    public void findEmpresa(String pesquisa, JTable tabela, Usuario usuario) {
         
         
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql;
-        sql = "SELECT * FROM Empresa" 
-               + "INNER JOIN Empresa_has_Usuario on Empresa.idEmpresa = Empresa_has_Usuario.Empresa_idEmpresa" 
-               + "INNER JOIN Usuario on Usuario.idUsuario = Empresa_has_Usuario.Usuario_idUsuario" 
-               + "WHERE Empresa.nome LIKE CONCAT('?', '%') AND Usuario.idUsuario = ?";
+        String sql = "SELECT e.CNPJ, e.nome FROM Empresa e INNER JOIN Empresa_has_Usuario eu on e.idEmpresa = eu.Empresa_idEmpresa INNER JOIN Usuario u on eu.Usuario_idUsuario = u.idUsuario WHERE e.nome LIKE CONCAT('%',?, '%') AND u.idUsuario = ? GROUP BY idEmpresa, e.nome ASC";
         
         try {
             stmt = con.prepareStatement(sql);
             stmt.setString(1, pesquisa);
-            stmt.setInt(2, 2);
+            stmt.setInt(2, usuario.getIdUsuario());
             rs = stmt.executeQuery();
+            tabela.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (SQLException ex) {
             System.err.println("Erro ao pesquisar empresas: "+ ex);
         } finally{
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
-        
-        return rs;
     }
     
-    public List<Empresa> findAll(){
+    public void findAll(JTable tabela, Usuario usuario){
         
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql;
-        sql = "SELECT Empresa.idEmpresa, Empresa.CNPJ, Empresa.nome FROM Empresa" 
-               + "INNER JOIN Empresa_has_Usuario on Empresa.idEmpresa = Empresa_has_Usuario.Empresa_idEmpresa" 
-               + "INNER JOIN Usuario on Usuario.idUsuario = Empresa_has_Usuario.Usuario_idUsuario" 
-               + "WHERE Usuario.idUsuario = ?";
-        List<Empresa> empresas = new ArrayList<>();
+        String sql = "SELECT e.CNPJ, e.nome FROM Empresa e INNER JOIN Empresa_has_Usuario eu on e.idEmpresa = eu.Empresa_idEmpresa INNER JOIN Usuario u on eu.Usuario_idUsuario = u.idUsuario WHERE u.idUsuario = ? GROUP BY idEmpresa, e.nome ASC";
         
         try {
             stmt = con.prepareStatement(sql);
             stmt.setInt(1, usuario.getIdUsuario());
             rs = stmt.executeQuery();
-            
-            saveInListEmpresas(rs, empresas);
-
+            tabela.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (SQLException ex) {
-            System.err.println("Erro: "+ ex);
+            System.err.println("Erro ao pesquisar empresas: "+ ex);
         } finally{
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
-        
-        return empresas;
     }
 
-    private void saveInListEmpresas(ResultSet rs, List<Empresa> empresas) throws SQLException {
-        while(rs.next()){
-            Empresa empresa = new Empresa();
-            empresa.setIdEmpresa(rs.getInt("idEmpresa"));
-            empresa.setCNPJ(rs.getString("CNPJ"));
-            empresa.setNome(rs.getString("nome"));
-            
-            empresas.add(empresa);
-        }
-    }
     
     public boolean update(Empresa empresa){
-        
         PreparedStatement stmt = null;
         String sql= "UPDATE Empresa SET nome = ? WHERE idEmpresa = ?";
 

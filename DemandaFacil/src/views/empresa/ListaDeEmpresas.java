@@ -1,13 +1,15 @@
 
 package views.empresa;
 
-import controllers.comunicacao.Comunicavel;
 import models.empresa.Empresa;
-//import models.usuario.Usuario;
+import models.empresa.EmpresaDAO;
+import models.usuario.Usuario;
+import views.core.Home;
 
-public class ListaDeEmpresas extends javax.swing.JFrame implements Comunicavel {
+public class ListaDeEmpresas extends javax.swing.JFrame {
 
     private Empresa empresa;
+    private Usuario usuario;
     
     public ListaDeEmpresas() {
         initComponents();
@@ -39,14 +41,22 @@ public class ListaDeEmpresas extends javax.swing.JFrame implements Comunicavel {
         painelBackgroundForm = new javax.swing.JPanel();
         painelForm = new javax.swing.JPanel();
         jPanel_Lista = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        jbl_pesquisa_empresa = new javax.swing.JLabel();
+        btn_voltar = new javax.swing.JButton();
         btn_visualizar_empresa = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        txt_campo_pesquisa = new javax.swing.JTextField();
+        btn_nova_empresa = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl_empresas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Lista de Empresas");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         background.setBackground(new java.awt.Color(178, 242, 236));
         background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -153,12 +163,12 @@ public class ListaDeEmpresas extends javax.swing.JFrame implements Comunicavel {
                 .addComponent(opcaoMenu3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(opcaoMenu2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
                 .addComponent(opcaoMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38))
         );
 
-        background.add(menuLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 540));
+        background.add(menuLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 500));
 
         faixaTitulo.setBackground(new java.awt.Color(0, 128, 128));
 
@@ -197,13 +207,13 @@ public class ListaDeEmpresas extends javax.swing.JFrame implements Comunicavel {
 
         painelBackgroundForm.setBackground(java.awt.Color.lightGray);
 
-        jLabel2.setText("Informe o nome da empresa");
+        jbl_pesquisa_empresa.setText("Informe o nome da empresa");
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Chevron Esquerda-26.png"))); // NOI18N
-        jButton3.setText("Voltar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btn_voltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Chevron Esquerda-26.png"))); // NOI18N
+        btn_voltar.setText("Voltar");
+        btn_voltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btn_voltarActionPerformed(evt);
             }
         });
 
@@ -215,6 +225,55 @@ public class ListaDeEmpresas extends javax.swing.JFrame implements Comunicavel {
             }
         });
 
+        txt_campo_pesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_campo_pesquisaKeyReleased(evt);
+            }
+        });
+
+        btn_nova_empresa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Mais-26.png"))); // NOI18N
+        btn_nova_empresa.setText("Nova Empresa");
+        btn_nova_empresa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_nova_empresaActionPerformed(evt);
+            }
+        });
+
+        tbl_empresas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "CNPJ", "Nome"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbl_empresas.setColumnSelectionAllowed(true);
+        tbl_empresas.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tbl_empresas);
+        tbl_empresas.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+
         javax.swing.GroupLayout jPanel_ListaLayout = new javax.swing.GroupLayout(jPanel_Lista);
         jPanel_Lista.setLayout(jPanel_ListaLayout);
         jPanel_ListaLayout.setHorizontalGroup(
@@ -224,25 +283,35 @@ public class ListaDeEmpresas extends javax.swing.JFrame implements Comunicavel {
                 .addGroup(jPanel_ListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_ListaLayout.createSequentialGroup()
                         .addGroup(jPanel_ListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_ListaLayout.createSequentialGroup()
-                        .addComponent(jButton3)
+                            .addComponent(jbl_pesquisa_empresa)
+                            .addComponent(txt_campo_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_nova_empresa)
+                        .addGap(32, 32, 32))
+                    .addGroup(jPanel_ListaLayout.createSequentialGroup()
+                        .addComponent(btn_voltar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 220, Short.MAX_VALUE)
                         .addComponent(btn_visualizar_empresa)
-                        .addGap(24, 24, 24))))
+                        .addGap(24, 24, 24))
+                    .addGroup(jPanel_ListaLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())))
         );
         jPanel_ListaLayout.setVerticalGroup(
             jPanel_ListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_ListaLayout.createSequentialGroup()
-                .addContainerGap(246, Short.MAX_VALUE)
-                .addComponent(jLabel2)
+                .addGap(25, 25, 25)
+                .addGroup(jPanel_ListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_nova_empresa, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel_ListaLayout.createSequentialGroup()
+                        .addComponent(jbl_pesquisa_empresa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_campo_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
                 .addGroup(jPanel_ListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_visualizar_empresa, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -281,36 +350,57 @@ public class ListaDeEmpresas extends javax.swing.JFrame implements Comunicavel {
                 .addContainerGap())
         );
 
-        background.add(painelBackgroundForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 570, 400));
+        background.add(painelBackgroundForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 570, 370));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, 828, Short.MAX_VALUE)
+            .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, 829, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, 499, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
         // TODO add your handling code here:
-        // Vai para o Home
-    }//GEN-LAST:event_jButton3ActionPerformed
+        Home home = new Home();
+        home.setUsuario(usuario);
+        home.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btn_voltarActionPerformed
 
     private void btn_visualizar_empresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_visualizar_empresaActionPerformed
         PerfilEmpresa perfilEmpresa = new PerfilEmpresa();
-
-        perfilEmpresa.setObject(empresa);
-        
+        perfilEmpresa.setEmpresa(empresa);
         perfilEmpresa.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btn_visualizar_empresaActionPerformed
+
+    private void btn_nova_empresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nova_empresaActionPerformed
+        // TODO add your handling code here:
+        CadastroEmpresa cadastroEmpresa = new CadastroEmpresa();
+        cadastroEmpresa.setUsuario(getUsuario());  
+        cadastroEmpresa.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btn_nova_empresaActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        EmpresaDAO dao = new EmpresaDAO();
+        dao.findAll(tbl_empresas, usuario);
+    }//GEN-LAST:event_formWindowActivated
+
+    private void txt_campo_pesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_campo_pesquisaKeyReleased
+        // TODO add your handling code here:
+        EmpresaDAO dao = new EmpresaDAO();
+            dao.findEmpresa(txt_campo_pesquisa.getText(), tbl_empresas, usuario);        
+    }//GEN-LAST:event_txt_campo_pesquisaKeyReleased
 
 
     public static void main(String args[]) {
@@ -337,8 +427,6 @@ public class ListaDeEmpresas extends javax.swing.JFrame implements Comunicavel {
         }
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -350,17 +438,18 @@ public class ListaDeEmpresas extends javax.swing.JFrame implements Comunicavel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
+    private javax.swing.JButton btn_nova_empresa;
     private javax.swing.JButton btn_visualizar_empresa;
+    private javax.swing.JButton btn_voltar;
     private javax.swing.JPanel faixaTitulo;
     private javax.swing.JLabel icon;
     private javax.swing.JLabel icon1;
     private javax.swing.JLabel icon2;
     private javax.swing.JLabel icon3;
     private javax.swing.JLabel iconLogo;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel_Lista;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jbl_pesquisa_empresa;
     private javax.swing.JPanel linhaDivisoria;
     private javax.swing.JPanel menuLateral;
     private javax.swing.JLabel nome;
@@ -375,13 +464,18 @@ public class ListaDeEmpresas extends javax.swing.JFrame implements Comunicavel {
     private javax.swing.JPanel painelBackgroundForm;
     private javax.swing.JPanel painelForm;
     private javax.swing.JLabel subTitulo;
+    private javax.swing.JTable tbl_empresas;
+    private javax.swing.JTextField txt_campo_pesquisa;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void setObject(Object object) {
-        if(object != null){
-            //usuario = (Usuario) object;
+    public void setUsuario(Usuario usuario) {
+        if(usuario != null){
+            this.usuario = usuario;
         }
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
     }
 
 }

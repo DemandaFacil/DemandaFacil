@@ -5,9 +5,8 @@
  */
 package views.core;
 
-import controllers.comunicacao.Comunicavel;
-import controllers.control.core.CoreControl;
 import models.usuario.Usuario;
+import views.empresa.ListaDeEmpresas;
 
 /**
  *
@@ -15,10 +14,7 @@ import models.usuario.Usuario;
  */
 public class Home extends javax.swing.JFrame {
 
-    CoreControl control = new CoreControl();
-    Usuario usuario = new Usuario();
-    
-    //Usuario usuario = new Usuario();
+    Usuario usuario = new Usuario("kassia", "akira", "181510");
     /**
      * Creates new form Home
      */
@@ -211,13 +207,15 @@ public class Home extends javax.swing.JFrame {
 
     private void jlb_sairMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlb_sairMouseReleased
         // TODO add your handling code here:
-        control.exit();
+        System.exit(0);
     }//GEN-LAST:event_jlb_sairMouseReleased
 
     private void jpl_opcao_empresasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpl_opcao_empresasMouseReleased
         // TODO add your handling code here:
-        control.setUsuario(getUsuario());
-        control.returnListaDeEmpresas();
+        ListaDeEmpresas listaEmpresas = new ListaDeEmpresas();
+        usuario.setIdUsuario(3);
+        listaEmpresas.setUsuario(usuario);
+        listaEmpresas.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jpl_opcao_empresasMouseReleased
 

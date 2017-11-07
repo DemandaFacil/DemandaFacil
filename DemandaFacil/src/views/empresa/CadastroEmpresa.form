@@ -349,7 +349,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="249" y="129" width="570" height="360"/>
+              <AbsoluteConstraints x="249" y="119" width="570" height="370"/>
             </Constraint>
           </Constraints>
 
@@ -440,7 +440,7 @@
                               <Component id="lbl_numCnpj" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="txt_CNPJ" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="99" max="32767" attributes="0"/>
+                              <EmptySpace pref="109" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="btn_voltar" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                                   <Component id="btn_cadastrar" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>

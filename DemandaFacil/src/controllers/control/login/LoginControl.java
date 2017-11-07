@@ -5,27 +5,28 @@
  */
 package controllers.control.login;
 
-import controllers.control.core.CoreControl;
 import javax.swing.JOptionPane;
-
+import models.usuario.Usuario;
 /**
  *
  * @author akira
  */
-public class LoginControl extends CoreControl {
+public class LoginControl {
+    
+    private Usuario usuario;
     
     public boolean login(String login, String senha){
         //UsuarioDAO dao = new UsuarioDAO();
         //setUsuario(dao.findUsuario(login));
-        if(validaNome(login)){
+        if(!login.isEmpty()){
             if(checkLogin(login, senha)){
-                returnHome();
+                //returnHome();
                 return true;
             }else{
-                mensagemDadosInvalidos();
+                //mensagemDadosInvalidos();
             }
         }else{
-            mensagemNomeInvalido();
+            //mensagemNomeInvalido();
         }
         return false;
     }
@@ -43,5 +44,13 @@ public class LoginControl extends CoreControl {
     
     public void mensagemSenhaInvalida(){
         JOptionPane.showMessageDialog(null, "Senha Inválida! Tente Novamente.");
+    }
+
+    private Usuario getUsuario() {
+        return usuario;
+    }
+    
+    public void setUsuario(Usuario usuario){
+        this.usuario = usuario;
     }
 }

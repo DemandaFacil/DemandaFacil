@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
+package models.produto;
+
+import models.empresa.Empresa;
 
 /**
  *
@@ -13,6 +15,7 @@ public class Produto {
     private int idProduto;
     private String nome;
     private int periodo_de_reposicao;
+    Empresa empresa;
 
     public Produto(String nome, int periodo_de_reposicao) {
         this.nome = nome;
@@ -43,6 +46,13 @@ public class Produto {
     public void setPeriodo_de_reposicao(int periodo_de_reposicao) {
         this.periodo_de_reposicao = periodo_de_reposicao;
     }
-    
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
     
 }

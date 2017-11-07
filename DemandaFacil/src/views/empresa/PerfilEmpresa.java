@@ -1,18 +1,17 @@
 
 package views.empresa;
 
-import controllers.comunicacao.Comunicavel;
 import javax.swing.JOptionPane;
 import models.empresa.Empresa;
 import models.empresa.EmpresaDAO;
+import models.usuario.Usuario;
 import views.produtos.ListaDeProdutos;
-//import models.usuario.Usuario;
 
 
-public class PerfilEmpresa extends javax.swing.JFrame implements Comunicavel {
+public class PerfilEmpresa extends javax.swing.JFrame {
 
     private Empresa empresa;
-//    Usuario usuario;
+    private Usuario usuario;
     
     public PerfilEmpresa() {
         initComponents();
@@ -167,12 +166,12 @@ public class PerfilEmpresa extends javax.swing.JFrame implements Comunicavel {
                 .addComponent(opcaoMenu3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(opcaoMenu2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
                 .addComponent(opcaoMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38))
         );
 
-        JPanelFundo.add(menuLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, -1));
+        JPanelFundo.add(menuLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 500));
 
         faixaTitulo.setBackground(new java.awt.Color(0, 128, 128));
 
@@ -344,7 +343,7 @@ public class PerfilEmpresa extends javax.swing.JFrame implements Comunicavel {
                 .addContainerGap())
         );
 
-        JPanelFundo.add(painelBackgroundForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(249, 129, 570, 370));
+        JPanelFundo.add(painelBackgroundForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 570, 370));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -355,7 +354,7 @@ public class PerfilEmpresa extends javax.swing.JFrame implements Comunicavel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(JPanelFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(JPanelFundo, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -366,9 +365,7 @@ public class PerfilEmpresa extends javax.swing.JFrame implements Comunicavel {
     private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
         // TODO add your handling code here:
         ListaDeEmpresas listaEmpresas = new ListaDeEmpresas();
-        
-//        listaEmpresas.setObject(usuario);
-        
+        listaEmpresas.setUsuario(usuario);
         listaEmpresas.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btn_voltarActionPerformed
@@ -382,7 +379,7 @@ public class PerfilEmpresa extends javax.swing.JFrame implements Comunicavel {
     private void btn_produtosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_produtosActionPerformed
         ListaDeProdutos listaProdutos = new ListaDeProdutos();
         
-        //listaProdutos.setObject(empresa);
+        listaProdutos.setEmpresa(empresa);
         
         listaProdutos.setVisible(true);
         this.setVisible(false);
@@ -390,9 +387,7 @@ public class PerfilEmpresa extends javax.swing.JFrame implements Comunicavel {
 
     private void btn_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editarActionPerformed
         EditarEmpresa editarEmpresa = new EditarEmpresa();
-
-        editarEmpresa.setObject(empresa);
-        
+        editarEmpresa.setEmpresa(empresa); 
         editarEmpresa.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btn_editarActionPerformed
@@ -402,8 +397,10 @@ public class PerfilEmpresa extends javax.swing.JFrame implements Comunicavel {
         EmpresaDAO dao = new EmpresaDAO();
         
         if(dao.delete(empresa)){
-            //Vai para o Home
-            
+            ListaDeEmpresas listaEmpresas = new ListaDeEmpresas();
+            listaEmpresas.setUsuario(usuario);
+            listaEmpresas.setVisible(true);
+            this.setVisible(false);
         }else{
             JOptionPane.showMessageDialog(null, "Erro ao Excluir, Tente Novamente!");
         }
@@ -477,12 +474,15 @@ public class PerfilEmpresa extends javax.swing.JFrame implements Comunicavel {
     private javax.swing.JLabel subTitulo;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void setObject(Object object) {
-        if(object != null){
-            empresa = (Empresa) object;
-            //usuario = empresa.getUsuario();
+    public void setEmpresa(Empresa empresa) {
+        if(empresa != null){
+            this.empresa = empresa;
+            this.usuario = empresa.getUsuario();
         }
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
     }
     
 }

@@ -5,7 +5,7 @@
  */
 package models.empresa;
 
-//import models.usuario.Usuario;
+import models.usuario.Usuario;
 
 /**
  *
@@ -16,7 +16,7 @@ public class Empresa {
     private int idEmpresa;
     private String nome;
     private String CNPJ;
-    //private Usuario usuario;
+    private Usuario usuario;
     
     
     public Empresa() {
@@ -58,14 +58,13 @@ public class Empresa {
         this.CNPJ = CNPJ;
     }
     
-    /*public Usuario getUsuario() {
-    return usuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
     
     
     public void setUsuario(Usuario usuario) {
-    this.usuario = usuario;
-    }*/
-    
+        this.usuario = usuario;
+    }
     
 }
