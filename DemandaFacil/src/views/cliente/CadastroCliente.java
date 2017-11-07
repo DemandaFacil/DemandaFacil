@@ -5,6 +5,10 @@
  */
 package views.cliente;
 
+import javax.swing.JOptionPane;
+import models.Usuario.DAOUsuario;
+import models.Usuario.Usuario;
+
 /**
  *
  * @author souza
@@ -52,31 +56,14 @@ public class CadastroCliente extends javax.swing.JFrame {
         txt_perfilEmpresa6 = new javax.swing.JTextField();
         painelBackgroundForm = new javax.swing.JPanel();
         painelForm = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        txt_perfilEmpresa = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        txt_perfilEmpresa1 = new javax.swing.JTextField();
-        txt_perfilEmpresa7 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        txt_perfilEmpresa4 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        txt_perfilEmpresa5 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        txt_perfilEmpresa8 = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        txt_perfilEmpresa11 = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        txt_perfilEmpresa13 = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
-        txt_perfilEmpresa12 = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
-        txt_perfilEmpresa15 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        txt_perfilEmpresa16 = new javax.swing.JTextField();
+        jPanelCadastro = new javax.swing.JPanel();
+        lbl_numCnpj = new javax.swing.JLabel();
+        lbl_nomeFantasia = new javax.swing.JLabel();
+        jTextNome1 = new javax.swing.JTextField();
+        jPasswordSenha = new javax.swing.JPasswordField();
+        lbl_nomeFantasia1 = new javax.swing.JLabel();
+        jTextSenha2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -247,169 +234,97 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         painelBackgroundForm.setBackground(java.awt.Color.lightGray);
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel5.setText("Nome:");
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel6.setText("CPF:");
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel8.setText("RG:");
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel7.setText("E-mail:");
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel1.setText("Data de Nascimento:");
-
-        txt_perfilEmpresa5.setText("         /        /");
-        txt_perfilEmpresa5.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setText("Confirmar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_perfilEmpresa5ActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel9.setText("Cidade:");
+        lbl_numCnpj.setText("Usuário:");
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel11.setText("Endereço:");
+        lbl_nomeFantasia.setText("Senha:");
 
-        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel14.setText("Telefone:      ");
+        jTextNome1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextNome1ActionPerformed(evt);
+            }
+        });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel3.setText("Usuário:");
+        jPasswordSenha.setText("jPasswordField1");
 
-        jTextField1.setText("(   )");
+        lbl_nomeFantasia1.setText("Repetir Senha:");
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel15.setText("Estado:");
+        jTextSenha2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextSenha2ActionPerformed(evt);
+            }
+        });
 
-        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel16.setText("Bairro:");
-
-        jButton2.setText("Confirmar");
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel4.setText("Senha:");
+        javax.swing.GroupLayout jPanelCadastroLayout = new javax.swing.GroupLayout(jPanelCadastro);
+        jPanelCadastro.setLayout(jPanelCadastroLayout);
+        jPanelCadastroLayout.setHorizontalGroup(
+            jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelCadastroLayout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelCadastroLayout.createSequentialGroup()
+                        .addComponent(lbl_nomeFantasia1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextSenha2))
+                    .addGroup(jPanelCadastroLayout.createSequentialGroup()
+                        .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_numCnpj)
+                            .addComponent(lbl_nomeFantasia))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTextNome1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPasswordSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))))
+                .addGap(25, 25, 25))
+        );
+        jPanelCadastroLayout.setVerticalGroup(
+            jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelCadastroLayout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_numCnpj)
+                    .addComponent(jTextNome1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_nomeFantasia)
+                    .addComponent(jPasswordSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_nomeFantasia1)
+                    .addComponent(jTextSenha2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(69, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout painelFormLayout = new javax.swing.GroupLayout(painelForm);
         painelForm.setLayout(painelFormLayout);
         painelFormLayout.setHorizontalGroup(
             painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelFormLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelFormLayout.createSequentialGroup()
-                        .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(painelFormLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_perfilEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(painelFormLayout.createSequentialGroup()
-                                .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel8))
-                                .addGap(18, 18, 18)
-                                .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txt_perfilEmpresa7, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_perfilEmpresa1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(painelFormLayout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txt_perfilEmpresa4, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(550, 550, 550))
-                    .addGroup(painelFormLayout.createSequentialGroup()
-                        .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel14)
-                            .addGroup(painelFormLayout.createSequentialGroup()
-                                .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(painelFormLayout.createSequentialGroup()
-                                            .addComponent(jLabel1)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(txt_perfilEmpresa5, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(painelFormLayout.createSequentialGroup()
-                                            .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel11)
-                                                .addComponent(jLabel3))
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txt_perfilEmpresa11, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txt_perfilEmpresa13, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txt_perfilEmpresa8, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addGap(35, 35, 35)
-                                .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(painelFormLayout.createSequentialGroup()
-                                            .addComponent(jLabel15)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(txt_perfilEmpresa12))
-                                        .addGroup(painelFormLayout.createSequentialGroup()
-                                            .addComponent(jLabel16)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(txt_perfilEmpresa15, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(painelFormLayout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txt_perfilEmpresa16, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(painelFormLayout.createSequentialGroup()
-                .addGap(217, 217, 217)
+                .addGap(230, 230, 230)
                 .addComponent(jButton2)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(241, Short.MAX_VALUE))
+            .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(painelFormLayout.createSequentialGroup()
+                    .addGap(105, 105, 105)
+                    .addComponent(jPanelCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(106, Short.MAX_VALUE)))
         );
         painelFormLayout.setVerticalGroup(
             painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelFormLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txt_perfilEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txt_perfilEmpresa1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_perfilEmpresa7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txt_perfilEmpresa4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(txt_perfilEmpresa5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(txt_perfilEmpresa8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15)
-                    .addComponent(txt_perfilEmpresa12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(txt_perfilEmpresa11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16)
-                    .addComponent(txt_perfilEmpresa15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_perfilEmpresa13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(txt_perfilEmpresa16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelFormLayout.createSequentialGroup()
+                .addContainerGap(301, Short.MAX_VALUE)
                 .addComponent(jButton2)
-                .addContainerGap())
+                .addGap(74, 74, 74))
+            .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(painelFormLayout.createSequentialGroup()
+                    .addGap(111, 111, 111)
+                    .addComponent(jPanelCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(111, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout painelBackgroundFormLayout = new javax.swing.GroupLayout(painelBackgroundForm);
@@ -418,7 +333,7 @@ public class CadastroCliente extends javax.swing.JFrame {
             painelBackgroundFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBackgroundFormLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(painelForm, javax.swing.GroupLayout.PREFERRED_SIZE, 550, Short.MAX_VALUE)
+                .addComponent(painelForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         painelBackgroundFormLayout.setVerticalGroup(
@@ -472,9 +387,36 @@ public class CadastroCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_perfilEmpresa6ActionPerformed
 
-    private void txt_perfilEmpresa5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_perfilEmpresa5ActionPerformed
+    private void jTextNome1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNome1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_perfilEmpresa5ActionPerformed
+    }//GEN-LAST:event_jTextNome1ActionPerformed
+
+    private void jTextSenha2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextSenha2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextSenha2ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String nome = jTextNome1.getText();
+        String senha = jPasswordSenha.getText();
+        String senha2 = jTextSenha2.getText();
+        
+        if (senha.equals(senha2)){
+           DAOUsuario user = new DAOUsuario();
+           Usuario usuario = new Usuario(nome, senha);
+           try {
+               if (user.CriaUsuario(usuario)){
+                       JOptionPane.showMessageDialog(rootPane, "Usuario cadastrado com sucesso", "Cadastro OK", JOptionPane.INFORMATION_MESSAGE);
+               }
+           }catch(Exception e){
+               System.out.println(e);                       
+           }
+        }else {
+            JOptionPane.showMessageDialog(rootPane, "senha invalida", "redigite a senha", JOptionPane.INFORMATION_MESSAGE);
+            jPasswordSenha.setText("");
+            jTextSenha2.setText("");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -521,21 +463,15 @@ public class CadastroCliente extends javax.swing.JFrame {
     private javax.swing.JLabel icon3;
     private javax.swing.JLabel iconLogo;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPanel jPanelCadastro;
+    private javax.swing.JPasswordField jPasswordSenha;
+    private javax.swing.JTextField jTextNome1;
+    private javax.swing.JTextField jTextSenha2;
+    private javax.swing.JLabel lbl_nomeFantasia;
+    private javax.swing.JLabel lbl_nomeFantasia1;
+    private javax.swing.JLabel lbl_numCnpj;
     private javax.swing.JPanel linhaDivisoria;
     private javax.swing.JPanel menuLateral;
     private javax.swing.JLabel nome;
@@ -550,18 +486,7 @@ public class CadastroCliente extends javax.swing.JFrame {
     private javax.swing.JPanel painelBackgroundForm;
     private javax.swing.JPanel painelForm;
     private javax.swing.JLabel subTitulo;
-    private javax.swing.JTextField txt_perfilEmpresa;
-    private javax.swing.JTextField txt_perfilEmpresa1;
-    private javax.swing.JTextField txt_perfilEmpresa11;
-    private javax.swing.JTextField txt_perfilEmpresa12;
-    private javax.swing.JTextField txt_perfilEmpresa13;
-    private javax.swing.JTextField txt_perfilEmpresa15;
-    private javax.swing.JTextField txt_perfilEmpresa16;
     private javax.swing.JTextField txt_perfilEmpresa2;
-    private javax.swing.JTextField txt_perfilEmpresa4;
-    private javax.swing.JTextField txt_perfilEmpresa5;
     private javax.swing.JTextField txt_perfilEmpresa6;
-    private javax.swing.JTextField txt_perfilEmpresa7;
-    private javax.swing.JTextField txt_perfilEmpresa8;
     // End of variables declaration//GEN-END:variables
 }
