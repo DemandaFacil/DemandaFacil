@@ -53,6 +53,45 @@ public class DAOUsuario {
             return usuario;
         }
     }
+    public boolean atualizaUsuario(Usuario userAtual,String NovoNome,String NovaSenha) throws Exception{
+        PreparedStatement p = null;
+        ResultSet rs = null;
+        int idAux = -1;
+        try{
+            Connection c = ConnectionFactory.getConnection();
+            p = c.prepareStatement("SELECT idUsuario FROM usuario WHERE nome like ?"); //pega id do usuario com o nome atual do objeto
+            p.setString(1, userAtual.getNome()); 
+            rs = p.executeQuery();
+            while(rs.next()){
+                idAux = rs.getInt(1);
+            }
+            p = null;
+            p = c.prepareStatement("UPDATE usuario SET nome = ?, senha = ? WHERE idUsuario = ?");
+            p.setString(1, NovoNome);
+            p.setString(2, NovaSenha);
+            p.setInt(3, idAux);
+            p.execute();
+            ConnectionFactory.closeConnection(c, p, rs);
+            return true;
+        }catch(Exception e){
+            System.out.println(e);
+            return false;
+        }
+    }
+    public boolean deletaUsuario(String nome) throws Exception{
+        PreparedStatement p = null;
+        try{
+            Connection c = ConnectionFactory.getConnection();
+            p = c.prepareStatement("DELETE FROM usuario WHERE nome like ?");
+            p.setString(1,nome);
+            p.execute();
+            ConnectionFactory.closeConnection(c, p);
+            return true;
+        }catch(Exception e){
+            System.out.println(e);
+            return false;
+        }
+    }
     
     
 }
