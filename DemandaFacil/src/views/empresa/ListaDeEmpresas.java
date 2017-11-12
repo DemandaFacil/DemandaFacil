@@ -1,25 +1,27 @@
 
 package views.empresa;
 
-import javax.swing.JOptionPane;
 import models.empresa.Empresa;
 import models.empresa.EmpresaDAO;
 import models.usuario.Usuario;
+import views.core.Home;
 
+public class ListaDeEmpresas extends javax.swing.JFrame {
 
-public class CadastroEmpresa extends javax.swing.JFrame {
-
+    private Empresa empresa;
     private Usuario usuario;
     
-    public CadastroEmpresa() {
+    public ListaDeEmpresas() {
         initComponents();
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        JPanelFundo = new javax.swing.JPanel();
+        background = new javax.swing.JPanel();
         menuLateral = new javax.swing.JPanel();
+        linhaDivisoria = new javax.swing.JPanel();
         opcaoMenu = new javax.swing.JPanel();
         icon = new javax.swing.JLabel();
         nome = new javax.swing.JLabel();
@@ -33,28 +35,46 @@ public class CadastroEmpresa extends javax.swing.JFrame {
         icon3 = new javax.swing.JLabel();
         nome3 = new javax.swing.JLabel();
         iconLogo = new javax.swing.JLabel();
-        linhaDivisoria = new javax.swing.JPanel();
         faixaTitulo = new javax.swing.JPanel();
         subTitulo = new javax.swing.JLabel();
         nomePagina = new javax.swing.JLabel();
         painelBackgroundForm = new javax.swing.JPanel();
         painelForm = new javax.swing.JPanel();
-        jPanelCadastro = new javax.swing.JPanel();
-        lbl_numCnpj = new javax.swing.JLabel();
-        lbl_nomeFantasia = new javax.swing.JLabel();
-        txt_CNPJ = new javax.swing.JFormattedTextField();
-        txt_nome = new javax.swing.JTextField();
-        btn_cadastrar = new javax.swing.JButton();
+        jPanel_Lista = new javax.swing.JPanel();
+        jbl_pesquisa_empresa = new javax.swing.JLabel();
         btn_voltar = new javax.swing.JButton();
+        btn_visualizar_empresa = new javax.swing.JButton();
+        txt_campo_pesquisa = new javax.swing.JTextField();
+        btn_nova_empresa = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl_empresas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Lista de Empresas");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
-        JPanelFundo.setBackground(new java.awt.Color(178, 242, 236));
-        JPanelFundo.setPreferredSize(new java.awt.Dimension(820, 509));
-        JPanelFundo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        background.setBackground(new java.awt.Color(178, 242, 236));
+        background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         menuLateral.setBackground(new java.awt.Color(47, 79, 79));
+
+        linhaDivisoria.setBackground(new java.awt.Color(178, 242, 236));
+
+        javax.swing.GroupLayout linhaDivisoriaLayout = new javax.swing.GroupLayout(linhaDivisoria);
+        linhaDivisoria.setLayout(linhaDivisoriaLayout);
+        linhaDivisoriaLayout.setHorizontalGroup(
+            linhaDivisoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        linhaDivisoriaLayout.setVerticalGroup(
+            linhaDivisoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 8, Short.MAX_VALUE)
+        );
 
         opcaoMenu.setBackground(new java.awt.Color(57, 95, 95));
         opcaoMenu.setLayout(new javax.swing.BoxLayout(opcaoMenu, javax.swing.BoxLayout.LINE_AXIS));
@@ -116,23 +136,11 @@ public class CadastroEmpresa extends javax.swing.JFrame {
         iconLogo.setForeground(java.awt.Color.white);
         iconLogo.setText("Logo");
 
-        linhaDivisoria.setBackground(new java.awt.Color(178, 242, 236));
-
-        javax.swing.GroupLayout linhaDivisoriaLayout = new javax.swing.GroupLayout(linhaDivisoria);
-        linhaDivisoria.setLayout(linhaDivisoriaLayout);
-        linhaDivisoriaLayout.setHorizontalGroup(
-            linhaDivisoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        linhaDivisoriaLayout.setVerticalGroup(
-            linhaDivisoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 8, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout menuLateralLayout = new javax.swing.GroupLayout(menuLateral);
         menuLateral.setLayout(menuLateralLayout);
         menuLateralLayout.setHorizontalGroup(
             menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(linhaDivisoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(opcaoMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(opcaoMenu2, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
             .addComponent(opcaoMenu1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -141,7 +149,6 @@ public class CadastroEmpresa extends javax.swing.JFrame {
                 .addGap(82, 82, 82)
                 .addComponent(iconLogo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(linhaDivisoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         menuLateralLayout.setVerticalGroup(
             menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,19 +168,19 @@ public class CadastroEmpresa extends javax.swing.JFrame {
                 .addGap(38, 38, 38))
         );
 
-        JPanelFundo.add(menuLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 500));
+        background.add(menuLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 500));
 
         faixaTitulo.setBackground(new java.awt.Color(0, 128, 128));
 
         subTitulo.setFont(new java.awt.Font("Merriweather Light", 1, 24)); // NOI18N
         subTitulo.setForeground(java.awt.Color.white);
-        subTitulo.setText("Cadastro");
+        subTitulo.setText("Lista");
         subTitulo.setMaximumSize(new java.awt.Dimension(90, 24));
         subTitulo.setMinimumSize(new java.awt.Dimension(90, 24));
 
         nomePagina.setFont(new java.awt.Font("Merriweather Light", 1, 36)); // NOI18N
         nomePagina.setForeground(java.awt.Color.white);
-        nomePagina.setText("Empresa");
+        nomePagina.setText("Empresas");
 
         javax.swing.GroupLayout faixaTituloLayout = new javax.swing.GroupLayout(faixaTitulo);
         faixaTitulo.setLayout(faixaTituloLayout);
@@ -196,38 +203,11 @@ public class CadastroEmpresa extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        JPanelFundo.add(faixaTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 0, 610, -1));
+        background.add(faixaTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 610, -1));
 
         painelBackgroundForm.setBackground(java.awt.Color.lightGray);
 
-        lbl_numCnpj.setText("Informe o número do CNPJ ");
-
-        lbl_nomeFantasia.setText("Informe o nome fantasia");
-
-        try {
-            txt_CNPJ.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txt_CNPJ.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_CNPJActionPerformed(evt);
-            }
-        });
-
-        txt_nome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_nomeActionPerformed(evt);
-            }
-        });
-
-        btn_cadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Adicionar propriedade-26.png"))); // NOI18N
-        btn_cadastrar.setText("Cadastrar");
-        btn_cadastrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_cadastrarActionPerformed(evt);
-            }
-        });
+        jbl_pesquisa_empresa.setText("Informe o nome da empresa");
 
         btn_voltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Chevron Esquerda-26.png"))); // NOI18N
         btn_voltar.setText("Voltar");
@@ -237,44 +217,102 @@ public class CadastroEmpresa extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanelCadastroLayout = new javax.swing.GroupLayout(jPanelCadastro);
-        jPanelCadastro.setLayout(jPanelCadastroLayout);
-        jPanelCadastroLayout.setHorizontalGroup(
-            jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelCadastroLayout.createSequentialGroup()
+        btn_visualizar_empresa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Ver detalhes-26.png"))); // NOI18N
+        btn_visualizar_empresa.setText("Visualizar Empresa");
+        btn_visualizar_empresa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_visualizar_empresaActionPerformed(evt);
+            }
+        });
+
+        txt_campo_pesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_campo_pesquisaKeyReleased(evt);
+            }
+        });
+
+        btn_nova_empresa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Mais-26.png"))); // NOI18N
+        btn_nova_empresa.setText("Nova Empresa");
+        btn_nova_empresa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_nova_empresaActionPerformed(evt);
+            }
+        });
+
+        tbl_empresas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "CNPJ", "Nome"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbl_empresas.setColumnSelectionAllowed(true);
+        tbl_empresas.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tbl_empresas);
+        tbl_empresas.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+
+        javax.swing.GroupLayout jPanel_ListaLayout = new javax.swing.GroupLayout(jPanel_Lista);
+        jPanel_Lista.setLayout(jPanel_ListaLayout);
+        jPanel_ListaLayout.setHorizontalGroup(
+            jPanel_ListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_ListaLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelCadastroLayout.createSequentialGroup()
-                        .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_numCnpj)
-                            .addComponent(lbl_nomeFantasia))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanelCadastroLayout.createSequentialGroup()
+                .addGroup(jPanel_ListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_ListaLayout.createSequentialGroup()
+                        .addGroup(jPanel_ListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jbl_pesquisa_empresa)
+                            .addComponent(txt_campo_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_nova_empresa)
+                        .addGap(32, 32, 32))
+                    .addGroup(jPanel_ListaLayout.createSequentialGroup()
                         .addComponent(btn_voltar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 280, Short.MAX_VALUE)
-                        .addComponent(btn_cadastrar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 220, Short.MAX_VALUE)
+                        .addComponent(btn_visualizar_empresa)
                         .addGap(24, 24, 24))
-                    .addGroup(jPanelCadastroLayout.createSequentialGroup()
-                        .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txt_CNPJ, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
-                            .addComponent(txt_nome, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(jPanel_ListaLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())))
         );
-        jPanelCadastroLayout.setVerticalGroup(
-            jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelCadastroLayout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(lbl_nomeFantasia)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(lbl_numCnpj)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txt_CNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
-                .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        jPanel_ListaLayout.setVerticalGroup(
+            jPanel_ListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_ListaLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel_ListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_nova_empresa, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel_ListaLayout.createSequentialGroup()
+                        .addComponent(jbl_pesquisa_empresa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_campo_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_ListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_cadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_visualizar_empresa, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -284,14 +322,14 @@ public class CadastroEmpresa extends javax.swing.JFrame {
             painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelFormLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel_Lista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         painelFormLayout.setVerticalGroup(
             painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelFormLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel_Lista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -299,79 +337,77 @@ public class CadastroEmpresa extends javax.swing.JFrame {
         painelBackgroundForm.setLayout(painelBackgroundFormLayout);
         painelBackgroundFormLayout.setHorizontalGroup(
             painelBackgroundFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBackgroundFormLayout.createSequentialGroup()
+            .addGroup(painelBackgroundFormLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(painelForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         painelBackgroundFormLayout.setVerticalGroup(
             painelBackgroundFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelBackgroundFormLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBackgroundFormLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(painelForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        JPanelFundo.add(painelBackgroundForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(249, 119, 570, 370));
+        background.add(painelBackgroundForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 570, 370));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JPanelFundo, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
+            .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, 829, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JPanelFundo, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, 499, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_CNPJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_CNPJActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_CNPJActionPerformed
-
-    private void btn_cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadastrarActionPerformed
-
-        Empresa empresa = new Empresa();
-        EmpresaDAO dao = new EmpresaDAO();
-        
-        empresa.setNome(txt_nome.getText());
-        empresa.setCNPJ(txt_CNPJ.getText());
-        empresa.setUsuario(usuario);
-        
-        if(dao.create(empresa)){
-            PerfilEmpresa perfilEmpresa = new PerfilEmpresa();
-        
-            perfilEmpresa.setEmpresa(empresa);
-        
-            perfilEmpresa.setVisible(true);
-            this.setVisible(false);
-        }else{
-            JOptionPane.showMessageDialog(null, "Erro ao Criar Empresa, Tente Novamente!");
-            txt_nome.setText("");
-            txt_CNPJ.setText("");
-        }
-    }//GEN-LAST:event_btn_cadastrarActionPerformed
-
     private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
-        ListaDeEmpresas listaEmpresas = new ListaDeEmpresas();
-        listaEmpresas.setUsuario(usuario);
-        listaEmpresas.setVisible(true);
+        // TODO add your handling code here:
+        Home home = new Home();
+        home.setUsuario(usuario);
+        home.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btn_voltarActionPerformed
 
-    private void txt_nomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nomeActionPerformed
+    private void btn_visualizar_empresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_visualizar_empresaActionPerformed
+        PerfilEmpresa perfilEmpresa = new PerfilEmpresa();
+        perfilEmpresa.setEmpresa(empresa);
+        perfilEmpresa.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btn_visualizar_empresaActionPerformed
+
+    private void btn_nova_empresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nova_empresaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_nomeActionPerformed
+        CadastroEmpresa cadastroEmpresa = new CadastroEmpresa();
+        cadastroEmpresa.setUsuario(getUsuario());  
+        cadastroEmpresa.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btn_nova_empresaActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        EmpresaDAO dao = new EmpresaDAO();
+        dao.findAll(tbl_empresas, usuario);
+    }//GEN-LAST:event_formWindowActivated
+
+    private void txt_campo_pesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_campo_pesquisaKeyReleased
+        // TODO add your handling code here:
+        EmpresaDAO dao = new EmpresaDAO();
+            dao.findEmpresa(txt_campo_pesquisa.getText(), tbl_empresas, usuario);        
+    }//GEN-LAST:event_txt_campo_pesquisaKeyReleased
+
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/jabackgroundtorial/uiswing/lookandfeel/plaf.html 
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -381,13 +417,13 @@ public class CadastroEmpresa extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastroEmpresa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaDeEmpresas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastroEmpresa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaDeEmpresas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastroEmpresa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaDeEmpresas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastroEmpresa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaDeEmpresas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -395,14 +431,15 @@ public class CadastroEmpresa extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CadastroEmpresa().setVisible(true);
+                new ListaDeEmpresas().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel JPanelFundo;
-    private javax.swing.JButton btn_cadastrar;
+    private javax.swing.JPanel background;
+    private javax.swing.JButton btn_nova_empresa;
+    private javax.swing.JButton btn_visualizar_empresa;
     private javax.swing.JButton btn_voltar;
     private javax.swing.JPanel faixaTitulo;
     private javax.swing.JLabel icon;
@@ -410,9 +447,9 @@ public class CadastroEmpresa extends javax.swing.JFrame {
     private javax.swing.JLabel icon2;
     private javax.swing.JLabel icon3;
     private javax.swing.JLabel iconLogo;
-    private javax.swing.JPanel jPanelCadastro;
-    private javax.swing.JLabel lbl_nomeFantasia;
-    private javax.swing.JLabel lbl_numCnpj;
+    private javax.swing.JPanel jPanel_Lista;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jbl_pesquisa_empresa;
     private javax.swing.JPanel linhaDivisoria;
     private javax.swing.JPanel menuLateral;
     private javax.swing.JLabel nome;
@@ -427,8 +464,8 @@ public class CadastroEmpresa extends javax.swing.JFrame {
     private javax.swing.JPanel painelBackgroundForm;
     private javax.swing.JPanel painelForm;
     private javax.swing.JLabel subTitulo;
-    private javax.swing.JFormattedTextField txt_CNPJ;
-    private javax.swing.JTextField txt_nome;
+    private javax.swing.JTable tbl_empresas;
+    private javax.swing.JTextField txt_campo_pesquisa;
     // End of variables declaration//GEN-END:variables
 
     public void setUsuario(Usuario usuario) {

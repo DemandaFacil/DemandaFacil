@@ -5,11 +5,10 @@
  */
 package views.produtos;
 
-import controllers.banco.ConnectionFactory;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
-import models.DAOProduto;
+import models.empresa.Empresa;
+import models.produto.ProdutoDAO;
+import models.usuario.Usuario;
 
 /**
  *
@@ -17,6 +16,8 @@ import models.DAOProduto;
  */
 public class ListaDeProdutos extends javax.swing.JFrame {
 
+    private Empresa empresa;
+    private Usuario usuario;
     /**
      * Creates new form teste
      */
@@ -54,17 +55,22 @@ public class ListaDeProdutos extends javax.swing.JFrame {
         nomePagina = new javax.swing.JLabel();
         painelBackgroundForm = new javax.swing.JPanel();
         painelForm = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btn_visualizar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableTabela = new javax.swing.JTable();
-        jTextNomeProduto = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        tbl_produtos = new javax.swing.JTable();
+        txt_pesquisa = new javax.swing.JTextField();
+        jbl_pesquisa = new javax.swing.JLabel();
+        btn_voltar = new javax.swing.JButton();
+        btn_novo_produto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Lista de Produtos");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         background.setBackground(new java.awt.Color(178, 242, 236));
         background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -193,11 +199,11 @@ public class ListaDeProdutos extends javax.swing.JFrame {
         faixaTituloLayout.setHorizontalGroup(
             faixaTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(faixaTituloLayout.createSequentialGroup()
-                .addGap(72, 72, 72)
+                .addGap(49, 49, 49)
                 .addGroup(faixaTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(subTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nomePagina, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(184, Short.MAX_VALUE))
+                .addContainerGap(207, Short.MAX_VALUE))
         );
         faixaTituloLayout.setVerticalGroup(
             faixaTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,15 +219,15 @@ public class ListaDeProdutos extends javax.swing.JFrame {
 
         painelBackgroundForm.setBackground(java.awt.Color.lightGray);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Ver detalhes-26.png"))); // NOI18N
-        jButton1.setText("Visualizar Produto");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_visualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Ver detalhes-26.png"))); // NOI18N
+        btn_visualizar.setText("Visualizar Produto");
+        btn_visualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_visualizarActionPerformed(evt);
             }
         });
 
-        jTableTabela.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_produtos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -233,7 +239,7 @@ public class ListaDeProdutos extends javax.swing.JFrame {
                 {null, null}
             },
             new String [] {
-                "Número", "Nome"
+                "id", "Nome"
             }
         ) {
             Class[] types = new Class [] {
@@ -251,42 +257,41 @@ public class ListaDeProdutos extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTableTabela.setColumnSelectionAllowed(true);
-        jTableTabela.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTableTabela);
-        jTableTabela.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        if (jTableTabela.getColumnModel().getColumnCount() > 0) {
-            jTableTabela.getColumnModel().getColumn(0).setResizable(false);
-            jTableTabela.getColumnModel().getColumn(0).setPreferredWidth(1);
+        tbl_produtos.setColumnSelectionAllowed(true);
+        tbl_produtos.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tbl_produtos);
+        tbl_produtos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (tbl_produtos.getColumnModel().getColumnCount() > 0) {
+            tbl_produtos.getColumnModel().getColumn(0).setResizable(false);
+            tbl_produtos.getColumnModel().getColumn(0).setPreferredWidth(1);
         }
 
-        jTextNomeProduto.setText("Nome do Produto");
-        jTextNomeProduto.addActionListener(new java.awt.event.ActionListener() {
+        txt_pesquisa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextNomeProdutoActionPerformed(evt);
+                txt_pesquisaActionPerformed(evt);
             }
         });
-        jTextNomeProduto.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_pesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextNomeProdutoKeyReleased(evt);
+                txt_pesquisaKeyReleased(evt);
             }
         });
 
-        jLabel4.setText("Buscar Produto");
+        jbl_pesquisa.setText("Buscar Produto");
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Chevron Esquerda-26.png"))); // NOI18N
-        jButton2.setText("Voltar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btn_voltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Chevron Esquerda-26.png"))); // NOI18N
+        btn_voltar.setText("Voltar");
+        btn_voltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btn_voltarActionPerformed(evt);
             }
         });
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Produto-26.png"))); // NOI18N
-        jButton4.setText("Novo Produto");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btn_novo_produto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Produto-26.png"))); // NOI18N
+        btn_novo_produto.setText("Novo Produto");
+        btn_novo_produto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btn_novo_produtoActionPerformed(evt);
             }
         });
 
@@ -297,20 +302,20 @@ public class ListaDeProdutos extends javax.swing.JFrame {
             .addGroup(painelFormLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(painelFormLayout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(btn_voltar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1))
+                        .addComponent(btn_visualizar))
                     .addGroup(painelFormLayout.createSequentialGroup()
                         .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelFormLayout.createSequentialGroup()
-                                .addComponent(jLabel4)
+                                .addComponent(jbl_pesquisa)
                                 .addGap(234, 234, 234))
                             .addGroup(painelFormLayout.createSequentialGroup()
-                                .addComponent(jTextNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txt_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addComponent(jButton4)))
+                        .addComponent(btn_novo_produto)))
                 .addGap(34, 34, 34))
         );
         painelFormLayout.setVerticalGroup(
@@ -319,16 +324,16 @@ public class ListaDeProdutos extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelFormLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addComponent(jbl_pesquisa)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txt_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_novo_produto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_visualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
@@ -368,40 +373,52 @@ public class ListaDeProdutos extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btn_voltarActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        CriarProduto novoprod = new CriarProduto();
-        novoprod.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_novo_produtoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_novo_produtoActionPerformed
+        CriarProduto criarProduto = new CriarProduto();
         
-        int linhaSelecionada = jTableTabela.getSelectedRow();
-        int idProdutoLinha = Integer.parseInt(jTableTabela.getValueAt(linhaSelecionada, 0).toString()); //1º seleciona linha, 2º seleciona coluna desejada
+        criarProduto.setEmpresa(empresa);
+        
+        criarProduto.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btn_novo_produtoActionPerformed
+
+    private void btn_visualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_visualizarActionPerformed
+        
+        int linhaSelecionada = tbl_produtos.getSelectedRow();
+        int idProdutoLinha = Integer.parseInt(tbl_produtos.getValueAt(linhaSelecionada, 0).toString()); //1º seleciona linha, 2º seleciona coluna desejada
         PerfilProduto perfilProd = new PerfilProduto(idProdutoLinha);
         perfilProd.setVisible(true);
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_visualizarActionPerformed
 
-    private void jTextNomeProdutoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextNomeProdutoKeyReleased
+    private void txt_pesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_pesquisaKeyReleased
         // TODO add your handling code here:
-        String nome = jTextNomeProduto.getText();
-        DAOProduto DAOp = new DAOProduto();
+        ProdutoDAO dao = new ProdutoDAO();
         try{
-            DAOp.procuraProduto(nome, jTableTabela);
+            dao.procuraProduto(txt_pesquisa.getText(), tbl_produtos, getEmpresa());
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Nao cadastrado", "Nao Encontrado",JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jTextNomeProdutoKeyReleased
+    }//GEN-LAST:event_txt_pesquisaKeyReleased
 
-    private void jTextNomeProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNomeProdutoActionPerformed
+    private void txt_pesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_pesquisaActionPerformed
         // TODO add your handling code here:
         
-    }//GEN-LAST:event_jTextNomeProdutoActionPerformed
+    }//GEN-LAST:event_txt_pesquisaActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        ProdutoDAO dao = new ProdutoDAO();
+        try{
+            dao.procuraProduto("", tbl_produtos, getEmpresa());
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Nao cadastrado", "Nao Encontrado",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
@@ -429,21 +446,6 @@ public class ListaDeProdutos extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(ListaDeProdutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -455,19 +457,17 @@ public class ListaDeProdutos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
+    private javax.swing.JButton btn_novo_produto;
+    private javax.swing.JButton btn_visualizar;
+    private javax.swing.JButton btn_voltar;
     private javax.swing.JPanel faixaTitulo;
     private javax.swing.JLabel icon;
     private javax.swing.JLabel icon1;
     private javax.swing.JLabel icon2;
     private javax.swing.JLabel icon3;
     private javax.swing.JLabel iconLogo;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableTabela;
-    private javax.swing.JTextField jTextNomeProduto;
+    private javax.swing.JLabel jbl_pesquisa;
     private javax.swing.JPanel linhaDivisoria;
     private javax.swing.JPanel menuLateral;
     private javax.swing.JLabel nome;
@@ -482,5 +482,19 @@ public class ListaDeProdutos extends javax.swing.JFrame {
     private javax.swing.JPanel painelBackgroundForm;
     private javax.swing.JPanel painelForm;
     private javax.swing.JLabel subTitulo;
+    private javax.swing.JTable tbl_produtos;
+    private javax.swing.JTextField txt_pesquisa;
     // End of variables declaration//GEN-END:variables
+    
+    public void setEmpresa(Empresa empresa) {
+        if(empresa != null){
+            this.empresa = empresa;
+            this.usuario = empresa.getUsuario();
+        }
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
 }

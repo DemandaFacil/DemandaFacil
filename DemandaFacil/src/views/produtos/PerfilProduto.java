@@ -6,8 +6,10 @@
 package views.produtos;
 
 import javax.swing.JOptionPane;
-import models.DAOProduto;
-import models.Produto;
+import models.empresa.Empresa;
+import models.produto.ProdutoDAO;
+import models.produto.Produto;
+import models.usuario.Usuario;
 
 /**
  *
@@ -15,6 +17,10 @@ import models.Produto;
  */
 public class PerfilProduto extends javax.swing.JFrame {
 
+    private Empresa empresa;
+    private Usuario usuario;
+    private Produto produto;
+    
     /**
      * Creates new form teste
      */
@@ -23,17 +29,6 @@ public class PerfilProduto extends javax.swing.JFrame {
     }
     public PerfilProduto(int id){
         initComponents();
-        jTextNome.setEditable(false);jTextPeriodo.setEditable(false); //seta todos campos para nao ser alterado
-        DAOProduto DAOp = new DAOProduto();
-        Produto prod = new Produto();
-        try{
-            prod = DAOp.leProduto(id);
-            jTextNome.setText(prod.getNome());
-            jTextPeriodo.setText(Integer.toString(prod.getPeriodo_de_reposicao()));
-            
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Nao encontrado", "erro de leitura",JOptionPane.ERROR_MESSAGE);
-        }
     }
 
     /**
@@ -66,24 +61,28 @@ public class PerfilProduto extends javax.swing.JFrame {
         nomePagina = new javax.swing.JLabel();
         painelBackgroundForm = new javax.swing.JPanel();
         painelForm = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jbl_nome = new javax.swing.JLabel();
+        jbl_periodo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableProduto = new javax.swing.JTable();
-        jLabel3 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextPeriodo = new javax.swing.JTextPane();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTextPane2 = new javax.swing.JTextPane();
-        jButton5 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jTextNome = new javax.swing.JTextField();
+        tbl_consumo = new javax.swing.JTable();
+        jbl_consumo = new javax.swing.JLabel();
+        btn_voltar = new javax.swing.JButton();
+        btn_excluir = new javax.swing.JButton();
+        btn_consumo = new javax.swing.JButton();
+        btn_estatisticas = new javax.swing.JButton();
+        jbl_campo_nome = new javax.swing.JLabel();
+        jbl_campo_periodo = new javax.swing.JLabel();
+        jbl_campo_tipo = new javax.swing.JLabel();
+        btn_editar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Perfil do Produto");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         background.setBackground(new java.awt.Color(178, 242, 236));
         background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -217,11 +216,11 @@ public class PerfilProduto extends javax.swing.JFrame {
         faixaTituloLayout.setHorizontalGroup(
             faixaTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(faixaTituloLayout.createSequentialGroup()
-                .addGap(72, 72, 72)
+                .addGap(49, 49, 49)
                 .addGroup(faixaTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(subTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nomePagina, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(225, Short.MAX_VALUE))
+                .addContainerGap(248, Short.MAX_VALUE))
         );
         faixaTituloLayout.setVerticalGroup(
             faixaTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,11 +236,11 @@ public class PerfilProduto extends javax.swing.JFrame {
 
         painelBackgroundForm.setBackground(java.awt.Color.lightGray);
 
-        jLabel1.setText("Nome");
+        jbl_nome.setText("Nome");
 
-        jLabel2.setText("Período de Reposição");
+        jbl_periodo.setText("Período de Reposição");
 
-        jTableProduto.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_consumo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -267,53 +266,58 @@ public class PerfilProduto extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTableProduto);
+        jScrollPane1.setViewportView(tbl_consumo);
 
-        jLabel3.setText("Consumo do Produto");
+        jbl_consumo.setText("Consumo do Produto");
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Chevron Esquerda-26.png"))); // NOI18N
-        jButton3.setText("Voltar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btn_voltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Chevron Esquerda-26.png"))); // NOI18N
+        btn_voltar.setText("Voltar");
+        btn_voltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btn_voltarActionPerformed(evt);
             }
         });
 
-        jButton2.setForeground(java.awt.Color.red);
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Excluir-26.png"))); // NOI18N
-        jButton2.setText("Excluir Produto");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btn_excluir.setForeground(java.awt.Color.red);
+        btn_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Excluir-26.png"))); // NOI18N
+        btn_excluir.setText("Excluir");
+        btn_excluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btn_excluirActionPerformed(evt);
             }
         });
 
-        jTextPeriodo.setText("NumPeriodo");
-        jScrollPane2.setViewportView(jTextPeriodo);
-
-        jTextPane2.setText("TipoPeriodo");
-        jScrollPane3.setViewportView(jTextPane2);
-
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Mais-26.png"))); // NOI18N
-        jButton5.setText("Inserir Consumo");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btn_consumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Mais-26.png"))); // NOI18N
+        btn_consumo.setText("Inserir Consumo");
+        btn_consumo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btn_consumoActionPerformed(evt);
             }
         });
 
-        jButton4.setForeground(java.awt.Color.green);
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Estatísticas-26.png"))); // NOI18N
-        jButton4.setText("Estatísticas");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btn_estatisticas.setForeground(java.awt.Color.green);
+        btn_estatisticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Estatísticas-26.png"))); // NOI18N
+        btn_estatisticas.setText("Estatísticas");
+        btn_estatisticas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btn_estatisticasActionPerformed(evt);
             }
         });
 
-        jTextNome.addActionListener(new java.awt.event.ActionListener() {
+        jbl_campo_nome.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jbl_campo_nome.setText("Nome Produto");
+
+        jbl_campo_periodo.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jbl_campo_periodo.setText("periodo");
+
+        jbl_campo_tipo.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jbl_campo_tipo.setText("tipo");
+
+        btn_editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Editar propriedade-26.png"))); // NOI18N
+        btn_editar.setText("Editar Produto");
+        btn_editar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextNomeActionPerformed(evt);
+                btn_editarActionPerformed(evt);
             }
         });
 
@@ -325,34 +329,36 @@ public class PerfilProduto extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(painelFormLayout.createSequentialGroup()
-                        .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(painelFormLayout.createSequentialGroup()
                                 .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jbl_nome)
                                     .addGroup(painelFormLayout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(painelFormLayout.createSequentialGroup()
-                                        .addComponent(jTextNome)
-                                        .addGap(93, 93, 93)))
-                                .addComponent(jButton4))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelFormLayout.createSequentialGroup()
-                                .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(painelFormLayout.createSequentialGroup()
-                                        .addComponent(jButton3)
-                                        .addGap(48, 48, 48)
-                                        .addComponent(jButton2))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)))
+                                        .addGap(12, 12, 12)
+                                        .addComponent(jbl_campo_nome)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_estatisticas))
+                            .addGroup(painelFormLayout.createSequentialGroup()
+                                .addComponent(btn_voltar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_excluir)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btn_editar))
+                            .addGroup(painelFormLayout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btn_consumo, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                                .addGap(6, 6, 6)))
                         .addGap(34, 34, 34))
                     .addGroup(painelFormLayout.createSequentialGroup()
                         .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jbl_consumo, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelFormLayout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(12, 12, 12)
+                                .addComponent(jbl_campo_periodo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jbl_campo_tipo))
+                            .addComponent(jbl_periodo, javax.swing.GroupLayout.Alignment.LEADING))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         painelFormLayout.setVerticalGroup(
@@ -360,30 +366,30 @@ public class PerfilProduto extends javax.swing.JFrame {
             .addGroup(painelFormLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_estatisticas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(painelFormLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(jbl_nome)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextNome, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jbl_campo_nome)))
                 .addGap(18, 18, 18)
-                .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(painelFormLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
-                .addComponent(jLabel3)
+                .addComponent(jbl_periodo)
+                .addGap(13, 13, 13)
+                .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbl_campo_periodo)
+                    .addComponent(jbl_campo_tipo))
+                .addGap(24, 24, 24)
+                .addComponent(jbl_consumo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelFormLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(44, Short.MAX_VALUE))
+                            .addComponent(btn_voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_excluir, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, Short.MAX_VALUE)))
+                    .addComponent(btn_consumo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout painelBackgroundFormLayout = new javax.swing.GroupLayout(painelBackgroundForm);
@@ -424,34 +430,53 @@ public class PerfilProduto extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        ListaDeProdutos listaProd = new ListaDeProdutos();
-        
-        listaProd.setVisible(true);
+    private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
+        ListaDeProdutos listaProdutos = new ListaDeProdutos();
+        listaProdutos.setEmpresa(empresa);
+        listaProdutos.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btn_voltarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btn_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_excluirActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        ProdutoDAO dao = new ProdutoDAO();
+        if(dao.excluiProduto(produto)){
+            ListaDeProdutos listaProdutos = new ListaDeProdutos();
+            listaProdutos.setEmpresa(empresa);
+            listaProdutos.setVisible(true);
+            this.setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(null, "Erro ao Excluir, Tente Novamente!");
+        }
+    }//GEN-LAST:event_btn_excluirActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btn_consumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consumoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btn_consumoActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btn_estatisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_estatisticasActionPerformed
         // TODO add your handling code here:
         
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btn_estatisticasActionPerformed
 
     private void opcaoMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcaoMenuMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_opcaoMenuMouseClicked
 
-    private void jTextNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNomeActionPerformed
+    private void btn_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editarActionPerformed
+        EditarProduto editarEmpresa = new EditarProduto();
+        editarEmpresa.setProduto(produto);
+        editarEmpresa.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btn_editarActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jTextNomeActionPerformed
+        jbl_campo_nome.setText(produto.getNome());
+        jbl_campo_periodo.setText(Integer.toString(produto.getPeriodo_de_reposicao()));
+        jbl_campo_tipo.setText("Mês");
+        //Procura todos os consumos e mostra na tabela
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
@@ -480,20 +505,6 @@ public class PerfilProduto extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -506,26 +517,24 @@ public class PerfilProduto extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
+    private javax.swing.JButton btn_consumo;
+    private javax.swing.JButton btn_editar;
+    private javax.swing.JButton btn_estatisticas;
+    private javax.swing.JButton btn_excluir;
+    private javax.swing.JButton btn_voltar;
     private javax.swing.JPanel faixaTitulo;
     private javax.swing.JLabel icon;
     private javax.swing.JLabel icon1;
     private javax.swing.JLabel icon2;
     private javax.swing.JLabel icon3;
     private javax.swing.JLabel iconLogo;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTableProduto;
-    private javax.swing.JTextField jTextNome;
-    private javax.swing.JTextPane jTextPane2;
-    private javax.swing.JTextPane jTextPeriodo;
+    private javax.swing.JLabel jbl_campo_nome;
+    private javax.swing.JLabel jbl_campo_periodo;
+    private javax.swing.JLabel jbl_campo_tipo;
+    private javax.swing.JLabel jbl_consumo;
+    private javax.swing.JLabel jbl_nome;
+    private javax.swing.JLabel jbl_periodo;
     private javax.swing.JPanel linhaDivisoria;
     private javax.swing.JPanel menuLateral;
     private javax.swing.JLabel nome;
@@ -540,5 +549,17 @@ public class PerfilProduto extends javax.swing.JFrame {
     private javax.swing.JPanel painelBackgroundForm;
     private javax.swing.JPanel painelForm;
     private javax.swing.JLabel subTitulo;
+    private javax.swing.JTable tbl_consumo;
     // End of variables declaration//GEN-END:variables
+    public void setProduto(Produto produto) {
+        if(produto != null){
+            this.produto = produto;
+            this.empresa = produto.getEmpresa();
+            this.usuario = empresa.getUsuario();
+        }
+    }
+
+    public Produto getProduto() {
+        return produto;
+    }
 }
