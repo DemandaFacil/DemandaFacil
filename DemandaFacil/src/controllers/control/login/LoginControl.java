@@ -7,6 +7,8 @@ package controllers.control.login;
 
 import javax.swing.JOptionPane;
 import models.usuario.Usuario;
+import models.usuario.UsuarioDAO;
+import views.core.Home;
 /**
  *
  * @author akira
@@ -16,17 +18,25 @@ public class LoginControl {
     private Usuario usuario;
     
     public boolean login(String login, String senha){
-        //UsuarioDAO dao = new UsuarioDAO();
-        //setUsuario(dao.findUsuario(login));
+        UsuarioDAO dao = new UsuarioDAO();
+        
         if(!login.isEmpty()){
-            if(checkLogin(login, senha)){
-                //returnHome();
-                return true;
+            Usuario usuario = dao.findUsuario(login);
+            if(usuario != null){
+            setUsuario(usuario);
+                if(checkLogin(login, senha)){
+                    Home home = new Home();
+                    home.setUsuario(getUsuario());
+                    home.setVisible(true);
+                    return true;
+                }else{
+                    JOptionPane.showMessageDialog(null, "Dados Inválidos! Tente Novamente.");
+                }
             }else{
-                //mensagemDadosInvalidos();
+                JOptionPane.showMessageDialog(null, "Usuario Inválido! Tente Novamente.");
             }
         }else{
-            //mensagemNomeInvalido();
+            JOptionPane.showMessageDialog(null, "Login Inválido! Tente Novamente.");
         }
         return false;
     }
@@ -37,15 +47,11 @@ public class LoginControl {
     
     public boolean checkSenha(String senha){
         if(!senha.equals(getUsuario().getSenha())){
-            mensagemSenhaInvalida();
+            JOptionPane.showMessageDialog(null, "Senha Inválida! Tente Novamente.");
         }
         return senha.equals(getUsuario().getSenha());
     }
     
-    public void mensagemSenhaInvalida(){
-        JOptionPane.showMessageDialog(null, "Senha Inválida! Tente Novamente.");
-    }
-
     private Usuario getUsuario() {
         return usuario;
     }

@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package views.cliente;
+package views.core;
 
 import controllers.control.login.LoginControl;
 import models.usuario.Usuario;
+import views.usuario.CadastroUsuario;
 
 /**
  *
@@ -14,8 +15,7 @@ import models.usuario.Usuario;
  */
 public class Login extends javax.swing.JFrame {
 
-    private Usuario usuario = new Usuario("Francisco", "fran", "123");
-    LoginControl control = new LoginControl();
+    private LoginControl control = new LoginControl();
     
     /**
      * Creates new form Login
@@ -37,7 +37,7 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
+        jpl_acesso = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jbl_icon_user = new javax.swing.JLabel();
         jbl_nome_titulo = new javax.swing.JLabel();
@@ -46,12 +46,13 @@ public class Login extends javax.swing.JFrame {
         txt_login = new javax.swing.JTextField();
         txt_senha = new javax.swing.JPasswordField();
         btn_entrar = new javax.swing.JButton();
+        jbl_cadastro = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(254, 254, 254));
+        jpl_acesso.setBackground(new java.awt.Color(254, 254, 254));
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 255));
 
@@ -105,27 +106,36 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jbl_cadastro.setText("<html><u>Cadastre-se</u>");
+        jbl_cadastro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jbl_cadastroMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpl_acessoLayout = new javax.swing.GroupLayout(jpl_acesso);
+        jpl_acesso.setLayout(jpl_acessoLayout);
+        jpl_acessoLayout.setHorizontalGroup(
+            jpl_acessoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(jpl_acessoLayout.createSequentialGroup()
                 .addGap(155, 155, 155)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jpl_acessoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jbl_senha)
                     .addComponent(jbl_login)
                     .addComponent(txt_login, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                     .addComponent(txt_senha))
                 .addContainerGap(155, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpl_acessoLayout.createSequentialGroup()
+                .addGap(58, 58, 58)
+                .addComponent(jbl_cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_entrar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jpl_acessoLayout.setVerticalGroup(
+            jpl_acessoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpl_acessoLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(jbl_login)
@@ -136,11 +146,13 @@ public class Login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txt_senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                .addComponent(btn_entrar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jpl_acessoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_entrar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbl_cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 420));
+        getContentPane().add(jpl_acesso, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 420));
 
         pack();
         setLocationRelativeTo(null);
@@ -148,15 +160,23 @@ public class Login extends javax.swing.JFrame {
     
     private void btn_entrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_entrarActionPerformed
         // TODO add your handling code here:
-        control.setUsuario(usuario);
-        //if(control.login(txt_login.getText(), new String(txt_senha.getPassword()))){
-          //  this.setVisible(false);
-        //}
+        if(control.login(txt_login.getText(), new String(txt_senha.getPassword()))){
+            this.setVisible(false);
+        }else{
+            txt_senha.setText("");
+        }
     }//GEN-LAST:event_btn_entrarActionPerformed
 
     private void btn_entrarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_entrarKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_entrarKeyReleased
+
+    private void jbl_cadastroMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbl_cadastroMouseReleased
+        // TODO add your handling code here:
+        CadastroUsuario cadastroUsuario = new CadastroUsuario();
+        cadastroUsuario.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jbl_cadastroMouseReleased
 
     
     
@@ -199,11 +219,12 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_entrar;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel jbl_cadastro;
     private javax.swing.JLabel jbl_icon_user;
     private javax.swing.JLabel jbl_login;
     private javax.swing.JLabel jbl_nome_titulo;
     private javax.swing.JLabel jbl_senha;
+    private javax.swing.JPanel jpl_acesso;
     private javax.swing.JTextField txt_login;
     private javax.swing.JPasswordField txt_senha;
     // End of variables declaration//GEN-END:variables

@@ -6,6 +6,7 @@
 package views.core;
 
 import models.usuario.Usuario;
+import views.usuario.PerfilUsuario;
 import views.empresa.ListaDeEmpresas;
 
 /**
@@ -14,7 +15,7 @@ import views.empresa.ListaDeEmpresas;
  */
 public class Home extends javax.swing.JFrame {
 
-    Usuario usuario = new Usuario("kassia", "akira", "181510");
+    private Usuario usuario;
     /**
      * Creates new form Home
      */
@@ -78,6 +79,11 @@ public class Home extends javax.swing.JFrame {
         JPanelFundo.add(faixaMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 140));
 
         jpl_opcao_usuario.setBackground(new java.awt.Color(0, 128, 128));
+        jpl_opcao_usuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jpl_opcao_usuarioMouseReleased(evt);
+            }
+        });
 
         jlb_icon_usuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-User.png"))); // NOI18N
 
@@ -213,11 +219,18 @@ public class Home extends javax.swing.JFrame {
     private void jpl_opcao_empresasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpl_opcao_empresasMouseReleased
         // TODO add your handling code here:
         ListaDeEmpresas listaEmpresas = new ListaDeEmpresas();
-        usuario.setIdUsuario(3);
         listaEmpresas.setUsuario(usuario);
         listaEmpresas.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jpl_opcao_empresasMouseReleased
+
+    private void jpl_opcao_usuarioMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpl_opcao_usuarioMouseReleased
+        // TODO add your handling code here:
+        PerfilUsuario perfilUsuario = new PerfilUsuario();
+        perfilUsuario.setUsuario(usuario);
+        perfilUsuario.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jpl_opcao_usuarioMouseReleased
 
     /**
      * @param args the command line arguments

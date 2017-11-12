@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models.Consumo;
+package models.consumo;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,11 +37,4 @@ public class Consumo {
         this.data = data;
     }
     
-    public ArrayList<Consumo> buscaConsumosRecentes(ArrayList<Consumo> consumos, int tempo){
-        ArrayList<Consumo> consumosRecentes = new ArrayList();
-        for(int i = 1; i <= tempo; i++){
-            consumosRecentes.add(consumos.get(consumos.size() - i));
-        }
-        return consumosRecentes;
-    }
 }

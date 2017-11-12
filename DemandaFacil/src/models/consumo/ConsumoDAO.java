@@ -3,22 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models.Consumo;
-
-import java.util.ArrayList;
+package models.consumo;
 
 /**
  *
  * @author Aluno
  */
 public class ConsumoDAO {
-    public ArrayList listaConsumo(int mesInicio,int mesFim) throws Exception{
-        try{
-            
-        }catch(Exception e){
-            System.out.println(e);
-        }
-    }
+    
     
 }
 

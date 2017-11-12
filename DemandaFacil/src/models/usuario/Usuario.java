@@ -5,6 +5,8 @@
  */
 package models.usuario;
 
+import models.empresa.Empresa;
+
 /**
  *
  * @author akira
@@ -15,6 +17,7 @@ public class Usuario {
     private String nome;
     private String login;
     private String senha;
+    private Empresa empresa;
 
     public Usuario() {
     }
@@ -22,6 +25,11 @@ public class Usuario {
     public Usuario(String nome, String login, String senha) {
         this.nome = nome;
         this.login = login;
+        this.senha = senha;
+    }
+
+    public Usuario(String nome, String senha) {
+        this.nome = nome;
         this.senha = senha;
     }
     
@@ -56,6 +64,14 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
     
 }
