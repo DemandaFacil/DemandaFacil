@@ -71,31 +71,14 @@ public class Grafico {
                        PlotOrientation.VERTICAL, 
                          true, true, false);     
    }
-   
-   
    //Cria os dados para inserir no gráfico apartir da quantidade e período informados
    //Passar um código de produto
-   public void criaDados() {
-    
-     CalculoGrafico x = new CalculoGrafico();
-     ConexaoDB db = new ConexaoDB();
-     Connection conn = db.getConnection();
-     
-     //Cria String para obter o nome do produto
-     String sql = "select p.nome as nome from produto p join consumo c on(p.idProduto = c.Produto_idProduto) where c.Produto_idProduto = 1";
-     String nomeProduto = null;
-     //Trata a String para obter o resultado no banco
-      try{
-        PreparedStatement cmd = conn.prepareStatement(sql);
-        ResultSet rs = cmd.executeQuery();
-        while(rs.next()){
-            nomeProduto = rs.getString("nome");
-        }
-      }catch(SQLException ex){
-        JOptionPane.showMessageDialog(null,"Não foi encontrado nenhuma classe!"+ex);
-      }
-      db.closeConnection();
+   public void criaDados(int id) {
       
+      String nomeProduto;
+      GraficoDAO dao = new GraficoDAO();
+      CalculoGrafico x = new CalculoGrafico();
+      nomeProduto = dao.procuraNomeProduto(id);
       for (int i = comeco; i <= fim; i++) {
        //Chama a função para obter a quantidade referente a tal periodo
        int valor = x.geraDados(i, qtde1);
@@ -106,66 +89,36 @@ public class Grafico {
      } 
    //Cria os dados para inserir no gráfico apartir da quantidade e período informados sendo dados de outra tabela
    //Passar um código de produto
-   public void criaDados2() {
-    
-     CalculoGrafico x = new CalculoGrafico();
-     ConexaoDB db = new ConexaoDB();
-     Connection conn = db.getConnection();
+   public void criaDados2(int id) {
      
-     //Cria String para obter o nome do produto
-     String sql = "select p.nome as nome from produto p join consumo c on(p.idProduto = c.Produto_idProduto) where c.Produto_idProduto = 4";
-     String nomeProduto2 = null;
-     //Trata a String para obter o resultado no banco
-      try{
-        PreparedStatement cmd = conn.prepareStatement(sql);
-        ResultSet rs = cmd.executeQuery();
-        while(rs.next()){
-            nomeProduto2 = rs.getString("nome");
-        }
-      }catch(SQLException ex){
-        JOptionPane.showMessageDialog(null,"Não foi encontrado nenhuma classe!"+ex);
-      }
-      db.closeConnection();
-      
+     String nomeProduto = null;
+     GraficoDAO dao = new GraficoDAO();
+     CalculoGrafico x = new CalculoGrafico();
+     nomeProduto = dao.procuraNomeProduto(id);
      for (int i = comeco; i <= fim; i++) {
        //Chama a função para obter a quantidade referente a tal periodo
        int valor = x.geraDados(i, qtde2);
        //Chama a função para obter o periodo que foi informado
-       String periodo2 = x.periodo(i);
-       dados2.addValue(valor,nomeProduto2,periodo2); 
+       String periodo = x.periodo(i);
+       dados2.addValue(valor,nomeProduto,periodo); 
      }  
      } 
    
    //Recebe o valor dos desvios
-   public void criaDadosDesvio() {
+   public void criaDadosDesvio(int id) {
     
+     String nomeProduto;
+     GraficoDAO dao = new GraficoDAO();
      CalculoGrafico x = new CalculoGrafico();
-     ConexaoDB db = new ConexaoDB();
-     Connection conn = db.getConnection();
-     
-     //Cria String para obter o nome do produto
-     String sql = "select p.nome as nome from produto p join consumo c on(p.idProduto = c.Produto_idProduto) where c.Produto_idProduto = 4";
-     String nomeProduto2 = null;
-     //Trata a String para obter o resultado no banco
-      try{
-        PreparedStatement cmd = conn.prepareStatement(sql);
-        ResultSet rs = cmd.executeQuery();
-        while(rs.next()){
-            nomeProduto2 = rs.getString("nome");
-        }
-      }catch(SQLException ex){
-        JOptionPane.showMessageDialog(null,"Não foi encontrado nenhuma classe!"+ex);
-      }
-      db.closeConnection();
-      
+     nomeProduto = dao.procuraNomeProduto(id);
      for (int i = comeco; i <= fim; i++) {
        //Chama a função para obter a quantidade referente a tal periodo
        double valor = x.geraDadosDesvio(i, qtde3);
        //Chama a função para obter o periodo que foi informado
-       String periodo2 = x.periodo(i);
-       dados2.addValue(valor,nomeProduto2,periodo2); 
+       String periodo = x.periodo(i);
+       dados2.addValue(valor,nomeProduto,periodo); 
      }  
-     } 
+    } 
    //Cria o painel do gráfico.
    public ChartPanel getPanel() {
         //Recupera o gráfico com somente um dado inserido
