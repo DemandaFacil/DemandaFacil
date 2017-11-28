@@ -25,6 +25,7 @@ import models.estimativa.Estimativas;
 public class EstimativaGraficos extends javax.swing.JFrame {
     
     private Consumo con;
+    private Estimativas es;
     private Connection conn;
     private String produtoNome;
     private String datas;
@@ -351,6 +352,27 @@ public class EstimativaGraficos extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_salvarActionPerformed
     
     
+    public void demanda(){
+        
+      GraficoDAO dao = new GraficoDAO();
+      Produto_idProduto = dao.getIdProduto(produtoNome);
+      ArrayList<Estimativas> dadosEstimativas = new ArrayList<Estimativas>();
+      dadosEstimativas = getDadosEstimativas(Produto_idProduto, datas);
+      int tamanho;
+      tamanho = dadosEstimativas.size();
+      
+      Vector<Integer> meses = new Vector<>(dadosEstimativas.size());
+      Vector<Double> valor = new Vector<>(dadosEstimativas.size());
+      int qtde[] = new int[tamanho];
+      int mes[] = new int[tamanho];
+      
+      for(Estimativas e : dadosEstimativas){
+        meses.add(Integer.parseInt(e.getData()));
+        valor.add(e.getValorCalculado());
+      }    
+      
+    }
+    
     public void mediaMovel(){
       select="mediaMovel";
       GraficoDAO dao = new GraficoDAO();
@@ -584,6 +606,36 @@ public class EstimativaGraficos extends javax.swing.JFrame {
 	}
        return listaConsumo;
     } 
+    
+    public ArrayList<Estimativas> getDadosEstimativas(int idProduto, String datas){
+        ArrayList<Estimativas> listaEstimativas = new ArrayList<Estimativas>();
+        String query = "SELECT valorCalculado as valorCalculado, SUBSTRING(data,6,2) as data FROM estimativas where Produto_idProduto="+idProduto+" and data like '"+datas+"%' order by data";
+         try {
+            PreparedStatement stmt = conn.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery(query);
+            while(rs.next()){
+                es = new Estimativas();
+                String data = rs.getString("data");
+                int valor = rs.getInt("valorCalculado");
+                
+                if(data == "08"){
+                    data = "8";
+                }
+                if(data== "09"){
+                    data="9";
+                }
+                es.setProduto_IdProduto(Produto_idProduto);
+                es.setValorCalculado(valor);
+                es.setData(data);
+		listaEstimativas.add(es);
+            }
+            stmt.close();
+	}
+	catch(SQLException e){
+		e.printStackTrace();
+	}
+       return listaEstimativas;
+    }
     
     public static void main(String args[]) {
        
