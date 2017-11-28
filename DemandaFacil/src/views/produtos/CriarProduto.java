@@ -62,10 +62,6 @@ public class CriarProduto extends javax.swing.JFrame {
         txt_tempo = new javax.swing.JTextField();
         jcb_tipo_periodo = new javax.swing.JComboBox<>();
         btn_salvar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_consumo = new javax.swing.JTable();
-        btn_consumo = new javax.swing.JButton();
-        jlb_consumo = new javax.swing.JLabel();
         btn_voltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -250,44 +246,6 @@ public class CriarProduto extends javax.swing.JFrame {
             }
         });
 
-        tbl_consumo.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Número", "Consumo", "Periodo"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, true, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tbl_consumo);
-
-        btn_consumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Mais-26.png"))); // NOI18N
-        btn_consumo.setText("Inserir Consumo");
-        btn_consumo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_consumoActionPerformed(evt);
-            }
-        });
-
-        jlb_consumo.setText("Consumo do Produto");
-
         btn_voltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Chevron Esquerda-26.png"))); // NOI18N
         btn_voltar.setText("Voltar");
         btn_voltar.addActionListener(new java.awt.event.ActionListener() {
@@ -303,19 +261,10 @@ public class CriarProduto extends javax.swing.JFrame {
             .addGroup(painelFormLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelFormLayout.createSequentialGroup()
-                        .addComponent(jlb_consumo)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelFormLayout.createSequentialGroup()
-                        .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(painelFormLayout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btn_consumo, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
-                            .addGroup(painelFormLayout.createSequentialGroup()
-                                .addComponent(btn_voltar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btn_salvar)))
+                        .addComponent(btn_voltar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_salvar)
                         .addGap(34, 34, 34))
                     .addGroup(painelFormLayout.createSequentialGroup()
                         .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,7 +275,7 @@ public class CriarProduto extends javax.swing.JFrame {
                                 .addComponent(txt_tempo, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jcb_tipo_periodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(240, Short.MAX_VALUE))))
         );
         painelFormLayout.setVerticalGroup(
             painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -341,13 +290,7 @@ public class CriarProduto extends javax.swing.JFrame {
                 .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_tempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jcb_tipo_periodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jlb_consumo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_consumo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
                 .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -396,14 +339,10 @@ public class CriarProduto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_nomeActionPerformed
 
-    private void btn_consumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consumoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_consumoActionPerformed
-
     private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
-        ListaDeProdutos listaProd = new ListaDeProdutos();
-        
-        listaProd.setVisible(true);
+        ListaDeProdutos listaProdutos = new ListaDeProdutos();
+        listaProdutos.setEmpresa(empresa);
+        listaProdutos.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btn_voltarActionPerformed
 
@@ -424,7 +363,6 @@ public class CriarProduto extends javax.swing.JFrame {
             txt_nome.setText("");
             txt_tempo.setText("");
         }
-            
     }//GEN-LAST:event_btn_salvarActionPerformed
 
     private void jcb_tipo_periodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_tipo_periodoActionPerformed
@@ -473,7 +411,6 @@ public class CriarProduto extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
-    private javax.swing.JButton btn_consumo;
     private javax.swing.JButton btn_salvar;
     private javax.swing.JButton btn_voltar;
     private javax.swing.JPanel faixaTitulo;
@@ -482,10 +419,8 @@ public class CriarProduto extends javax.swing.JFrame {
     private javax.swing.JLabel icon2;
     private javax.swing.JLabel icon3;
     private javax.swing.JLabel iconLogo;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jbl_nome;
     private javax.swing.JComboBox<String> jcb_tipo_periodo;
-    private javax.swing.JLabel jlb_consumo;
     private javax.swing.JLabel lbl_periodo;
     private javax.swing.JPanel linhaDivisoria;
     private javax.swing.JPanel menuLateral;
@@ -501,7 +436,6 @@ public class CriarProduto extends javax.swing.JFrame {
     private javax.swing.JPanel painelBackgroundForm;
     private javax.swing.JPanel painelForm;
     private javax.swing.JLabel subTitulo;
-    private javax.swing.JTable tbl_consumo;
     private javax.swing.JTextField txt_nome;
     private javax.swing.JTextField txt_tempo;
     // End of variables declaration//GEN-END:variables

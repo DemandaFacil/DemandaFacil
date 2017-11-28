@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JTable;
 import models.empresa.Empresa;
+import models.empresa.EmpresaDAO;
 import net.proteanit.sql.DbUtils;
 
 /* *
@@ -73,12 +74,12 @@ public class ProdutoDAO {
     }
     
     public void procuraProduto(String nome, JTable jt, Empresa empresa){
-       PreparedStatement stmt = null;
-       ResultSet rs = null;
-       String sql = "SELECT idProduto id, Produto.nome nome FROM Produto, Empresa WHERE Empresa_idEmpresa = ? AND Produto.nome like concat('%',?, '%') GROUP BY id";
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT idProduto id, Produto.nome nome FROM Produto, Empresa WHERE Empresa_idEmpresa = ? AND Produto.nome like concat('%',?, '%') GROUP BY id";
         try{
             stmt = con.prepareStatement(sql);
-            stmt.setInt(1, 1);
+            stmt.setInt(1, empresa.getIdEmpresa());
             stmt.setString(2, nome);
             rs = stmt.executeQuery();
             jt.setModel(DbUtils.resultSetToTableModel(rs));
@@ -89,25 +90,28 @@ public class ProdutoDAO {
         }
     }
     
-    public Produto leProduto(int id) throws Exception{
+    public Produto leProduto(int id){
         PreparedStatement stmt = null;
         ResultSet rs = null;
         Produto produto = new Produto();
+        EmpresaDAO dao = new EmpresaDAO();
         try{
-            stmt = con.prepareStatement("SELECT descricao,preco FROM produto WHERE idProduto = ?");
+            stmt = con.prepareStatement("SELECT * FROM Produto WHERE idProduto = ?");
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
             while(rs.next()){
-                produto.setNome(rs.getString(1)); // enviar pro objeto o valor do banco
-                produto.setPeriodo_de_reposicao(rs.getInt(2));
+                produto.setIdProduto(rs.getInt(1));
+                produto.setNome(rs.getString(2));
+                produto.setEmpresa(dao.leEmpresa(rs.getInt(3)));
+                produto.setPeriodo_de_reposicao(rs.getInt(4));
             }
             return produto;
         }catch(SQLException ex){
             System.out.println(ex);
-            return produto;
         } finally {
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
+        return null;
     }
     
     public boolean update(Produto produto){
