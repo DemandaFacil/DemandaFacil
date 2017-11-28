@@ -40,7 +40,22 @@ public class Grafico {
    private DefaultCategoryDataset dados2;
    private static JFreeChart grafico;
  
-   public Grafico(int[] qtde1,int[]qtde2, int comeco, int fim) {
+    public Grafico(int[] qtde1, int comeco, int fim) {
+
+     this.qtde1=qtde1;
+     this.comeco = comeco;
+     this.fim = fim;
+     
+     //Inserção de dados no gráfico
+     this.dados = new DefaultCategoryDataset();
+     this.dados2 = new DefaultCategoryDataset();
+     this.grafico = ChartFactory.createLineChart("Estatísticas - Médias", 
+                       "Período", "Quantidade", dados,
+                       PlotOrientation.VERTICAL, 
+                         true, true, false);     
+   }
+   
+   public Grafico(int[] qtde1,int[] qtde2, int comeco, int fim) {
 
      this.qtde1=qtde1;
      this.qtde2=qtde2;
@@ -50,7 +65,7 @@ public class Grafico {
      //Inserção de dados no gráfico
      this.dados = new DefaultCategoryDataset();
      this.dados2 = new DefaultCategoryDataset();
-     this.grafico = ChartFactory.createLineChart("Estimativas", 
+     this.grafico = ChartFactory.createLineChart("Estatísticas - Médias", 
                        "Período", "Quantidade", dados,
                        PlotOrientation.VERTICAL, 
                          true, true, false);     
@@ -71,6 +86,8 @@ public class Grafico {
                        PlotOrientation.VERTICAL, 
                          true, true, false);     
    }
+   
+   
    //Cria os dados para inserir no gráfico apartir da quantidade e período informados
    //Passar um código de produto
    public void criaDados(int id) {
@@ -79,42 +96,50 @@ public class Grafico {
       GraficoDAO dao = new GraficoDAO();
       CalculoGrafico x = new CalculoGrafico();
       nomeProduto = dao.procuraNomeProduto(id);
+      int elementos=0;  
       for (int i = comeco; i <= fim; i++) {
        //Chama a função para obter a quantidade referente a tal periodo
-       int valor = x.geraDados(i, qtde1);
+       //int valor = x.geraDados(i, qtde1); 
        //Chama a função para obter o periodo que foi informado
+       int valor = qtde1[elementos];
+       
        String periodo = x.periodo(i);
-       dados.addValue(valor,nomeProduto,periodo); 
+       dados.addValue(valor,nomeProduto,periodo);
+       elementos++;
      }
      } 
+   
    //Cria os dados para inserir no gráfico apartir da quantidade e período informados sendo dados de outra tabela
    //Passar um código de produto
    public void criaDados2(int id) {
-     
+     int elementos=0;
      String nomeProduto = null;
      GraficoDAO dao = new GraficoDAO();
      CalculoGrafico x = new CalculoGrafico();
      nomeProduto = dao.procuraNomeProduto(id);
      for (int i = comeco; i <= fim; i++) {
        //Chama a função para obter a quantidade referente a tal periodo
-       int valor = x.geraDados(i, qtde2);
+       int valor = qtde2[elementos];
        //Chama a função para obter o periodo que foi informado
        String periodo = x.periodo(i);
        dados2.addValue(valor,nomeProduto,periodo); 
+       elementos++;
+     }
      }  
-     } 
+      
    
-   //Recebe o valor dos desvios
+   //Recebe o valor dos desvios 
    public void criaDadosDesvio(int id) {
-    
+     int elementos=0;
      String nomeProduto;
      GraficoDAO dao = new GraficoDAO();
      CalculoGrafico x = new CalculoGrafico();
      nomeProduto = dao.procuraNomeProduto(id);
      for (int i = comeco; i <= fim; i++) {
        //Chama a função para obter a quantidade referente a tal periodo
-       double valor = x.geraDadosDesvio(i, qtde3);
+       //double valor = x.geraDadosDesvio(i, qtde3);
        //Chama a função para obter o periodo que foi informado
+       double valor = qtde3[elementos];
        String periodo = x.periodo(i);
        dados2.addValue(valor,nomeProduto,periodo); 
      }  

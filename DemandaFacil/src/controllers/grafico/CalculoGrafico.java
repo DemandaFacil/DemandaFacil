@@ -18,51 +18,30 @@ public class CalculoGrafico {
     this.periodo = periodo;
     this.qtdeproduto = qtdeproduto;
    }
-   
-   //Nesssa classe será feita o calculo das quantidades do produto pelo período selecionado
-   
-   
-   //Retorna a quantidade referente de cada produto
-   public int geraDados(int periodo, int[] qtdeproduto){
-     int qtde=0;   
-     for(int i = 0; i< periodo;i++){
-         qtde= qtdeproduto[i];
-     }
-     return qtde;
-   }
-   
-   //retorna o período referente aos desvios
-   public double geraDadosDesvio(int periodo, double[] desvio){
-     double des = 0;   
-     for(int i = 0; i< periodo;i++){
-         des= desvio[i];
-     }
-     return des;
-   }
       
    //Mostrara a String referente ao período informado
    public String periodo(int i){
        String periodo =null;
        switch(i){
-            case 1:
+            case 01:
                 periodo = "Jan";
                 break;
-            case 2:
+            case 02:
                 periodo = "Fev";
                 break;
-            case 3:
+            case 03:
                 periodo = "Mar";
                 break;
-            case 4:
+            case 04:
                 periodo = "Abr";
                 break;
-            case 5:
+            case 05:
                 periodo = "Mai";
                 break;
-            case 6:
+            case 06:
                 periodo = "Jun";
                 break;
-            case 7:
+            case 07:
                 periodo = "Jul";
                 break;
             case 8:
