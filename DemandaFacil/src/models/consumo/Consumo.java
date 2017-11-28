@@ -20,6 +20,9 @@ public class Consumo {
     private Date data;
     private String periodo;
     private Produto produto;
+    
+    private String datas;
+
 
     public Consumo() {
         this.data = new Date();
