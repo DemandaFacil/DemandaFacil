@@ -5,7 +5,10 @@
  */
 package views.produtos;
 
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
+import models.consumo.Consumo;
+import models.consumo.ConsumoDAO;
 import models.empresa.Empresa;
 import models.produto.ProdutoDAO;
 import models.produto.Produto;
@@ -20,6 +23,7 @@ public class PerfilProduto extends javax.swing.JFrame {
     private Empresa empresa;
     private Usuario usuario;
     private Produto produto;
+    private Consumo consumo;
     
     /**
      * Creates new form teste
@@ -242,20 +246,17 @@ public class PerfilProduto extends javax.swing.JFrame {
 
         tbl_consumo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "Número", "Consumo", "Periodo"
+                "Id", "Consumo", "Periodo"
             }
         ) {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -452,6 +453,30 @@ public class PerfilProduto extends javax.swing.JFrame {
 
     private void btn_consumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consumoActionPerformed
         // TODO add your handling code here:
+        String valor = "";
+        int v = 0;
+        consumo = new Consumo();
+        consumo.setProduto(produto);
+        ConsumoDAO dao = new ConsumoDAO();
+        if(consumo.periodoExato()){
+            do{
+            valor = JOptionPane.showInputDialog(null, "Insira o Consumo: ", "Consumo", JOptionPane.PLAIN_MESSAGE);
+                if (valor.equals("")) {
+                    JOptionPane.showMessageDialog(null, "Digite um consumo válido.", "Valor inválido", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    try{
+                        v = Integer.parseInt(valor);
+                    }catch(NumberFormatException ex){
+                        System.err.println("Erro ao inserir: " + ex);
+                        JOptionPane.showMessageDialog(null, "Formato de número inválido!", "Entrada Inválida", JOptionPane.ERROR_MESSAGE);
+                    }
+                    consumo.setQuantidade(v);
+                    dao.create(consumo, tbl_consumo);
+                }
+            }while (valor.equals("") || v == 0);
+        }else{
+            JOptionPane.showMessageDialog(null, "Não é possível adicionar um consumo! Volte quando for "+ consumo.getPeriodo(), "Erro no Consumo", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btn_consumoActionPerformed
 
     private void btn_estatisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_estatisticasActionPerformed
@@ -475,7 +500,10 @@ public class PerfilProduto extends javax.swing.JFrame {
         jbl_campo_nome.setText(produto.getNome());
         jbl_campo_periodo.setText(Integer.toString(produto.getPeriodo_de_reposicao()));
         jbl_campo_tipo.setText("Mês");
-        //Procura todos os consumos e mostra na tabela
+        ConsumoDAO dao = new ConsumoDAO();
+        consumo = new Consumo();
+        consumo.setProduto(produto);
+        dao.listaConsumo(tbl_consumo, consumo);
     }//GEN-LAST:event_formWindowActivated
 
     /**

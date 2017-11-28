@@ -241,14 +241,7 @@ public class ListaDeEmpresas extends javax.swing.JFrame {
 
         tbl_empresas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "CNPJ", "Nome"
@@ -269,10 +262,8 @@ public class ListaDeEmpresas extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tbl_empresas.setColumnSelectionAllowed(true);
         tbl_empresas.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tbl_empresas);
-        tbl_empresas.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         javax.swing.GroupLayout jPanel_ListaLayout = new javax.swing.GroupLayout(jPanel_Lista);
         jPanel_Lista.setLayout(jPanel_ListaLayout);
@@ -376,7 +367,12 @@ public class ListaDeEmpresas extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_voltarActionPerformed
 
     private void btn_visualizar_empresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_visualizar_empresaActionPerformed
+        int linhaSelecionada = tbl_empresas.getSelectedRow();
+        String idProdutoLinha = tbl_empresas.getValueAt(linhaSelecionada, 0).toString(); //1º seleciona linha, 2º seleciona coluna desejada
+        EmpresaDAO dao = new EmpresaDAO();
         PerfilEmpresa perfilEmpresa = new PerfilEmpresa();
+        empresa = dao.leEmpresaCNPJ(idProdutoLinha);
+        empresa.setUsuario(usuario);
         perfilEmpresa.setEmpresa(empresa);
         perfilEmpresa.setVisible(true);
         this.setVisible(false);

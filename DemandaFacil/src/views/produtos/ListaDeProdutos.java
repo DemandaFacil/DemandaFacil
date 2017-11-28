@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import models.empresa.Empresa;
 import models.produto.ProdutoDAO;
 import models.usuario.Usuario;
+import views.empresa.PerfilEmpresa;
 
 /**
  *
@@ -229,14 +230,7 @@ public class ListaDeProdutos extends javax.swing.JFrame {
 
         tbl_produtos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "id", "Nome"
@@ -257,10 +251,8 @@ public class ListaDeProdutos extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tbl_produtos.setColumnSelectionAllowed(true);
         tbl_produtos.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tbl_produtos);
-        tbl_produtos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (tbl_produtos.getColumnModel().getColumnCount() > 0) {
             tbl_produtos.getColumnModel().getColumn(0).setResizable(false);
             tbl_produtos.getColumnModel().getColumn(0).setPreferredWidth(1);
@@ -375,6 +367,10 @@ public class ListaDeProdutos extends javax.swing.JFrame {
 
     private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
         // TODO add your handling code here:
+        PerfilEmpresa perfilEmpresa = new PerfilEmpresa();
+        perfilEmpresa.setEmpresa(empresa);
+        perfilEmpresa.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btn_voltarActionPerformed
 
     private void btn_novo_produtoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_novo_produtoActionPerformed
@@ -387,12 +383,13 @@ public class ListaDeProdutos extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_novo_produtoActionPerformed
 
     private void btn_visualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_visualizarActionPerformed
-        
         int linhaSelecionada = tbl_produtos.getSelectedRow();
         int idProdutoLinha = Integer.parseInt(tbl_produtos.getValueAt(linhaSelecionada, 0).toString()); //1º seleciona linha, 2º seleciona coluna desejada
-        PerfilProduto perfilProd = new PerfilProduto(idProdutoLinha);
-        perfilProd.setVisible(true);
-        
+        ProdutoDAO dao = new ProdutoDAO();
+        PerfilProduto perfilProduto = new PerfilProduto();
+        perfilProduto.setProduto(dao.leProduto(idProdutoLinha));
+        perfilProduto.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btn_visualizarActionPerformed
 
     private void txt_pesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_pesquisaKeyReleased

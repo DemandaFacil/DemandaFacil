@@ -101,7 +101,6 @@ public class EmpresaDAO {
     
     public void findEmpresa(String pesquisa, JTable tabela, Usuario usuario) {
         
-        
         PreparedStatement stmt = null;
         ResultSet rs = null;
         String sql = "SELECT e.CNPJ, e.nome FROM Empresa e INNER JOIN Empresa_has_Usuario eu on e.idEmpresa = eu.Empresa_idEmpresa INNER JOIN Usuario u on eu.Usuario_idUsuario = u.idUsuario WHERE e.nome LIKE CONCAT('%',?, '%') AND u.idUsuario = ? GROUP BY idEmpresa, e.nome ASC";
@@ -179,5 +178,48 @@ public class EmpresaDAO {
         }
         return false;
     }
+
+    public Empresa leEmpresaCNPJ(String cnpj) {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Empresa empresa = new Empresa();
+        try{
+            stmt = con.prepareStatement("SELECT * FROM Empresa WHERE CNPJ like concat(?,'%')");
+            stmt.setString(1, cnpj);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                empresa.setIdEmpresa(rs.getInt(1));
+                empresa.setCNPJ(rs.getString(2));
+                empresa.setNome(rs.getString(3));
+            }
+            return empresa;
+        }catch(SQLException ex){
+            System.out.println(ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        return null;
+    }
     
+    public Empresa leEmpresa(int id) {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Empresa empresa = new Empresa();
+        try{
+            stmt = con.prepareStatement("SELECT * FROM Empresa WHERE idEmpresa = ?");
+            stmt.setInt(1, id);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                empresa.setIdEmpresa(rs.getInt(1));
+                empresa.setCNPJ(rs.getString(2));
+                empresa.setNome(rs.getString(3));
+            }
+            return empresa;
+        }catch(SQLException ex){
+            System.out.println(ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        return null;
+    }
 }
