@@ -28,20 +28,23 @@ public class EstimativaGraficos extends javax.swing.JFrame {
     private Estimativas es;
     private Connection conn;
     private String produtoNome;
+    private int reposicao;
     private String datas;
     private String select;
     private int Produto_idProduto;
     private double valores;
+    private int Start,End;
     
     public EstimativaGraficos() {
         initComponents();
         this.conn = ConnectionFactory.getConnection();
     }
     
-    public EstimativaGraficos(String nomeProduto, String data){
+    public EstimativaGraficos(String nomeProduto, String data,String periodoReposicao){
        initComponents();
        produtoNome=nomeProduto;
        datas=data;
+       reposicao=Integer.parseInt(periodoReposicao);
        this.conn = ConnectionFactory.getConnection();
        this.comboMedias.setSelectedIndex(1);
        btn_gerar_grafico.doClick();
@@ -229,7 +232,7 @@ public class EstimativaGraficos extends javax.swing.JFrame {
         painelBackgroundForm.setBackground(java.awt.Color.lightGray);
 
         btn_gerar_grafico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Combo Chart.png"))); // NOI18N
-        btn_gerar_grafico.setText("Gerar outro Gráfico");
+        btn_gerar_grafico.setText("Gerar Gráfico");
         btn_gerar_grafico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_gerar_graficoActionPerformed(evt);
@@ -243,7 +246,7 @@ public class EstimativaGraficos extends javax.swing.JFrame {
         jLabel1.setText("Estimativas");
 
         btn_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Salvar-26.png"))); // NOI18N
-        btn_salvar.setText("Salvar");
+        btn_salvar.setText("Salvar Estimativa");
         btn_salvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_salvarActionPerformed(evt);
@@ -254,17 +257,19 @@ public class EstimativaGraficos extends javax.swing.JFrame {
         painelForm.setLayout(painelFormLayout);
         painelFormLayout.setHorizontalGroup(
             painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelFormLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelFormLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(btn_gerar_grafico)
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboMedias, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(btn_salvar)
-                .addGap(53, 53, 53))
-            .addComponent(painelGrafico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(27, 27, 27))
+            .addGroup(painelFormLayout.createSequentialGroup()
+                .addComponent(painelGrafico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         painelFormLayout.setVerticalGroup(
             painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -325,6 +330,7 @@ public class EstimativaGraficos extends javax.swing.JFrame {
             desvio();
             btn_salvar.setEnabled(false);
         }else if(comboMedias.getSelectedIndex()==3){
+            demanda();
             btn_salvar.setEnabled(false);
         }
     }//GEN-LAST:event_btn_gerar_graficoActionPerformed
@@ -339,40 +345,77 @@ public class EstimativaGraficos extends javax.swing.JFrame {
             EstimativaDAO dao = new EstimativaDAO();
             e.setData(dataFormatada);
             e.setProduto_IdProduto(Produto_idProduto);
-            e.setValorCalculado(valores);
+            e.setValorCalculado((int) valores);
             dao.insert(e);
        }else if(select.equals("mediaPonderada")){
             Estimativas e = new Estimativas();
             EstimativaDAO dao = new EstimativaDAO();
             e.setData(dataFormatada);
             e.setProduto_IdProduto(Produto_idProduto);
-            e.setValorCalculado(valores);
+            e.setValorCalculado((int) valores);
             dao.insert(e);   
        }
     }//GEN-LAST:event_btn_salvarActionPerformed
-    
     
     public void demanda(){
         
       GraficoDAO dao = new GraficoDAO();
       Produto_idProduto = dao.getIdProduto(produtoNome);
       ArrayList<Estimativas> dadosEstimativas = new ArrayList<Estimativas>();
+      ArrayList<Consumo> dadosConsumo = new ArrayList<Consumo>();
       dadosEstimativas = getDadosEstimativas(Produto_idProduto, datas);
+      dadosConsumo = getDados(Produto_idProduto, datas);
+      
       int tamanho;
       tamanho = dadosEstimativas.size();
       
-      Vector<Integer> meses = new Vector<>(dadosEstimativas.size());
-      Vector<Double> valor = new Vector<>(dadosEstimativas.size());
-      int qtde[] = new int[tamanho];
+      Vector<Integer> quantidade = new Vector<Integer>(dadosConsumo.size());
+      Vector<Integer> valorEstimativa = new Vector<Integer>(dadosEstimativas.size());
+      Vector<Integer> mesesReposicao = new Vector<>(dadosConsumo.size());
+      int valorEstimativas[] = new int[tamanho];
       int mes[] = new int[tamanho];
-      
+      int qtde[] = new int[tamanho];
       for(Estimativas e : dadosEstimativas){
-        meses.add(Integer.parseInt(e.getData()));
-        valor.add(e.getValorCalculado());
-      }    
+        valorEstimativa.add(e.getValorCalculado());
+      }
+      for(int x = 0;x<tamanho;x++){
+          valorEstimativas[x]=valorEstimativa.elementAt(x);
+      }
+      //
+      for(Consumo c : dadosConsumo){
+        mesesReposicao.add(Integer.parseInt(c.getPeriodo().substring(0,2)));
+        quantidade.add(c.getQuantidade());
+      }
+      for(int x = 0;x<tamanho;x++){
+          mes[x]=mesesReposicao.elementAt(x);
+          qtde[x]=quantidade.elementAt(x);
+      }
       
+      //Calculando o inicio da previsão
+      if((mes[(mes.length-1)]+reposicao)>12){
+         Start = (mes[(mes.length-1)]+reposicao) -12;  
+      }else{
+         Start = (mes[(mes.length-1)]+reposicao); 
+      }
+      
+      //Calculando o fim da previsão
+      for(int i=1;i<=mes.length;i++){
+          End = Start*i;
+          if(End>12){
+            End = End-12;
+          }
+      }
+      
+      Grafico graf = new Grafico(valorEstimativas,Start,End+2);
+      graf.criaDados(Produto_idProduto,reposicao);
+      //graf.criaDados2(Produto_idProduto, reposicao);
+      painelGrafico.removeAll();
+      painelGrafico.add(graf.getPanel());
+      this.pack();
+      painelGrafico.validate();
+      painelGrafico.repaint();
     }
-    
+   
     public void mediaMovel(){
       select="mediaMovel";
       GraficoDAO dao = new GraficoDAO();
@@ -380,7 +423,7 @@ public class EstimativaGraficos extends javax.swing.JFrame {
       ArrayList<Consumo> dadosConsumo = new ArrayList<Consumo>();
       dadosConsumo = getDados(Produto_idProduto, datas);
       int tamanho;
-      tamanho = dadosConsumo.size()+1;
+      tamanho = dadosConsumo.size();
 
       Vector<Integer> meses = new Vector<>(dadosConsumo.size());
       Vector<Integer> quantidade = new Vector<>(dadosConsumo.size());
@@ -389,19 +432,22 @@ public class EstimativaGraficos extends javax.swing.JFrame {
       int[]media = new int[tamanho];
       int soma=0;
       int valorCalculado;
-      
+
       for(Consumo c : dadosConsumo){
         meses.add(Integer.parseInt(c.getPeriodo().substring(0,2)));
         quantidade.add(c.getQuantidade());
         soma+=c.getQuantidade();
-      }    
+      }
+      
       valorCalculado=soma/tamanho;
       valores=valorCalculado;
       
       for(int x = 0;x<tamanho;x++){
           qtde[x]=quantidade.elementAt(x);
           mes[x]=meses.elementAt(x);
-      } 
+      }
+      //Salvo o conteudo dos meses de reposicao para fazer a previsao de demanda
+       
       for(int i=0;i<media.length;i++){
           media[i]=0;
           media[i]=valorCalculado;
@@ -410,8 +456,8 @@ public class EstimativaGraficos extends javax.swing.JFrame {
       int inicio= meses.firstElement();
       //Insere os array de quantidades e o periodo informado, transformando eles em inteiros
       Grafico graf = new Grafico(qtde,media,inicio,fim);
-      graf.criaDados(Produto_idProduto);
-      graf.criaDados2(Produto_idProduto);
+      graf.criaDados(Produto_idProduto,reposicao);
+      graf.criaDados2(Produto_idProduto, reposicao);
       painelGrafico.removeAll();
       painelGrafico.add(graf.getPanel());
       this.pack();
@@ -423,6 +469,7 @@ public class EstimativaGraficos extends javax.swing.JFrame {
       select="mediaPonderada";
       GraficoDAO dao = new GraficoDAO();
       Produto_idProduto = dao.getIdProduto(produtoNome);
+
       ArrayList<Consumo> dadosConsumo = new ArrayList<Consumo>();
       dadosConsumo = getDados(Produto_idProduto,datas);
       int tamanho;
@@ -435,7 +482,7 @@ public class EstimativaGraficos extends javax.swing.JFrame {
       int[] mediaPonderada = new int[tamanho];
       int soma=0;
       float peso, valor=0;
-      
+
       for(Consumo c : dadosConsumo){
         meses.add(Integer.parseInt(c.getPeriodo().substring(0,2)));
         quantidade.add(c.getQuantidade());
@@ -445,6 +492,8 @@ public class EstimativaGraficos extends javax.swing.JFrame {
           qtde[x]=quantidade.elementAt(x);
           mes[x]=meses.elementAt(x);
       }
+      //Salvo o conteudo dos meses de reposicao para fazer a previsao de demanda
+      
       
       for(Consumo c: dadosConsumo){
           peso = (float) ((double) c.getQuantidade()/soma); //identifica peso daquele valor
@@ -457,16 +506,16 @@ public class EstimativaGraficos extends javax.swing.JFrame {
       }
       
       int fim = meses.lastElement();
-      int inicio= meses.firstElement();
- 
+      int inicio= meses.firstElement(); 
+      
       Grafico graf = new Grafico(qtde,mediaPonderada,inicio,fim);
-      graf.criaDados(Produto_idProduto);
-      graf.criaDados2(Produto_idProduto);
+      graf.criaDados(Produto_idProduto,reposicao);
+      graf.criaDados2(Produto_idProduto,reposicao);
       painelGrafico.removeAll();
       painelGrafico.add(graf.getPanel());
       this.pack();
       painelGrafico.validate();
-      painelGrafico.repaint();  
+      painelGrafico.repaint();
     }
     
     public void desvio(){
@@ -568,8 +617,8 @@ public class EstimativaGraficos extends javax.swing.JFrame {
       int inicio= meses.firstElement();
       
       Grafico graf = new Grafico(qtde,desvio,inicio,fim);
-      graf.criaDados(Produto_idProduto);  
-      graf.criaDadosDesvio(Produto_idProduto);
+      graf.criaDados(Produto_idProduto, reposicao);  
+      graf.criaDadosDesvio(Produto_idProduto,reposicao);
       painelGrafico.removeAll();
       painelGrafico.add(graf.getPanel());
       this.pack();
@@ -580,23 +629,25 @@ public class EstimativaGraficos extends javax.swing.JFrame {
     
     public ArrayList<Consumo> getDados(int idProduto, String datas){
       ArrayList<Consumo> listaConsumo = new ArrayList<Consumo>(); 
-      String query = "SELECT quantidade as qtde, SUBSTRING(periodo,0,2) as data FROM consumo where Produto_idProduto="+idProduto+" and data like '"+datas+"%' order by data";              
+      String query = "SELECT quantidade as qtde, periodo as periodo FROM consumo where Produto_idProduto="+idProduto+" and data like '"+datas+"%' order by data";              
+      int qtde=0;
+      String periodo=null;
       try {
             PreparedStatement stmt = conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 con = new Consumo();
-                int qtde = rs.getInt("qtde");
-                String data = rs.getString("data");
-                
-                if(data == "08"){
-                    data = "8";
+                qtde = rs.getInt("qtde");
+                periodo = rs.getString("periodo");
+                /*
+                if(periodo == "08"){
+                    periodo = "8";
                 }
-                if(data== "09"){
-                    data="9";
-                }
+                if(periodo== "09"){
+                    periodo="9";
+                }*/
                 con.setQuantidade(qtde);
-                con.setPeriodo(data);
+                con.setPeriodo(periodo);
 		listaConsumo.add(con);
             }
             stmt.close();
@@ -609,24 +660,15 @@ public class EstimativaGraficos extends javax.swing.JFrame {
     
     public ArrayList<Estimativas> getDadosEstimativas(int idProduto, String datas){
         ArrayList<Estimativas> listaEstimativas = new ArrayList<Estimativas>();
-        String query = "SELECT valorCalculado as valorCalculado, SUBSTRING(data,6,2) as data FROM estimativas where Produto_idProduto="+idProduto+" and data like '"+datas+"%' order by data";
+        String query = "SELECT valorCalculado as valorCalculado FROM estimativa where Produto_idProduto="+idProduto+" and data like '"+datas+"%' order by data";
          try {
             PreparedStatement stmt = conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
                 es = new Estimativas();
-                String data = rs.getString("data");
-                int valor = rs.getInt("valorCalculado");
+                int valor = rs.getInt("valorCalculado");   
                 
-                if(data == "08"){
-                    data = "8";
-                }
-                if(data== "09"){
-                    data="9";
-                }
-                es.setProduto_IdProduto(Produto_idProduto);
                 es.setValorCalculado(valor);
-                es.setData(data);
 		listaEstimativas.add(es);
             }
             stmt.close();

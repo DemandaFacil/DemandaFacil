@@ -23,25 +23,25 @@ public class CalculoGrafico {
    public String periodo(int i){
        String periodo =null;
        switch(i){
-            case 01:
+            case 1:
                 periodo = "Jan";
                 break;
-            case 02:
+            case 2:
                 periodo = "Fev";
                 break;
-            case 03:
+            case 3:
                 periodo = "Mar";
                 break;
-            case 04:
+            case 4:
                 periodo = "Abr";
                 break;
-            case 05:
+            case 5:
                 periodo = "Mai";
                 break;
-            case 06:
+            case 6:
                 periodo = "Jun";
                 break;
-            case 07:
+            case 7:
                 periodo = "Jul";
                 break;
             case 8:

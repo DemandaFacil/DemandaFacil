@@ -475,7 +475,8 @@ public class PerfilProduto extends javax.swing.JFrame {
         /*Teste teste = new Teste(nomeProduto);
         teste.setLocationRelativeTo(null);
         teste.setVisible(true);*/
-        Estimativa estimativa = new Estimativa(nomeProduto);
+        String reposicao = jbl_campo_periodo.getText();
+        Estimativa estimativa = new Estimativa(nomeProduto, reposicao);
         estimativa.setLocationRelativeTo(null);
         estimativa.setVisible(true);
     }//GEN-LAST:event_btn_estatisticasActionPerformed

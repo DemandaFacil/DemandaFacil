@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.event.ChartChangeListener;
 import org.jfree.chart.event.ChartProgressListener;
@@ -49,7 +50,7 @@ public class Grafico {
      //Inserção de dados no gráfico
      this.dados = new DefaultCategoryDataset();
      this.dados2 = new DefaultCategoryDataset();
-     this.grafico = ChartFactory.createLineChart("Estatísticas - Médias", 
+     this.grafico = ChartFactory.createLineChart("Previsão de Demanda", 
                        "Período", "Quantidade", dados,
                        PlotOrientation.VERTICAL, 
                          true, true, false);     
@@ -68,7 +69,7 @@ public class Grafico {
      this.grafico = ChartFactory.createLineChart("Estatísticas - Médias", 
                        "Período", "Quantidade", dados,
                        PlotOrientation.VERTICAL, 
-                         true, true, false);     
+                         true, true, false);
    }
    
    public Grafico(int[] qtde1,double[]qtde3, int comeco, int fim) {
@@ -87,65 +88,116 @@ public class Grafico {
                          true, true, false);     
    }
    
-   
    //Cria os dados para inserir no gráfico apartir da quantidade e período informados
    //Passar um código de produto
-   public void criaDados(int id) {
-      
+   public void criaDados(int id, int reposicao) { 
       String nomeProduto;
       GraficoDAO dao = new GraficoDAO();
       CalculoGrafico x = new CalculoGrafico();
       nomeProduto = dao.procuraNomeProduto(id);
-      int elementos=0;  
-      for (int i = comeco; i <= fim; i++) {
-       //Chama a função para obter a quantidade referente a tal periodo
-       //int valor = x.geraDados(i, qtde1); 
-       //Chama a função para obter o periodo que foi informado
-       int valor = qtde1[elementos];
-       
-       String periodo = x.periodo(i);
-       dados.addValue(valor,nomeProduto,periodo);
-       elementos++;
-     }
+      int elementos=0;
+      int i = comeco;
+      while(i!=fim){
+         if(i==12){
+             i=0;
+             i+=reposicao;
+             int valor = qtde1[elementos];
+             String periodo = x.periodo(i);
+             dados.addValue(valor,nomeProduto,periodo);
+             elementos++;
+         }else if (i<12){
+            int valor = qtde1[elementos];
+            String periodo = x.periodo(i);
+            dados.addValue(valor,nomeProduto,periodo);
+            elementos++;
+            i+=reposicao;
+         }
+      }
+       /* for (int i = comeco; i <= fim; i++) {
+        //Chama a função para obter a quantidade referente a tal periodo
+        //int valor = x.geraDados(i, qtde1); 
+        //Chama a função para obter o periodo que foi informado
+        int valor = qtde1[elementos];
+        String periodo = x.periodo(i);
+        dados.addValue(valor,nomeProduto,periodo);
+        elementos++;
+        }*/
+      
      } 
    
    //Cria os dados para inserir no gráfico apartir da quantidade e período informados sendo dados de outra tabela
    //Passar um código de produto
-   public void criaDados2(int id) {
+   public void criaDados2(int id, int reposicao) {
      int elementos=0;
      String nomeProduto = null;
      GraficoDAO dao = new GraficoDAO();
      CalculoGrafico x = new CalculoGrafico();
      nomeProduto = dao.procuraNomeProduto(id);
-     for (int i = comeco; i <= fim; i++) {
-       //Chama a função para obter a quantidade referente a tal periodo
-       int valor = qtde2[elementos];
-       //Chama a função para obter o periodo que foi informado
-       String periodo = x.periodo(i);
-       dados2.addValue(valor,nomeProduto,periodo); 
-       elementos++;
+     int i = comeco;
+     while(i!=fim){
+         if(i==12){
+             i=0;
+             i+=reposicao;
+             int valor = qtde2[elementos];
+             String periodo = x.periodo(i);
+             dados2.addValue(valor,nomeProduto,periodo);
+             elementos++;
+         }else if(i<12){
+            int valor = qtde2[elementos];
+            String periodo = x.periodo(i);
+            dados2.addValue(valor,nomeProduto,periodo);
+            elementos++;
+            i+=reposicao;
+         }
      }
-     }  
+     /*
+        for (int i = comeco; i <= fim; i++) {
+       //Chama a função para obter a quantidade referente a tal periodo
+        int valor = qtde2[elementos];
+       //Chama a função para obter o periodo que foi informado
+        String periodo = x.periodo(i);
+        dados2.addValue(valor,nomeProduto,periodo); 
+        elementos++;
+        }*/
+    }  
       
-   
    //Recebe o valor dos desvios 
-   public void criaDadosDesvio(int id) {
+   public void criaDadosDesvio(int id, int reposicao) {
      int elementos=0;
      String nomeProduto;
      GraficoDAO dao = new GraficoDAO();
      CalculoGrafico x = new CalculoGrafico();
      nomeProduto = dao.procuraNomeProduto(id);
-     for (int i = comeco; i <= fim; i++) {
+     int i= comeco;
+     while(i!=fim){
+         if(i==12){
+             i=0;
+             i+=reposicao;
+             double valor = qtde3[elementos];
+             String periodo = x.periodo(i);
+             dados2.addValue(valor,nomeProduto,periodo);
+             elementos++;
+         }else if(i<12){
+            double valor = qtde3[elementos];
+            String periodo = x.periodo(i);
+            dados2.addValue(valor,nomeProduto,periodo);
+            elementos++;
+            i+=reposicao;
+         }
+      }
+     
+     /*for (int i = comeco; i <= fim; i++) {
        //Chama a função para obter a quantidade referente a tal periodo
        //double valor = x.geraDadosDesvio(i, qtde3);
        //Chama a função para obter o periodo que foi informado
        double valor = qtde3[elementos];
        String periodo = x.periodo(i);
        dados2.addValue(valor,nomeProduto,periodo); 
-     }  
+     }*/  
     } 
    //Cria o painel do gráfico.
    public ChartPanel getPanel() {
+        
         //Recupera o gráfico com somente um dado inserido
         final CategoryPlot plot = grafico.getCategoryPlot();
         //Plota a cor de fundo para branco
@@ -162,7 +214,6 @@ public class Grafico {
         //Formatação caso o número decimal e tiver mais que duas casas decimais
         final DecimalFormat format = new DecimalFormat("#0.##");
         renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator("{2}", format));
-        
         //Plota a segunda linha de dados
         plot.setDataset(1, dados2);
         renderer.setSeriesPaint(1, Color.BLUE);
