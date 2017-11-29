@@ -6,17 +6,18 @@ import java.sql.Connection;
 
 public class Estimativa extends javax.swing.JFrame {
     private Connection conn;
+    private String periodoReposicao;
     
     public Estimativa() {
         initComponents();
         this.conn = ConnectionFactory.getConnection();
     }
 
-   public Estimativa(String nomeProduto){
+   public Estimativa(String nomeProduto, String reposicao){
        initComponents();
        //O nome foi setado porque o label nao estava pegando do banco
-       nomeProduto="Palheiro Paulistinha";
        txt_nomeProduto.setText(nomeProduto);
+       periodoReposicao=reposicao;
        this.conn = ConnectionFactory.getConnection();
        
    }
@@ -298,7 +299,7 @@ public class Estimativa extends javax.swing.JFrame {
     private void btn_gerargraficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_gerargraficoActionPerformed
         String nomeProduto = txt_nomeProduto.getText();
         String data = (String) comboDatas.getSelectedItem();
-        EstimativaGraficos es = new EstimativaGraficos(nomeProduto,data);
+        EstimativaGraficos es = new EstimativaGraficos(nomeProduto,data,periodoReposicao);
         es.setLocationRelativeTo(null);
         es.setVisible(true);
     }//GEN-LAST:event_btn_gerargraficoActionPerformed
