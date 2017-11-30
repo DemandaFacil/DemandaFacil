@@ -6,7 +6,6 @@
 package views.core;
 
 import controllers.control.login.LoginControl;
-import models.usuario.Usuario;
 import views.usuario.CadastroUsuario;
 
 /**
@@ -49,6 +48,7 @@ public class Login extends javax.swing.JFrame {
         jbl_cadastro = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Área de Acesso - DemandaFácil 1.0");
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

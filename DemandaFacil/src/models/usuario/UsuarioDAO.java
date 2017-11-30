@@ -58,23 +58,25 @@ public class UsuarioDAO {
             return usuario;
         }catch(SQLException ex){
             System.err.println("Erro ao Encontrar Usuario: "+ ex);
-            return usuario;
+            return null;
         }finally{
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
     }
     
-    public Usuario leUsuario(String nome) throws Exception{
+    public Usuario leUsuario(int id){
         PreparedStatement stmt = null;
         ResultSet rs = null;
         Usuario usuario = new Usuario();
         try{
-            stmt = con.prepareStatement("SELECT nome, senha FROM usuario WHERE nome = ?");
-            stmt.setString(1, nome);
+            stmt = con.prepareStatement("SELECT idUsuario, nome, login, senha FROM Usuario WHERE idUsuario = ?");
+            stmt.setInt(1, id);
             rs = stmt.executeQuery();
             while(rs.next()){
-                usuario.setNome(rs.getString(1)); // enviar pro objeto o valor do banco
-                usuario.setSenha(rs.getString(2));
+                usuario.setIdUsuario(rs.getInt(1));
+                usuario.setNome(rs.getString(2)); // enviar pro objeto o valor do banco
+                usuario.setLogin(rs.getString(3));
+                usuario.setSenha(rs.getString(4));
             }
             return usuario;
         }catch(SQLException ex){

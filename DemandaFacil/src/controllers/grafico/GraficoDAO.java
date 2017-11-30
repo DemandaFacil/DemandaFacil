@@ -5,8 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JTable;
-import net.proteanit.sql.DbUtils;
 
 public class GraficoDAO {
     Connection con;
@@ -19,7 +17,7 @@ public class GraficoDAO {
        PreparedStatement stmt = null;
        ResultSet rs = null;
        String nomeProduto = null;
-       String sql = "select p.nome as nome from produto p join consumo c on(p.idProduto = c.Produto_idProduto) where c.Produto_idProduto = "+id;
+       String sql = "select p.nome as nome from Produto p join Consumo c on(p.idProduto = c.Produto_idProduto) where c.Produto_idProduto = "+id;
         try{
             stmt = con.prepareStatement(sql);
             rs = stmt.executeQuery();
@@ -39,7 +37,7 @@ public class GraficoDAO {
        PreparedStatement stmt = null;
        ResultSet rs = null;
        int id=0;
-       String query = "SELECT c.Produto_idProduto FROM consumo c JOIN produto p where p.nome = '"+nomeProduto+"' ";
+       String query = "SELECT c.Produto_idProduto FROM Consumo c JOIN Produto p where p.nome = '"+nomeProduto+"' ";
        try{
             stmt = con.prepareStatement(query);
             rs = stmt.executeQuery();

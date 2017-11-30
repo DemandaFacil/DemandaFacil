@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import models.usuario.Usuario;
+import models.usuario.UsuarioDAO;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -96,7 +97,6 @@ public class EmpresaDAO {
         }finally{
             ConnectionFactory.closeConnection(con, stmt);
         }
-        
     }
     
     public void findEmpresa(String pesquisa, JTable tabela, Usuario usuario) {
@@ -205,6 +205,7 @@ public class EmpresaDAO {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         Empresa empresa = new Empresa();
+        
         try{
             stmt = con.prepareStatement("SELECT * FROM Empresa WHERE idEmpresa = ?");
             stmt.setInt(1, id);
@@ -214,6 +215,7 @@ public class EmpresaDAO {
                 empresa.setCNPJ(rs.getString(2));
                 empresa.setNome(rs.getString(3));
             }
+            
             return empresa;
         }catch(SQLException ex){
             System.out.println(ex);
