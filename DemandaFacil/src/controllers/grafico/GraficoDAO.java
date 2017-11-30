@@ -37,12 +37,13 @@ public class GraficoDAO {
        PreparedStatement stmt = null;
        ResultSet rs = null;
        int id=0;
-       String query = "SELECT c.Produto_idProduto FROM Consumo c JOIN Produto p where p.nome = '"+nomeProduto+"' ";
+
+       String query = "SELECT idProduto FROM produto where nome = '"+nomeProduto+"' ";
        try{
             stmt = con.prepareStatement(query);
             rs = stmt.executeQuery();
             while(rs.next()){
-                id = rs.getInt("Produto_idProduto");
+                id = rs.getInt("idProduto");
             }
         }catch(SQLException ex){
             System.out.println(ex);

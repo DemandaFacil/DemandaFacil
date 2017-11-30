@@ -157,7 +157,7 @@ public class EditarEmpresa extends javax.swing.JFrame {
 
         iconLogo.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         iconLogo.setForeground(java.awt.Color.white);
-        iconLogo.setText("Logo");
+        iconLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/logo/logotipo.png"))); // NOI18N
 
         linhaDivisoria.setBackground(new java.awt.Color(178, 242, 236));
 
@@ -179,19 +179,18 @@ public class EditarEmpresa extends javax.swing.JFrame {
             .addComponent(opcaoMenuHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(opcaoMenuEmpresas, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
             .addComponent(opcaoMenuSair, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(menuLateralLayout.createSequentialGroup()
-                .addGap(82, 82, 82)
-                .addComponent(iconLogo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(linhaDivisoria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(opcaoMenuPerfil, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(menuLateralLayout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addComponent(iconLogo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         menuLateralLayout.setVerticalGroup(
             menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuLateralLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
                 .addComponent(iconLogo)
-                .addGap(43, 43, 43)
+                .addGap(18, 18, 18)
                 .addComponent(linhaDivisoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47)
                 .addComponent(opcaoMenuHome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -199,7 +198,7 @@ public class EditarEmpresa extends javax.swing.JFrame {
                 .addComponent(opcaoMenuPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(opcaoMenuEmpresas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
                 .addComponent(opcaoMenuSair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38))
         );
@@ -210,13 +209,13 @@ public class EditarEmpresa extends javax.swing.JFrame {
 
         subTitulo.setFont(new java.awt.Font("Merriweather Light", 1, 24)); // NOI18N
         subTitulo.setForeground(java.awt.Color.white);
-        subTitulo.setText("Editar");
+        subTitulo.setText("Empresa");
         subTitulo.setMaximumSize(new java.awt.Dimension(90, 24));
         subTitulo.setMinimumSize(new java.awt.Dimension(90, 24));
 
         nomePagina.setFont(new java.awt.Font("Merriweather Light", 1, 36)); // NOI18N
         nomePagina.setForeground(java.awt.Color.white);
-        nomePagina.setText("Empresa");
+        nomePagina.setText("Editar Empresa");
 
         javax.swing.GroupLayout faixaTituloLayout = new javax.swing.GroupLayout(faixaTitulo);
         faixaTitulo.setLayout(faixaTituloLayout);

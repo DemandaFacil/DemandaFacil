@@ -69,22 +69,21 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="linhaDivisoria" alignment="0" max="32767" attributes="0"/>
                   <Component id="opcaoMenuHome" alignment="0" max="32767" attributes="0"/>
-                  <Component id="opcaoMenuEmpresas" alignment="0" max="32767" attributes="0"/>
+                  <Component id="opcaoMenuEmpresas" alignment="0" pref="230" max="32767" attributes="0"/>
                   <Component id="opcaoMenuSair" alignment="1" max="32767" attributes="0"/>
                   <Component id="opcaoMenuPerfil" alignment="1" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                       <Component id="iconLogo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="94" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                       <Component id="iconLogo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Component id="linhaDivisoria" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                       <Component id="opcaoMenuHome" min="-2" max="-2" attributes="0"/>
@@ -92,7 +91,7 @@
                       <Component id="opcaoMenuPerfil" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="opcaoMenuEmpresas" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="107" max="32767" attributes="0"/>
+                      <EmptySpace pref="106" max="32767" attributes="0"/>
                       <Component id="opcaoMenuSair" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   </Group>
@@ -279,7 +278,9 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Logo"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/views/imagens/logo/logotipo.png"/>
+                </Property>
               </Properties>
             </Component>
           </SubComponents>
@@ -330,7 +331,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Nome Empresa"/>
+                <Property name="text" type="java.lang.String" value="Empresa"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[90, 24]"/>
                 </Property>
@@ -393,7 +394,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jScrollPane1" max="32767" attributes="0"/>
+                              <Component id="jScrollPane1" pref="484" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Component id="btn_voltar" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
@@ -401,15 +402,10 @@
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="jbl_pesquisa" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="234" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="txt_pesquisa" min="-2" pref="180" max="-2" attributes="0"/>
-                                          <EmptySpace max="32767" attributes="0"/>
-                                      </Group>
+                                      <Component id="txt_pesquisa" min="-2" pref="180" max="-2" attributes="0"/>
+                                      <Component id="jbl_pesquisa" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Component id="btn_novo_produto" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>

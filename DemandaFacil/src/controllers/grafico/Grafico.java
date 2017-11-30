@@ -35,10 +35,12 @@ public class Grafico {
    private int qtde1[];
    private int qtde2[];
    private double qtde3[];
+   private double qtde4[];
    private int comeco;
    private int fim;
    private DefaultCategoryDataset dados;
    private DefaultCategoryDataset dados2;
+   private DefaultCategoryDataset dados3;
    private static JFreeChart grafico;
  
     public Grafico(int[] qtde1, int comeco, int fim) {
@@ -87,6 +89,25 @@ public class Grafico {
                        PlotOrientation.VERTICAL, 
                          true, true, false);     
    }
+   
+   public Grafico(int[] qtde1,double[]qtde3,double[] qtde4, int comeco, int fim) {
+
+     this.qtde1=qtde1;
+     this.qtde3=qtde3;
+     this.qtde4=qtde4;
+     this.comeco = comeco;
+     this.fim = fim;
+     
+     //Inserção de dados no gráfico
+     this.dados = new DefaultCategoryDataset();
+     this.dados2 = new DefaultCategoryDataset();
+     this.dados3 = new DefaultCategoryDataset();
+     this.grafico = ChartFactory.createLineChart("Desvios", 
+                       "Período", "Quantidade", dados,
+                       PlotOrientation.VERTICAL, 
+                         true, true, false);     
+   }
+   
    
    //Cria os dados para inserir no gráfico apartir da quantidade e período informados
    //Passar um código de produto
@@ -175,12 +196,12 @@ public class Grafico {
              i+=reposicao;
              double valor = qtde3[elementos];
              String periodo = x.periodo(i);
-             dados2.addValue(valor,nomeProduto,periodo);
+             dados2.addValue(valor,"Desvio para Baixo",periodo);
              elementos++;
          }else if(i<12){
             double valor = qtde3[elementos];
             String periodo = x.periodo(i);
-            dados2.addValue(valor,nomeProduto,periodo);
+            dados2.addValue(valor,"Desvio para Baixo",periodo);
             elementos++;
             i+=reposicao;
          }
@@ -194,7 +215,35 @@ public class Grafico {
        String periodo = x.periodo(i);
        dados2.addValue(valor,nomeProduto,periodo); 
      }*/  
-    } 
+    }
+   
+   public void criaDadosDesvio2(int id, int reposicao) {
+     int elementos=0;
+     String nomeProduto;
+     GraficoDAO dao = new GraficoDAO();
+     CalculoGrafico x = new CalculoGrafico();
+     nomeProduto = dao.procuraNomeProduto(id);
+     int i= comeco;
+     while(i!=fim){
+         if(i==12){
+             i=0;
+             i+=reposicao;
+             double valor = qtde4[elementos];
+             String periodo = x.periodo(i);
+             dados3.addValue(valor,"Desvio para Cima",periodo);
+             //dados3.addValue(valor,nomeProduto,periodo);
+             elementos++;
+         }else if(i<12){
+            double valor = qtde4[elementos];
+            String periodo = x.periodo(i);
+            //dados3.addValue(valor,nomeProduto,periodo);
+            dados3.addValue(valor,"Desvio para Cima",periodo);
+            elementos++;
+            i+=reposicao;
+         }
+     }
+   }
+   
    //Cria o painel do gráfico.
    public ChartPanel getPanel() {
         
@@ -217,6 +266,32 @@ public class Grafico {
         //Plota a segunda linha de dados
         plot.setDataset(1, dados2);
         renderer.setSeriesPaint(1, Color.BLUE);
+        plot.setRenderer(renderer);
+        return new ChartPanel(grafico);
+}
+   
+   //Cria o panel de Desvios do Gráfico o qual se utiliza mais de 1 dataset para plotar
+   public ChartPanel getPanelDesvio() {
+        
+        //Recupera o gráfico com somente um dado inserido
+        final CategoryPlot plot = grafico.getCategoryPlot();
+        //Plota a cor de fundo para branco
+        plot.setBackgroundPaint(Color.WHITE);
+        //Recupera os dados da linha do gráfico
+        final LineAndShapeRenderer renderer = (LineAndShapeRenderer) plot.getRenderer();
+        //Mostra o ponto no gráfico
+        renderer.setBaseShapesVisible(true);
+        
+        //Mostra a posição(Quantidade no caso) do item
+        renderer.setBaseItemLabelsVisible(true);
+        
+        //Formatação caso o número decimal e tiver mais que duas casas decimais
+        final DecimalFormat format = new DecimalFormat("#0.##");
+        renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator("{2}", format));
+        //Plota a segunda linha de dados
+        plot.setDataset(1, dados2);
+        plot.setDataset(2,dados3);
+        renderer.setSeriesPaint(0, Color.BLUE);
         plot.setRenderer(renderer);
         return new ChartPanel(grafico);
 }

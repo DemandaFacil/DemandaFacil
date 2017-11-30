@@ -115,5 +115,31 @@ public class ConsumoDAO {
         }
         return null;
     }
+    
+    public int existeConsumo(int idProduto){
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        String sqlBuscaConsumo = "SELECT COUNT(*)as Total FROM consumo WHERE Produto_idProduto= "+idProduto;
+        int total = 0;
+        try{
+            stmt = con.prepareStatement(sqlBuscaConsumo);
+            rs = stmt.executeQuery(sqlBuscaConsumo);
+            while(rs.next()){
+                total = rs.getInt("Total");   
+            }
+        }catch(SQLException ex){
+            System.err.println("Erro ao procurar periodo do consumo: "+ ex);
+        }
+        int retorno =0;
+        if(total ==1 || total == 0){
+            retorno = 1;
+        }else if(total >1){
+            retorno = 2;
+        }
+        return retorno;
+    }
+    
+    
+    
 }
 

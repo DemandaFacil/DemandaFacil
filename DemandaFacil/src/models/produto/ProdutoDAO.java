@@ -132,4 +132,23 @@ public class ProdutoDAO {
             ConnectionFactory.closeConnection(con, stmt);
         }
     }
+    
+    
+    public int getIdProduto(String nomeProduto){
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        String sqlBuscaId = "SELECT idProduto FROM produto WHERE nome = '"+nomeProduto+"'";
+        int idProduto = 0;
+        try{
+            stmt = con.prepareStatement(sqlBuscaId);
+            rs = stmt.executeQuery(sqlBuscaId);
+            while(rs.next()){
+                idProduto = rs.getInt("idProduto");   
+            }
+            stmt.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+	}
+        return idProduto;
+    }
 }

@@ -382,6 +382,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
+<<<<<<< HEAD
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btn_gerar_grafico" min="-2" max="-2" attributes="0"/>
@@ -389,6 +390,19 @@
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="comboMedias" min="-2" pref="110" max="-2" attributes="0"/>
+=======
+                      <Group type="102" attributes="0">
+                          <Component id="btn_gerar_grafico" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="comboMedias" pref="155" max="32767" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btn_salvar" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="painelGrafico" max="32767" attributes="0"/>
+>>>>>>> Acabo Caraigit add -A
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btn_salvar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="7" max="32767" attributes="0"/>
@@ -406,8 +420,13 @@
                                   <Component id="comboMedias" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
+<<<<<<< HEAD
                               <Component id="btn_salvar" min="-2" max="-2" attributes="0"/>
                               <Component id="btn_gerar_grafico" alignment="0" min="-2" pref="46" max="-2" attributes="0"/>
+=======
+                              <Component id="btn_gerar_grafico" min="-2" pref="46" max="-2" attributes="0"/>
+                              <Component id="btn_salvar" alignment="0" min="-2" max="-2" attributes="0"/>
+>>>>>>> Acabo Caraigit add -A
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -429,11 +448,13 @@
                 <Component class="javax.swing.JComboBox" name="comboMedias">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="4">
+                      <StringArray count="6">
                         <StringItem index="0" value="M&#xe9;dia M&#xf3;vel"/>
                         <StringItem index="1" value="M&#xe9;dia Ponderada"/>
                         <StringItem index="2" value="Desvios"/>
                         <StringItem index="3" value="Previs&#xe3;o de Demanda"/>
+                        <StringItem index="4" value="M&#xe9;dia M&#xf3;vel Exponencial"/>
+                        <StringItem index="5" value=" "/>
                       </StringArray>
                     </Property>
                   </Properties>
