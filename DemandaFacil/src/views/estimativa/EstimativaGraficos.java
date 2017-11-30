@@ -258,7 +258,7 @@ public class EstimativaGraficos extends javax.swing.JFrame {
             }
         });
 
-        comboMedias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Média Móvel", "Média Ponderada", "Desvios", "Previsão de Demanda" }));
+        comboMedias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Média Móvel", "Média Ponderada", "Desvios", "Previsão de Demanda", "Média Móvel Exponencial", " " }));
 
         painelGrafico.setLayout(new java.awt.BorderLayout());
 
@@ -277,16 +277,16 @@ public class EstimativaGraficos extends javax.swing.JFrame {
         painelFormLayout.setHorizontalGroup(
             painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelFormLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(btn_gerar_grafico)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(37, 37, 37)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comboMedias, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_salvar)
-                .addGap(0, 7, Short.MAX_VALUE))
-            .addComponent(painelGrafico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(comboMedias, 0, 155, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_salvar))
+            .addGroup(painelFormLayout.createSequentialGroup()
+                .addComponent(painelGrafico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         painelFormLayout.setVerticalGroup(
             painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -297,8 +297,8 @@ public class EstimativaGraficos extends javax.swing.JFrame {
                     .addGroup(painelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(comboMedias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel1))
-                    .addComponent(btn_salvar)
-                    .addComponent(btn_gerar_grafico, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_gerar_grafico, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_salvar))
                 .addContainerGap())
         );
 
@@ -336,7 +336,22 @@ public class EstimativaGraficos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_gerar_graficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_gerar_graficoActionPerformed
-        setarGrafico();
+        if(comboMedias.getSelectedIndex()==0){
+            mediaMovel();
+            btn_salvar.setEnabled(true);
+        }else if(comboMedias.getSelectedIndex()==1){
+            mediaPonderada();
+            btn_salvar.setEnabled(true);
+        }else if(comboMedias.getSelectedIndex()==2){
+            desvio();
+            btn_salvar.setEnabled(false);
+        }else if(comboMedias.getSelectedIndex()==3){
+            demanda();
+            btn_salvar.setEnabled(false);
+        }else if(comboMedias.getSelectedIndex()==4){
+            mediaMovelExponencial();
+            btn_salvar.setEnabled(false);
+        }
     }//GEN-LAST:event_btn_gerar_graficoActionPerformed
 
     private void setarGrafico() {
@@ -441,7 +456,7 @@ public class EstimativaGraficos extends javax.swing.JFrame {
         mesesReposicao.add(Integer.parseInt(c.getPeriodo().substring(0,2)));
         quantidade.add(c.getQuantidade());
       }
-      for(int x = 0;x<tamanho;x++){
+      for(int x = 0;x<tamanho-1;x++){
           mes[x]=mesesReposicao.elementAt(x);
           qtde[x]=quantidade.elementAt(x);
       }
@@ -461,7 +476,7 @@ public class EstimativaGraficos extends javax.swing.JFrame {
           }
       }
       
-      Grafico graf = new Grafico(valorEstimativas,Start,End+2);
+      Grafico graf = new Grafico(valorEstimativas,Start,End+reposicao);
       graf.criaDados(Produto_idProduto,reposicao);
       //graf.criaDados2(Produto_idProduto, reposicao);
       painelGrafico.removeAll();
@@ -492,8 +507,7 @@ public class EstimativaGraficos extends javax.swing.JFrame {
         meses.add(Integer.parseInt(c.getPeriodo().substring(0,2)));
         quantidade.add(c.getQuantidade());
         soma+=c.getQuantidade();
-      }
-      
+      }   
       valorCalculado=soma/tamanho;
       valores=valorCalculado;
       
@@ -501,8 +515,6 @@ public class EstimativaGraficos extends javax.swing.JFrame {
           qtde[x]=quantidade.elementAt(x);
           mes[x]=meses.elementAt(x);
       }
-      //Salvo o conteudo dos meses de reposicao para fazer a previsao de demanda
-       
       for(int i=0;i<media.length;i++){
           media[i]=0;
           media[i]=valorCalculado;
@@ -524,7 +536,7 @@ public class EstimativaGraficos extends javax.swing.JFrame {
       select="mediaPonderada";
       GraficoDAO dao = new GraficoDAO();
       Produto_idProduto = dao.getIdProduto(produtoNome);
-
+      
       ArrayList<Consumo> dadosConsumo = new ArrayList<Consumo>();
       dadosConsumo = getDados(Produto_idProduto,datas);
       int tamanho;
@@ -547,9 +559,7 @@ public class EstimativaGraficos extends javax.swing.JFrame {
           qtde[x]=quantidade.elementAt(x);
           mes[x]=meses.elementAt(x);
       }
-      //Salvo o conteudo dos meses de reposicao para fazer a previsao de demanda
-      
-      
+  
       for(Consumo c: dadosConsumo){
           peso = (float) ((double) c.getQuantidade()/soma); //identifica peso daquele valor
           valor = valor+peso*c.getQuantidade(); //soma todos os valores com os pesos ajustados
@@ -581,6 +591,10 @@ public class EstimativaGraficos extends javax.swing.JFrame {
       int tamanho;
       tamanho = dadosConsumo.size();
       
+      ArrayList<Estimativas> dadosEstimativas = new ArrayList<Estimativas>();
+      dadosEstimativas = getDadosEstimativas(Produto_idProduto, datas);
+      Vector<Integer> valorEstimativa = new Vector<Integer>(dadosEstimativas.size());
+      
       Vector<Integer> meses = new Vector<>(dadosConsumo.size());
       Vector<Integer> quantidade = new Vector<>(dadosConsumo.size());
       int qtde[] = new int[tamanho];
@@ -593,11 +607,21 @@ public class EstimativaGraficos extends javax.swing.JFrame {
           qtde[x]=quantidade.elementAt(x);
           mes[x]=meses.elementAt(x);
       }
-         
+      
+      int valorEstimativas[] = new int[tamanho];
+      for(Estimativas e : dadosEstimativas){
+        valorEstimativa.add(e.getValorCalculado());
+      }
+      for(int x = 0;x<tamanho-1;x++){
+          valorEstimativas[x]=valorEstimativa.elementAt(x);
+      }
+      
+      
       int n = qtde.length;
       int[] auxiliar = new int[n];
       int[] repetidos = new int[n];
       double[] desvio = new double[n];
+      double[] desvio2 = new double[n];
       int[] auxiliar2 = new int[n];
       
       int media;
@@ -666,25 +690,79 @@ public class EstimativaGraficos extends javax.swing.JFrame {
       
       for(int i = 0; i <n;i++){
           desvio[i] = desvioPadrao;
+          desvio2[i] = desvioPadrao+media;
       }
       
       int fim = meses.lastElement();
       int inicio= meses.firstElement();
       
-      Grafico graf = new Grafico(qtde,desvio,inicio,fim);
-      graf.criaDados(Produto_idProduto, reposicao);  
+      Grafico graf = new Grafico(qtde,desvio,desvio2,inicio,fim);
+      graf.criaDados(Produto_idProduto, reposicao);
       graf.criaDadosDesvio(Produto_idProduto,reposicao);
+      graf.criaDadosDesvio2(Produto_idProduto,reposicao);
       painelGrafico.removeAll();
-      painelGrafico.add(graf.getPanel());
+      painelGrafico.add(graf.getPanelDesvio());
       this.pack();
       painelGrafico.validate();
       painelGrafico.repaint();
         
     }
     
+    public void mediaMovelExponencial(){
+      GraficoDAO dao = new GraficoDAO();
+      Produto_idProduto = dao.getIdProduto(produtoNome);
+      ArrayList<Consumo> dadosConsumo = new ArrayList<Consumo>();
+      dadosConsumo = getDadosEspecifico(Produto_idProduto,datas);
+      
+      Vector<Integer> meses = new Vector<>(dadosConsumo.size());
+      Vector<Integer> quantidade = new Vector<>(dadosConsumo.size());
+      double alfa = 0.3;
+      int mes[] = new int[dadosConsumo.size()];
+      int qtde[] = new int[dadosConsumo.size()];
+      int media[] = new int[dadosConsumo.size()];
+      
+      for(Consumo c : dadosConsumo){
+        meses.add(Integer.parseInt(c.getPeriodo().substring(0,2)));
+        quantidade.add(c.getQuantidade());
+      }
+      for(int i=0;i<dadosConsumo.size();i++){
+          qtde[i]=quantidade.get(i);
+          mes[i]=meses.get(i);
+      }
+      for(int x=0;x<dadosConsumo.size();x++){
+          System.out.println(qtde[x]);
+          System.out.println(mes[x]);
+      }
+        
+      int anoAnterior = quantidade.firstElement();
+      anoAnterior = (int) (anoAnterior*alfa);
+      int ultimo = quantidade.lastElement();
+      int atual = (int) ((1-alfa)*ultimo);
+      
+      int mediaExp= anoAnterior+atual;
+      
+      for(int i=0;i<dadosConsumo.size();i++){
+          media[i]=mediaExp;
+      }
+      
+      int inicio=meses.firstElement();
+      int fim = meses.lastElement();
+
+      Grafico graf = new Grafico(qtde,media,inicio,fim);
+      graf.criaDados(Produto_idProduto,reposicao);
+      graf.criaDados2(Produto_idProduto,reposicao);
+      painelGrafico.removeAll();
+      painelGrafico.add(graf.getPanel());
+      this.pack();
+      painelGrafico.validate();
+      painelGrafico.repaint();
+
+    }
+    
     public ArrayList<Consumo> getDados(int idProduto, String datas){
       ArrayList<Consumo> listaConsumo = new ArrayList<Consumo>(); 
-      String query = "SELECT quantidade as qtde, periodo as periodo FROM Consumo where Produto_idProduto="+idProduto+" and periodo like '%"+datas+"' order by periodo";              
+
+      String query = "SELECT quantidade as qtde, periodo as p FROM consumo where Produto_idProduto="+idProduto+" and periodo like '%"+datas+"' order by periodo";              
       int qtde=0;
       String periodo=null;
       try {
@@ -693,7 +771,38 @@ public class EstimativaGraficos extends javax.swing.JFrame {
             while(rs.next()){
                 con = new Consumo();
                 qtde = rs.getInt("qtde");
-                periodo = rs.getString("periodo");
+                periodo = rs.getString("p");
+                /*
+                if(periodo == "08"){
+                    periodo = "8";
+                }
+                if(periodo== "09"){
+                    periodo="9";
+                }*/
+                con.setQuantidade(qtde);
+                con.setPeriodo(periodo);
+		listaConsumo.add(con);
+            }
+            stmt.close();
+	}
+	catch(SQLException e){
+		e.printStackTrace();
+	}
+       return listaConsumo;
+    } 
+    
+    public ArrayList<Consumo> getDadosEspecifico(int idProduto, String datas){
+      ArrayList<Consumo> listaConsumo = new ArrayList<Consumo>(); 
+      String query = "SELECT quantidade as qtde, periodo as p FROM consumo WHERE Produto_idProduto="+idProduto+" and periodo like '%"+datas+"' order by periodo ";              
+      int qtde=0;
+      String periodo=null;
+      try {
+            PreparedStatement stmt = conn.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery(query);
+            while(rs.next()){
+                con = new Consumo();
+                qtde = rs.getInt("qtde");
+                periodo = rs.getString("p");
                 /*
                 if(periodo == "08"){
                     periodo = "8";
@@ -794,6 +903,8 @@ public class EstimativaGraficos extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public void setUsuario(Usuario usuario){
-        this.usuario = usuario;
+        if(usuario != null){
+            this.usuario = usuario;
+        }
     }
 }

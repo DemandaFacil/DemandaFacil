@@ -68,6 +68,11 @@ public class CriarProduto extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Criar Produto - DemandaFácil 1.0");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         background.setBackground(new java.awt.Color(178, 242, 236));
         background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -163,7 +168,7 @@ public class CriarProduto extends javax.swing.JFrame {
 
         iconLogo.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         iconLogo.setForeground(java.awt.Color.white);
-        iconLogo.setText("Logo");
+        iconLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/logo/logotipo.png"))); // NOI18N
 
         javax.swing.GroupLayout menuLateralLayout = new javax.swing.GroupLayout(menuLateral);
         menuLateral.setLayout(menuLateralLayout);
@@ -171,20 +176,19 @@ public class CriarProduto extends javax.swing.JFrame {
             menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(linhaDivisoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(opcaoMenuHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(opcaoMenuEmpresas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(opcaoMenuEmpresas, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
             .addComponent(opcaoMenuSair, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(opcaoMenuPerfil, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(menuLateralLayout.createSequentialGroup()
-                .addGap(82, 82, 82)
+                .addGap(51, 51, 51)
                 .addComponent(iconLogo)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         menuLateralLayout.setVerticalGroup(
             menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuLateralLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
                 .addComponent(iconLogo)
-                .addGap(40, 40, 40)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(linhaDivisoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
                 .addComponent(opcaoMenuHome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -192,7 +196,7 @@ public class CriarProduto extends javax.swing.JFrame {
                 .addComponent(opcaoMenuPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(opcaoMenuEmpresas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
                 .addComponent(opcaoMenuSair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38))
         );
@@ -203,7 +207,7 @@ public class CriarProduto extends javax.swing.JFrame {
 
         subTitulo.setFont(new java.awt.Font("Merriweather Light", 1, 24)); // NOI18N
         subTitulo.setForeground(java.awt.Color.white);
-        subTitulo.setText("Nome Empresa");
+        subTitulo.setText("Empresa");
         subTitulo.setMaximumSize(new java.awt.Dimension(90, 24));
         subTitulo.setMinimumSize(new java.awt.Dimension(90, 24));
 
@@ -421,6 +425,11 @@ public class CriarProduto extends javax.swing.JFrame {
         core.returnLogin();
         this.setVisible(false);
     }//GEN-LAST:event_opcaoMenuSairMouseReleased
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        subTitulo.setText(empresa.getNome());
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments

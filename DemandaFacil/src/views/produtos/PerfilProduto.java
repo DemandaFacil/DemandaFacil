@@ -175,7 +175,7 @@ public class PerfilProduto extends javax.swing.JFrame {
 
         iconLogo.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         iconLogo.setForeground(java.awt.Color.white);
-        iconLogo.setText("Logo");
+        iconLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/logo/logotipo.png"))); // NOI18N
 
         javax.swing.GroupLayout menuLateralLayout = new javax.swing.GroupLayout(menuLateral);
         menuLateral.setLayout(menuLateralLayout);
@@ -183,20 +183,19 @@ public class PerfilProduto extends javax.swing.JFrame {
             menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(linhaDivisoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(opcaoMenuHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(opcaoMenuEmpresas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(opcaoMenuEmpresas, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
             .addComponent(opcaoMenuSair, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(opcaoMenuPerfil, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(menuLateralLayout.createSequentialGroup()
-                .addGap(82, 82, 82)
+                .addGap(47, 47, 47)
                 .addComponent(iconLogo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         menuLateralLayout.setVerticalGroup(
             menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuLateralLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
                 .addComponent(iconLogo)
-                .addGap(40, 40, 40)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(linhaDivisoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
                 .addComponent(opcaoMenuHome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -204,7 +203,7 @@ public class PerfilProduto extends javax.swing.JFrame {
                 .addComponent(opcaoMenuPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(opcaoMenuEmpresas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
                 .addComponent(opcaoMenuSair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38))
         );
@@ -215,7 +214,7 @@ public class PerfilProduto extends javax.swing.JFrame {
 
         subTitulo.setFont(new java.awt.Font("Merriweather Light", 1, 24)); // NOI18N
         subTitulo.setForeground(java.awt.Color.white);
-        subTitulo.setText("Nome Empresa");
+        subTitulo.setText("Empresa");
         subTitulo.setMaximumSize(new java.awt.Dimension(90, 24));
         subTitulo.setMinimumSize(new java.awt.Dimension(90, 24));
 
@@ -489,15 +488,21 @@ public class PerfilProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_consumoActionPerformed
 
     private void btn_estatisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_estatisticasActionPerformed
-        String nomeProduto = jbl_campo_nome.getText();
-        /*Teste teste = new Teste(nomeProduto);
-        teste.setLocationRelativeTo(null);
-        teste.setVisible(true);*/
-        String reposicao = jbl_campo_periodo.getText();
-        Estimativa estimativa = new Estimativa(nomeProduto, reposicao);
-        estimativa.setUsuario(usuario);
-        estimativa.setLocationRelativeTo(null);
-        estimativa.setVisible(true);
+        ProdutoDAO dao = new ProdutoDAO();
+        ConsumoDAO dao2= new ConsumoDAO();
+        int idProduto = dao.getIdProduto(jbl_campo_nome.getText());
+        int totalConsumo = dao2.existeConsumo(idProduto);
+        if(totalConsumo ==1){
+           JOptionPane.showMessageDialog(null,"Impossível fazer os cálculos de Estimativas!\nNão Existe dados Suficientes para Executar tal comando!","ERRO",JOptionPane.WARNING_MESSAGE);      
+        }else if(totalConsumo ==2){
+           String nomeProduto = jbl_campo_nome.getText();
+           String reposicao = jbl_campo_periodo.getText();
+           Estimativa estimativa = new Estimativa(nomeProduto, reposicao);
+           estimativa.setUsuario(usuario);
+           estimativa.setLocationRelativeTo(null);
+           estimativa.setVisible(true);
+           this.setVisible(false);
+        } 
     }//GEN-LAST:event_btn_estatisticasActionPerformed
 
     private void opcaoMenuHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcaoMenuHomeMouseClicked
@@ -513,6 +518,7 @@ public class PerfilProduto extends javax.swing.JFrame {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
+        subTitulo.setText(empresa.getNome());
         jbl_campo_nome.setText(produto.getNome());
         jbl_campo_periodo.setText(Integer.toString(produto.getPeriodo_de_reposicao()));
         jbl_campo_tipo.setText("Mês");

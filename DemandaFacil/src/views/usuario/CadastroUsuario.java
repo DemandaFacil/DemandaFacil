@@ -55,7 +55,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
 
         subTitulo.setFont(new java.awt.Font("Merriweather Light", 1, 24)); // NOI18N
         subTitulo.setForeground(java.awt.Color.white);
-        subTitulo.setText("Cadastro");
+        subTitulo.setText("Cadastrar");
         subTitulo.setMaximumSize(new java.awt.Dimension(90, 24));
         subTitulo.setMinimumSize(new java.awt.Dimension(90, 24));
 
