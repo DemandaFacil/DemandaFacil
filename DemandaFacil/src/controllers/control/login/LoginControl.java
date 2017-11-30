@@ -21,22 +21,22 @@ public class LoginControl {
         UsuarioDAO dao = new UsuarioDAO();
         
         if(!login.isEmpty()){
-            Usuario usuario = dao.findUsuario(login);
+            usuario = dao.findUsuario(login);
             if(usuario != null){
-            setUsuario(usuario);
+                setUsuario(usuario);
                 if(checkLogin(login, senha)){
                     Home home = new Home();
                     home.setUsuario(getUsuario());
                     home.setVisible(true);
                     return true;
                 }else{
-                    JOptionPane.showMessageDialog(null, "Dados Inválidos! Tente Novamente.");
+                    JOptionPane.showMessageDialog(null, "Dados Inválidos! Tente Novamente.", "Erro Login", JOptionPane.ERROR_MESSAGE);
                 }
             }else{
-                JOptionPane.showMessageDialog(null, "Usuario Inválido! Tente Novamente.");
+                JOptionPane.showMessageDialog(null, "Usuario Inválido! Tente Novamente.", "Erro Login", JOptionPane.ERROR_MESSAGE);
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Login Inválido! Tente Novamente.");
+            JOptionPane.showMessageDialog(null, "Login Inválido! Tente Novamente.", "Erro Login", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -47,7 +47,7 @@ public class LoginControl {
     
     public boolean checkSenha(String senha){
         if(!senha.equals(getUsuario().getSenha())){
-            JOptionPane.showMessageDialog(null, "Senha Inválida! Tente Novamente.");
+            JOptionPane.showMessageDialog(null, "Senha Inválida! Tente Novamente.", "Erro Login", JOptionPane.ERROR_MESSAGE);
         }
         return senha.equals(getUsuario().getSenha());
     }

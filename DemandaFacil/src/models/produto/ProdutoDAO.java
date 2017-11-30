@@ -94,6 +94,7 @@ public class ProdutoDAO {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         Produto produto = new Produto();
+        EmpresaDAO materiaDAO = new EmpresaDAO();
         EmpresaDAO dao = new EmpresaDAO();
         try{
             stmt = con.prepareStatement("SELECT * FROM Produto WHERE idProduto = ?");
@@ -102,7 +103,7 @@ public class ProdutoDAO {
             while(rs.next()){
                 produto.setIdProduto(rs.getInt(1));
                 produto.setNome(rs.getString(2));
-                produto.setEmpresa(dao.leEmpresa(rs.getInt(3)));
+                produto.setEmpresa(materiaDAO.leEmpresa(rs.getInt(3)));
                 produto.setPeriodo_de_reposicao(rs.getInt(4));
             }
             return produto;

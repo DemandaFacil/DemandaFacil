@@ -5,6 +5,7 @@
  */
 package views.core;
 
+import controllers.control.core.CoreControl;
 import models.usuario.Usuario;
 import views.usuario.PerfilUsuario;
 import views.empresa.ListaDeEmpresas;
@@ -41,12 +42,10 @@ public class Home extends javax.swing.JFrame {
         jpl_opcao_empresas = new javax.swing.JPanel();
         jlb_icon_empresas = new javax.swing.JLabel();
         txt_empresas = new javax.swing.JLabel();
-        jpl_opcao_relatorios = new javax.swing.JPanel();
-        jlb_icon_relatorios = new javax.swing.JLabel();
-        txt_relatorios = new javax.swing.JLabel();
         jlb_sair = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Home - DemandaFácil 1.0");
         setResizable(false);
 
         JPanelFundo.setBackground(new java.awt.Color(178, 242, 236));
@@ -63,10 +62,10 @@ public class Home extends javax.swing.JFrame {
         faixaMenu.setLayout(faixaMenuLayout);
         faixaMenuLayout.setHorizontalGroup(
             faixaMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, faixaMenuLayout.createSequentialGroup()
-                .addContainerGap(278, Short.MAX_VALUE)
+            .addGroup(faixaMenuLayout.createSequentialGroup()
+                .addGap(147, 147, 147)
                 .addComponent(txt_nome_titulo)
-                .addGap(277, 277, 277))
+                .addContainerGap(148, Short.MAX_VALUE))
         );
         faixaMenuLayout.setVerticalGroup(
             faixaMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -76,7 +75,7 @@ public class Home extends javax.swing.JFrame {
                 .addContainerGap(41, Short.MAX_VALUE))
         );
 
-        JPanelFundo.add(faixaMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 140));
+        JPanelFundo.add(faixaMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 140));
 
         jpl_opcao_usuario.setBackground(new java.awt.Color(0, 128, 128));
         jpl_opcao_usuario.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -154,38 +153,6 @@ public class Home extends javax.swing.JFrame {
 
         JPanelFundo.add(jpl_opcao_empresas, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 210, 230, 180));
 
-        jpl_opcao_relatorios.setBackground(new java.awt.Color(0, 128, 128));
-
-        jlb_icon_relatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Contabilidade-128.png"))); // NOI18N
-
-        txt_relatorios.setFont(new java.awt.Font("Merriweather Light", 1, 36)); // NOI18N
-        txt_relatorios.setForeground(java.awt.Color.white);
-        txt_relatorios.setText("Relatórios");
-
-        javax.swing.GroupLayout jpl_opcao_relatoriosLayout = new javax.swing.GroupLayout(jpl_opcao_relatorios);
-        jpl_opcao_relatorios.setLayout(jpl_opcao_relatoriosLayout);
-        jpl_opcao_relatoriosLayout.setHorizontalGroup(
-            jpl_opcao_relatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpl_opcao_relatoriosLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(txt_relatorios)
-                .addContainerGap(21, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpl_opcao_relatoriosLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jlb_icon_relatorios)
-                .addGap(51, 51, 51))
-        );
-        jpl_opcao_relatoriosLayout.setVerticalGroup(
-            jpl_opcao_relatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpl_opcao_relatoriosLayout.createSequentialGroup()
-                .addComponent(jlb_icon_relatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_relatorios)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        JPanelFundo.add(jpl_opcao_relatorios, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 210, 230, 180));
-
         jlb_sair.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         jlb_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Sair-26.png"))); // NOI18N
         jlb_sair.setText("Sair");
@@ -194,17 +161,17 @@ public class Home extends javax.swing.JFrame {
                 jlb_sairMouseReleased(evt);
             }
         });
-        JPanelFundo.add(jlb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 470, 70, -1));
+        JPanelFundo.add(jlb_sair, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 440, 70, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JPanelFundo, javax.swing.GroupLayout.PREFERRED_SIZE, 829, Short.MAX_VALUE)
+            .addComponent(JPanelFundo, javax.swing.GroupLayout.PREFERRED_SIZE, 566, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JPanelFundo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(JPanelFundo, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
         );
 
         pack();
@@ -213,14 +180,15 @@ public class Home extends javax.swing.JFrame {
 
     private void jlb_sairMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlb_sairMouseReleased
         // TODO add your handling code here:
-        System.exit(0);
+        CoreControl core = new CoreControl(usuario);
+        core.returnLogin();
+        this.setVisible(false);
     }//GEN-LAST:event_jlb_sairMouseReleased
 
     private void jpl_opcao_empresasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpl_opcao_empresasMouseReleased
         // TODO add your handling code here:
-        ListaDeEmpresas listaEmpresas = new ListaDeEmpresas();
-        listaEmpresas.setUsuario(usuario);
-        listaEmpresas.setVisible(true);
+        CoreControl core = new CoreControl(usuario);
+        core.returnEmpresas();
         this.setVisible(false);
     }//GEN-LAST:event_jpl_opcao_empresasMouseReleased
 
@@ -271,15 +239,12 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel JPanelFundo;
     private javax.swing.JPanel faixaMenu;
     private javax.swing.JLabel jlb_icon_empresas;
-    private javax.swing.JLabel jlb_icon_relatorios;
     private javax.swing.JLabel jlb_icon_usuario;
     private javax.swing.JLabel jlb_sair;
     private javax.swing.JPanel jpl_opcao_empresas;
-    private javax.swing.JPanel jpl_opcao_relatorios;
     private javax.swing.JPanel jpl_opcao_usuario;
     private javax.swing.JLabel txt_empresas;
     private javax.swing.JLabel txt_nome_titulo;
-    private javax.swing.JLabel txt_relatorios;
     private javax.swing.JLabel txt_usuario;
     // End of variables declaration//GEN-END:variables
 

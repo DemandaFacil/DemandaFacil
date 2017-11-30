@@ -5,6 +5,7 @@
  */
 package views.produtos;
 
+import controllers.control.core.CoreControl;
 import javax.swing.JOptionPane;
 import models.empresa.Empresa;
 import models.produto.ProdutoDAO;
@@ -38,16 +39,16 @@ public class ListaDeProdutos extends javax.swing.JFrame {
         background = new javax.swing.JPanel();
         menuLateral = new javax.swing.JPanel();
         linhaDivisoria = new javax.swing.JPanel();
-        opcaoMenu = new javax.swing.JPanel();
+        opcaoMenuHome = new javax.swing.JPanel();
         icon = new javax.swing.JLabel();
         nome = new javax.swing.JLabel();
-        opcaoMenu1 = new javax.swing.JPanel();
+        opcaoMenuSair = new javax.swing.JPanel();
         icon1 = new javax.swing.JLabel();
         nome1 = new javax.swing.JLabel();
-        opcaoMenu2 = new javax.swing.JPanel();
+        opcaoMenuEmpresas = new javax.swing.JPanel();
         icon2 = new javax.swing.JLabel();
         nome2 = new javax.swing.JLabel();
-        opcaoMenu3 = new javax.swing.JPanel();
+        opcaoMenuPerfil = new javax.swing.JPanel();
         icon3 = new javax.swing.JLabel();
         nome3 = new javax.swing.JLabel();
         iconLogo = new javax.swing.JLabel();
@@ -65,7 +66,7 @@ public class ListaDeProdutos extends javax.swing.JFrame {
         btn_novo_produto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Lista de Produtos");
+        setTitle("Lista de Produtos  - DemandaFácil 1.0");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -89,11 +90,16 @@ public class ListaDeProdutos extends javax.swing.JFrame {
             .addGap(0, 8, Short.MAX_VALUE)
         );
 
-        opcaoMenu.setBackground(new java.awt.Color(57, 95, 95));
-        opcaoMenu.setLayout(new javax.swing.BoxLayout(opcaoMenu, javax.swing.BoxLayout.LINE_AXIS));
+        opcaoMenuHome.setBackground(new java.awt.Color(57, 95, 95));
+        opcaoMenuHome.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                opcaoMenuHomeMouseReleased(evt);
+            }
+        });
+        opcaoMenuHome.setLayout(new javax.swing.BoxLayout(opcaoMenuHome, javax.swing.BoxLayout.LINE_AXIS));
 
         icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Home.png"))); // NOI18N
-        opcaoMenu.add(icon);
+        opcaoMenuHome.add(icon);
 
         nome.setFont(new java.awt.Font("Merriweather Light", 1, 24)); // NOI18N
         nome.setForeground(java.awt.Color.white);
@@ -101,13 +107,18 @@ public class ListaDeProdutos extends javax.swing.JFrame {
         nome.setText("Home");
         nome.setMaximumSize(new java.awt.Dimension(80, 24));
         nome.setMinimumSize(new java.awt.Dimension(58, 24));
-        opcaoMenu.add(nome);
+        opcaoMenuHome.add(nome);
 
-        opcaoMenu1.setBackground(new java.awt.Color(57, 95, 95));
-        opcaoMenu1.setLayout(new javax.swing.BoxLayout(opcaoMenu1, javax.swing.BoxLayout.LINE_AXIS));
+        opcaoMenuSair.setBackground(new java.awt.Color(57, 95, 95));
+        opcaoMenuSair.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                opcaoMenuSairMouseReleased(evt);
+            }
+        });
+        opcaoMenuSair.setLayout(new javax.swing.BoxLayout(opcaoMenuSair, javax.swing.BoxLayout.LINE_AXIS));
 
         icon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Exit.png"))); // NOI18N
-        opcaoMenu1.add(icon1);
+        opcaoMenuSair.add(icon1);
 
         nome1.setFont(new java.awt.Font("Merriweather Light", 1, 24)); // NOI18N
         nome1.setForeground(java.awt.Color.white);
@@ -115,13 +126,18 @@ public class ListaDeProdutos extends javax.swing.JFrame {
         nome1.setText("Sair");
         nome1.setMaximumSize(new java.awt.Dimension(70, 24));
         nome1.setMinimumSize(new java.awt.Dimension(46, 24));
-        opcaoMenu1.add(nome1);
+        opcaoMenuSair.add(nome1);
 
-        opcaoMenu2.setBackground(new java.awt.Color(57, 95, 95));
-        opcaoMenu2.setLayout(new javax.swing.BoxLayout(opcaoMenu2, javax.swing.BoxLayout.LINE_AXIS));
+        opcaoMenuEmpresas.setBackground(new java.awt.Color(57, 95, 95));
+        opcaoMenuEmpresas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                opcaoMenuEmpresasMouseReleased(evt);
+            }
+        });
+        opcaoMenuEmpresas.setLayout(new javax.swing.BoxLayout(opcaoMenuEmpresas, javax.swing.BoxLayout.LINE_AXIS));
 
         icon2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-Business.png"))); // NOI18N
-        opcaoMenu2.add(icon2);
+        opcaoMenuEmpresas.add(icon2);
 
         nome2.setFont(new java.awt.Font("Merriweather Light", 1, 24)); // NOI18N
         nome2.setForeground(java.awt.Color.white);
@@ -129,13 +145,18 @@ public class ListaDeProdutos extends javax.swing.JFrame {
         nome2.setText("Empresas");
         nome2.setMaximumSize(new java.awt.Dimension(130, 32));
         nome2.setMinimumSize(new java.awt.Dimension(95, 24));
-        opcaoMenu2.add(nome2);
+        opcaoMenuEmpresas.add(nome2);
 
-        opcaoMenu3.setBackground(new java.awt.Color(57, 95, 95));
-        opcaoMenu3.setLayout(new javax.swing.BoxLayout(opcaoMenu3, javax.swing.BoxLayout.LINE_AXIS));
+        opcaoMenuPerfil.setBackground(new java.awt.Color(57, 95, 95));
+        opcaoMenuPerfil.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                opcaoMenuPerfilMouseReleased(evt);
+            }
+        });
+        opcaoMenuPerfil.setLayout(new javax.swing.BoxLayout(opcaoMenuPerfil, javax.swing.BoxLayout.LINE_AXIS));
 
         icon3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/imagens/icones/icons8-More Info.png"))); // NOI18N
-        opcaoMenu3.add(icon3);
+        opcaoMenuPerfil.add(icon3);
 
         nome3.setFont(new java.awt.Font("Merriweather Light", 1, 24)); // NOI18N
         nome3.setForeground(java.awt.Color.white);
@@ -143,7 +164,7 @@ public class ListaDeProdutos extends javax.swing.JFrame {
         nome3.setText("Perfil");
         nome3.setMaximumSize(new java.awt.Dimension(80, 24));
         nome3.setMinimumSize(new java.awt.Dimension(65, 24));
-        opcaoMenu3.add(nome3);
+        opcaoMenuPerfil.add(nome3);
 
         iconLogo.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         iconLogo.setForeground(java.awt.Color.white);
@@ -154,10 +175,10 @@ public class ListaDeProdutos extends javax.swing.JFrame {
         menuLateralLayout.setHorizontalGroup(
             menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(linhaDivisoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(opcaoMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(opcaoMenu2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(opcaoMenu1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(opcaoMenu3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(opcaoMenuHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(opcaoMenuEmpresas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(opcaoMenuSair, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(opcaoMenuPerfil, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(menuLateralLayout.createSequentialGroup()
                 .addGap(82, 82, 82)
                 .addComponent(iconLogo)
@@ -171,13 +192,13 @@ public class ListaDeProdutos extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addComponent(linhaDivisoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
-                .addComponent(opcaoMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(opcaoMenuHome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(opcaoMenu3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(opcaoMenuPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(opcaoMenu2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(opcaoMenuEmpresas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
-                .addComponent(opcaoMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(opcaoMenuSair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38))
         );
 
@@ -383,13 +404,17 @@ public class ListaDeProdutos extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_novo_produtoActionPerformed
 
     private void btn_visualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_visualizarActionPerformed
-        int linhaSelecionada = tbl_produtos.getSelectedRow();
-        int idProdutoLinha = Integer.parseInt(tbl_produtos.getValueAt(linhaSelecionada, 0).toString()); //1º seleciona linha, 2º seleciona coluna desejada
-        ProdutoDAO dao = new ProdutoDAO();
-        PerfilProduto perfilProduto = new PerfilProduto();
-        perfilProduto.setProduto(dao.leProduto(idProdutoLinha));
-        perfilProduto.setVisible(true);
-        this.setVisible(false);
+        if(tbl_produtos.getSelectedRow() != -1){
+            int linhaSelecionada = tbl_produtos.getSelectedRow();
+            int idProdutoLinha = Integer.parseInt(tbl_produtos.getValueAt(linhaSelecionada, 0).toString()); //1º seleciona linha, 2º seleciona coluna desejada
+            ProdutoDAO dao = new ProdutoDAO();
+            PerfilProduto perfilProduto = new PerfilProduto();
+            perfilProduto.setProduto(dao.leProduto(idProdutoLinha));
+            perfilProduto.setVisible(true);
+            this.setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(null, "Nenhuma empresa selecionada! Selecione um produto para prosseguir.", "Erro Seleção Produto", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btn_visualizarActionPerformed
 
     private void txt_pesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_pesquisaKeyReleased
@@ -404,7 +429,6 @@ public class ListaDeProdutos extends javax.swing.JFrame {
 
     private void txt_pesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_pesquisaActionPerformed
         // TODO add your handling code here:
-        
     }//GEN-LAST:event_txt_pesquisaActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -416,6 +440,34 @@ public class ListaDeProdutos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Nao cadastrado", "Nao Encontrado",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_formWindowActivated
+
+    private void opcaoMenuHomeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcaoMenuHomeMouseReleased
+        // TODO add your handling code here:
+        CoreControl core = new CoreControl(usuario);
+        core.returnHome();
+        this.setVisible(false);
+    }//GEN-LAST:event_opcaoMenuHomeMouseReleased
+
+    private void opcaoMenuPerfilMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcaoMenuPerfilMouseReleased
+        // TODO add your handling code here:
+        CoreControl core = new CoreControl(usuario);
+        core.returnPerfil();
+        this.setVisible(false);
+    }//GEN-LAST:event_opcaoMenuPerfilMouseReleased
+
+    private void opcaoMenuEmpresasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcaoMenuEmpresasMouseReleased
+        // TODO add your handling code here:
+        CoreControl core = new CoreControl(usuario);
+        core.returnEmpresas();
+        this.setVisible(false);
+    }//GEN-LAST:event_opcaoMenuEmpresasMouseReleased
+
+    private void opcaoMenuSairMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcaoMenuSairMouseReleased
+        // TODO add your handling code here:
+        CoreControl core = new CoreControl(usuario);
+        core.returnLogin();
+        this.setVisible(false);
+    }//GEN-LAST:event_opcaoMenuSairMouseReleased
 
     /**
      * @param args the command line arguments
@@ -472,10 +524,10 @@ public class ListaDeProdutos extends javax.swing.JFrame {
     private javax.swing.JLabel nome2;
     private javax.swing.JLabel nome3;
     private javax.swing.JLabel nomePagina;
-    private javax.swing.JPanel opcaoMenu;
-    private javax.swing.JPanel opcaoMenu1;
-    private javax.swing.JPanel opcaoMenu2;
-    private javax.swing.JPanel opcaoMenu3;
+    private javax.swing.JPanel opcaoMenuEmpresas;
+    private javax.swing.JPanel opcaoMenuHome;
+    private javax.swing.JPanel opcaoMenuPerfil;
+    private javax.swing.JPanel opcaoMenuSair;
     private javax.swing.JPanel painelBackgroundForm;
     private javax.swing.JPanel painelForm;
     private javax.swing.JLabel subTitulo;

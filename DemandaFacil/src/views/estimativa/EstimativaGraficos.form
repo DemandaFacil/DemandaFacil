@@ -60,10 +60,10 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="linhaDivisoria" alignment="0" max="32767" attributes="0"/>
-                  <Component id="opcaoMenu" alignment="0" max="32767" attributes="0"/>
-                  <Component id="opcaoMenu2" alignment="0" max="32767" attributes="0"/>
-                  <Component id="opcaoMenu1" alignment="1" max="32767" attributes="0"/>
-                  <Component id="opcaoMenu3" alignment="1" max="32767" attributes="0"/>
+                  <Component id="opcaoMenuHome" alignment="0" max="32767" attributes="0"/>
+                  <Component id="opcaoMenuEmpresas" alignment="0" max="32767" attributes="0"/>
+                  <Component id="opcaoMenuSair" alignment="1" max="32767" attributes="0"/>
+                  <Component id="opcaoMenuPerfil" alignment="1" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
                       <Component id="iconLogo" min="-2" max="-2" attributes="0"/>
@@ -79,13 +79,13 @@
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="linhaDivisoria" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                      <Component id="opcaoMenu" min="-2" max="-2" attributes="0"/>
+                      <Component id="opcaoMenuHome" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="opcaoMenu3" min="-2" max="-2" attributes="0"/>
+                      <Component id="opcaoMenuPerfil" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="opcaoMenu2" min="-2" max="-2" attributes="0"/>
+                      <Component id="opcaoMenuEmpresas" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="103" max="32767" attributes="0"/>
-                      <Component id="opcaoMenu1" min="-2" max="-2" attributes="0"/>
+                      <Component id="opcaoMenuSair" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -107,12 +107,15 @@
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Container class="javax.swing.JPanel" name="opcaoMenu">
+            <Container class="javax.swing.JPanel" name="opcaoMenuHome">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5f" green="5f" red="39" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="opcaoMenuHomeMouseReleased"/>
+              </Events>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
               <SubComponents>
@@ -143,12 +146,15 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="opcaoMenu1">
+            <Container class="javax.swing.JPanel" name="opcaoMenuSair">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5f" green="5f" red="39" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="opcaoMenuSairMouseReleased"/>
+              </Events>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
               <SubComponents>
@@ -179,12 +185,15 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="opcaoMenu2">
+            <Container class="javax.swing.JPanel" name="opcaoMenuEmpresas">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5f" green="5f" red="39" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="opcaoMenuEmpresasMouseReleased"/>
+              </Events>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
               <SubComponents>
@@ -215,12 +224,15 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="opcaoMenu3">
+            <Container class="javax.swing.JPanel" name="opcaoMenuPerfil">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5f" green="5f" red="39" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="opcaoMenuPerfilMouseReleased"/>
+              </Events>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
               <SubComponents>
@@ -340,7 +352,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="240" y="120" width="580" height="390"/>
+              <AbsoluteConstraints x="240" y="120" width="570" height="390"/>
             </Constraint>
           </Constraints>
 
@@ -370,37 +382,32 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="btn_gerar_grafico" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="comboMedias" min="-2" pref="110" max="-2" attributes="0"/>
-                          <EmptySpace pref="36" max="32767" attributes="0"/>
-                          <Component id="btn_salvar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="painelGrafico" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btn_salvar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="7" max="32767" attributes="0"/>
                       </Group>
+                      <Component id="painelGrafico" alignment="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="painelGrafico" pref="305" max="32767" attributes="0"/>
+                          <Component id="painelGrafico" pref="302" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
+                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                   <Component id="comboMedias" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="btn_gerar_grafico" alignment="3" min="-2" pref="46" max="-2" attributes="0"/>
-                                  <Component id="btn_salvar" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="btn_salvar" min="-2" max="-2" attributes="0"/>
+                              <Component id="btn_gerar_grafico" alignment="0" min="-2" pref="46" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
